@@ -4,7 +4,7 @@ import {ResultCodesEnum} from '../types/auth_types'
 export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-    headers: {"API-KEY": "be25bc47-78e9-4634-b668-90794e8b62b9"},
+    headers: {"API-KEY": process.env.API_KEY},
 })
 
 export enum ResultCodeForCapcthaEnum {
