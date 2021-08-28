@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nerko+One&display=swap');
+
+$dark-color: #313131;
+$light-color: #e7ffd9;
+
+.main {
+    width: 100%;
+    height: 100vh;
+    background-color: $dark-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'East Sea Dokdo', cursive;
+}
+
+.ghost__body {
+    width: 120px;
+    height: 120px;
+    background-color: $light-color;
+    border-radius: 70px 70px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+    animation: ghostFly 2s infinite ease-in-out;
+}
+
+@keyframes ghostFly {
+    50% {
+        transform: translateY(-50px);
+    }
+    
+}
+
+.ghost__face {
+    margin-top: 40px;
+    width: 90px;
+    height: 100px;
+}
+
+.ghost__eyes {
+    margin: 0 auto;
+    margin-top: 15px;
+    width: 62px;
+    height: 20px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1;
+    span {
+        width: 20px;
+        height: 100%;
+        border-radius: 50%;
+        background-color: $dark-color;
+        transition: .3s linear;
+    }
+}
+
+.ghost_mouth {
+    width: 38px;
+    height: 20px;
+    margin: 0 auto;
+    margin-top: 15px;
+    z-index: 1;
+    border-radius: 0 0 25px 25px;
+    background-color: $dark-color;
+    transition: .3s linear;
+}
+
+.ghost__body:hover  .ghost__eyes{
+    height: 17px;
+}
+
+.ghost__body:hover::after{
+    content: 'Hi!';
+    width: 100px;
+    height: 100px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 50px;
+    background-color: rgb(97, 95, 95);
+    position: absolute;
+    top: -80px;
+    right: -80px;
+}
+
+.ghost__body:hover  .ghost_mouth{
+    width: 40px;
+    height: 25px;
+}
+
+.ghost__hands {
+    position: absolute;
+    top: 78px;
+    width: 160px;
+    height: 25px;
+    border-radius: 12.5px;
+    z-index: -1;
+    background-color: $light-color;
+    span {
+        position: absolute;
+        right: 0px;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: $light-color;
+        transition: .1s linear;
+    }
+    animation: ghostFlyHands 2s infinite ease-in-out;
+}
+
+.ghost__body:hover  .ghost__hands span{
+    top: -3px;
+    right: -4px;
+}
+
+.ghost_feet {
+    position: absolute;
+    top: 115px;
+    width: 120px;
+    height: 25px;
+    display: flex;
+    background-color: $light-color;
+    span {
+        width: 44px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: $light-color;
+        transition: .3s linear;
+        &:first-child {
+            height: 44px;
+        }
+        &:last-child {
+            height: 44px;
+        }
+    }
+}
+
+.text {
+    margin-top: 80px;
+    color: $light-color;
+    font-size: 40px;
+    text-transform: uppercase;
+    //animation: ghostFlyText 2s infinite ease-in-out;
+}
+
+@keyframes ghostFlyHands {
+    50% {
+        transform: translateY(-7px);
+    }
+    
+}
+
+@keyframes ghostFlyText {
+    70% {
+        color: rgb(223, 196, 47);
+    }
+    
+}
