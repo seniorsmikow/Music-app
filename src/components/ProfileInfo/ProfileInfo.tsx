@@ -1,9 +1,14 @@
 import React from 'react'
 import styles from './ProfileInfo.module.scss'
 import portrait from '../../img/portrait.jpg'
+import { useSelector } from 'react-redux'
+import { AppStateType } from '../../redux/root_reducer'
 
 
 const ProfileInfo = () => {
+
+    const userLoginText = useSelector((state: AppStateType) => state.authReducer.login)
+
     return (
         <div className={styles.profile__wrapper}>
             <div className={styles.profile__header}></div>
@@ -13,7 +18,7 @@ const ProfileInfo = () => {
             </div>
 
             <div className={styles.profile__user_name}>
-                User name
+                {userLoginText ? userLoginText : "Имя отсутствует"}
             </div>
             <div className={styles.profile__user_profession}>
                 профессия:  пользователя 

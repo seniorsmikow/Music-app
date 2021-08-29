@@ -8,16 +8,17 @@ let initialState = {
     resultCode: 0,
     email: null as string | null,
     login: null as string | null,
-    isAuth: false
+    isAuth: false,
 }
 export type InitialStateType = typeof initialState
 
 
 const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case 'auth/LOGIN': {
+        case 'auth/USER_LOGIN': {
             return {
-                ...state, userId: action.payload.data.userId, resultCode: action.payload.resultCode, 
+                ...state, userId: action.payload.data.userId,
+                
             }
         }
         case 'auth/GET_USER': {
@@ -26,6 +27,13 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
                 login: action.payload.login, isAuth: action.payload.isAuth
             }
         }
+        case 'auth/USER_LOGOUT': {
+            return {
+                ...state, userId: action.payload.userId, email: action.payload.email, 
+                login: action.payload.login, isAuth: action.payload.isAuth,
+            }
+        }
+        
         default: 
             return state
     }
@@ -33,8 +41,12 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
 }
 
 export const actions = {
-    loginAction: (payload: AuthType) => ({type: 'auth/LOGIN', payload} as const),
+    loginAction: (payload: AuthType) => ({type: 'auth/USER_LOGIN', payload} as const),
     getUserData: (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => ({type: 'auth/GET_USER', 
+    payload: {
+        userId, login, email, isAuth
+    }} as const),
+    logoutAction: (userId: number | null, login: string | null, email: string | null, isAuth: boolean) => ({type: 'auth/USER_LOGOUT',
     payload: {
         userId, login, email, isAuth
     }} as const),
@@ -57,7 +69,14 @@ export const getOwnUserData = (): ThunkType => {
     }
 }
 
-
+export const logout = (): ThunkType => {
+    return async(dispatch) => {
+        let response = await authAPI.logout()
+        if(response.data.resultCode === 0) {
+            dispatch(actions.logoutAction(null, null, null, false))
+        }
+    }
+}
 
 export default appReducer
 

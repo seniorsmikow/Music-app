@@ -1,9 +1,14 @@
 import React from 'react'
 import styles from './UserCard.module.scss'
 import Portrait from '../../img/portrait.jpg'
+import { useSelector } from 'react-redux'
+import { AppStateType } from '../../redux/root_reducer'
 
 
 const UserCard  = () => {
+
+    const userLoginText = useSelector((state: AppStateType) => state.authReducer.login)
+
     return (
         <div className={styles.userCard__wrapper}>
             <div className={styles.user__card_icon}>
@@ -11,7 +16,7 @@ const UserCard  = () => {
             </div>
 
             <div className={styles.user__card_name}>
-                User Name
+                {userLoginText ? userLoginText : "Имя отсутствует"}
             </div>
             <div className={styles.user__card_buttons}>
                 <button>Delete</button>

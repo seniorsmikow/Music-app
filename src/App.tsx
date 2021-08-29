@@ -34,9 +34,11 @@ function App() {
   }, [userId, dispatch])
 
   useEffect(() => {
+    if(userId) {
+      dispatch(getOwnUserData())
+    }
     dispatch(getOwnUserData())
-  }, [dispatch])
-  
+  }, [userId, dispatch])
 
   return (
     <div className={styles.app__wrapper}>
