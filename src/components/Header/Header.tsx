@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import styles from './Header.module.scss'
+import { NavLink } from 'react-router-dom'
 import HomeIcon from '@material-ui/icons/Home'
-import ChromeReaderModeIcon from '@material-ui/icons/ChromeReaderMode'
-import MessageIcon from '@material-ui/icons/Message'
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
 import SearchIcon from '@material-ui/icons/Search'
+import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import Portrait from '../../img/portrait.jpg'
 import {useSelector, useDispatch} from 'react-redux'
 import {toogleOpenModalWindow} from '../../redux/app_reducer'
@@ -42,10 +41,12 @@ const Header = () => {
             </div>
             
             <ul className={styles.header__listWrapper}>
-                <li><HomeIcon />Home</li>
-                <li><ChromeReaderModeIcon />Projects</li>
-                <li><MessageIcon />Messages</li>
-                <li><NotificationsNoneIcon />Notification</li>
+                {
+                    isAuth ? 
+                    <NavLink to="/profile"><AccountBoxIcon />Profile</NavLink>
+                    : null
+                }
+                <NavLink to="/"><HomeIcon />Home</NavLink>
             </ul>
 
             <div>

@@ -1,7 +1,7 @@
 import { InferActionsTypes, BaseThunkType } from './root_reducer'
 
 let initialState = {
-    toggleOpen: false
+    toggleOpen: false,
 }
 export type InitialStateType = typeof initialState
 

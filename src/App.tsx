@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
+import {HashRouter} from 'react-router-dom'
 import styles from './App.module.scss'
 import Header from './components/Header/Header'
-import MainPage from './pages/MainPage/MainPage'
 import {ModalWindow} from './components/ModalWindow/ModalWindow'
 import {LoginForm} from './forms/LoginForm/LoginForm'
 import {AppStateType} from './redux/root_reducer'
@@ -9,6 +9,7 @@ import {useSelector} from 'react-redux'
 import {useDispatch} from 'react-redux'
 import {toogleOpenModalWindow} from './redux/app_reducer'
 import {getOwnUserData} from './redux/auth_reducer'
+import {AppRouter} from './components/AppRouter/AppRouter'
 
 
 function App() {
@@ -42,9 +43,12 @@ function App() {
 
   return (
     <div className={styles.app__wrapper}>
-      <Header />
-      <MainPage />
-      <ModalWindow isOpen={toggleOpen}><LoginForm /></ModalWindow>
+      <HashRouter>
+        <Header />
+        <ModalWindow isOpen={toggleOpen}><LoginForm /></ModalWindow>
+
+        <AppRouter />
+      </HashRouter>
     </div>
   )
 }
