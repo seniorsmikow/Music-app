@@ -1,9 +1,9 @@
 import { instance } from './api'
-import {UsersType} from '../types/users_types'
+import {GetItemsType} from '../types/users_types'
 
 
 export const usersAPI = {
-    getAllUsers() {
-        return instance.get<UsersType>('/users')
+    getAllUsers(count: number, page = 1) {
+        return instance.get<GetItemsType>(`/users?${count}&${page}`).then(res => res.data)
     }
 }

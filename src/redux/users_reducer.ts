@@ -1,9 +1,10 @@
 import { InferActionsTypes, BaseThunkType } from './root_reducer'
 import { usersAPI } from '../api/usersAPI'
+import {UserType} from '../types/users_types'
 
 
 let initialState = {
-    users: [],
+    users: [] as Array<UserType>,
     totalCount: 0
 }
 export type InitialStateType = typeof initialState
@@ -27,10 +28,10 @@ export const actions = {
     allUsers: (payload: any) => ({type: 'users/GET_ALL_USERS', payload} as const)
 }
 
-export const getAllUsers = (): ThunkType => {
+export const getAllUsers = (count: number, page: number): ThunkType => {
     return async (dispatch) => {
-        let response = await usersAPI.getAllUsers()
-        dispatch(actions.allUsers(response.data))
+        let data = await usersAPI.getAllUsers(count, page)
+        dispatch(actions.allUsers(data.items))
     }
 }
 

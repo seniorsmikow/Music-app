@@ -1,15 +1,20 @@
 .userCard__wrapper {
-    width: 800px;
-    height: 600px;
-    margin-top: 60px;
-    margin-left: 60px;
-    padding: 20px 30px;
+    min-width: 200px;
+    height: 200px;
+    //margin: 60px;
+    //margin-left: 60px;
+    //padding: 20px 30px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
     position: relative;
+    background-image: linear-gradient(to right, #cfd9e6 0%, #808080 100%);
+    color: white;
     -webkit-box-shadow: 2px 2px 8px 0px rgba(50, 50, 50, 0.61);
     -moz-box-shadow:    2px 2px 8px 0px rgba(50, 50, 50, 0.61);
     box-shadow:         2px 2px 8px 0px rgba(50, 50, 50, 0.61);
+    border-radius: 5px;
 }
 
 .user__card_icon {
@@ -24,23 +29,5 @@
 }
 
 .user__card_name {
-    margin-left: 20px;
-}
-
-.user__card_info {
-    margin-top: 10px;
-}
-
-.user__card_buttons {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    button {
-        margin-right: 20px;
-        width: 60px;
-        height: 30px;
-        background-color: rgb(134, 131, 131);
-        color: white;
-        border-radius: 3px;
-    }
+    margin-top: 20px;
 }
