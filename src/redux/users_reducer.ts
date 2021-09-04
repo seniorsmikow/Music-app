@@ -14,8 +14,13 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
     switch (action.type) {
         case 'users/GET_ALL_USERS': {
             return {
-                ...state, users: action.payload, totalCount: action.payload.totalCount
+                ...state, users: action.payload
                 
+            }
+        }
+        case 'users/GET_TOTAL_COUNT': {
+            return {
+                ...state, totalCount: action.totalCount
             }
         }
         default: 
@@ -25,13 +30,15 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
 }
 
 export const actions = {
-    allUsers: (payload: any) => ({type: 'users/GET_ALL_USERS', payload} as const)
+    allUsers: (payload: Array<UserType>) => ({type: 'users/GET_ALL_USERS', payload} as const),
+    getUsersTotalCount: (totalCount: number) => ({type: 'users/GET_TOTAL_COUNT', totalCount} as const)
 }
 
 export const getAllUsers = (count: number, page: number): ThunkType => {
     return async (dispatch) => {
         let data = await usersAPI.getAllUsers(count, page)
         dispatch(actions.allUsers(data.items))
+        dispatch(actions.getUsersTotalCount(data.totalCount))
     }
 }
 

@@ -17,7 +17,7 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
     switch (action.type) {
         case 'auth/USER_LOGIN': {
             return {
-                ...state, userId: action.payload.data.userId,
+                ...state, userId: action.payload.data.userId, isAuth: true
                 
             }
         }

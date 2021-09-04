@@ -45,7 +45,7 @@ function App() {
     <div className={styles.app__wrapper}>
       <HashRouter>
         <Header />
-        <ModalWindow isOpen={toggleOpen}><LoginForm /></ModalWindow>
+        {/* <ModalWindow isOpen={toggleOpen}><LoginForm /></ModalWindow> */}
 
         <AppRouter />
       </HashRouter>

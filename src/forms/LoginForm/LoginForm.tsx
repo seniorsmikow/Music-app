@@ -26,7 +26,6 @@ import styles from './Login.module.scss'
 
    return (
      <div className={styles.login__form_wrapper}>
-       <h1>Login form</h1>
        <Formik
          initialValues={initialValues}
          onSubmit={(values, actions) => {
@@ -34,14 +33,15 @@ import styles from './Login.module.scss'
          }}
        >
          <Form>
-           <label htmlFor="email">Email</label>
-           <Field id="email" name="email" placeholder="Email" />
+           <div className={styles.form__inputs}>
+            <Field id="email" name="email" placeholder="Email" />
+            <Field id="password" name="password" type="password" autoComplete="on" placeholder="password"/>
+           </div>
 
-           <label htmlFor="password">Password</label>
-           <Field id="password" name="password" type="password" autoComplete="on"/>
-
-           <label htmlFor="rememberMe">Запомнить</label>
-           <Field id="rememberMe" name="rememberMe"  type="checkbox"/>
+           <div className={styles.form__remember_me}>
+            <label htmlFor="rememberMe">Запомнить</label>
+            <Field id="rememberMe" name="rememberMe"  type="checkbox"/>
+           </div>
 
            <button type="submit">вход</button>
          </Form>

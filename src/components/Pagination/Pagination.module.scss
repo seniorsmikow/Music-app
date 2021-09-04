@@ -1,0 +1,27 @@
+.pagination__root {
+    margin-top: 60px;
+    width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+    
+.pagination__list {
+    display: flex;
+    margin-top: 20px;
+    width: 500px;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    li {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #19191a;
+        color: white;
+    }
+}
