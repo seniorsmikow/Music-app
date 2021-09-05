@@ -26,8 +26,8 @@ export const HeaderMenu: React.FC<PropsType> = ({isOpen}) => {
             onClick={() => dispatch(toogleOpenModalWindow(false))}
         >
                 <ul>
-                    <NavLink to="/newspage">Главная</NavLink>
-                    <NavLink to="/">Пользователи</NavLink>
+                    <NavLink to="/">Главная</NavLink>
+                    <NavLink to="/users">Пользователи</NavLink>
                     { 
                         isAuth ? <NavLink to="/profile">Профиль</NavLink> 
                         : null

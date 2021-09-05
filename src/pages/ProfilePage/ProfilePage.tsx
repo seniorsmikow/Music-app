@@ -23,7 +23,7 @@ export const ProfilePage = () => {
 
     useEffect(() => {
         if(!isAuth) {
-            history.push('/newspage')
+            history.push('/')
         }
     })
 

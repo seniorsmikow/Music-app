@@ -1,10 +1,10 @@
 import React from 'react'
 import { WaitGhost } from '../../components/WaitGhost/WaitGhost'
-import styles from './NewsPage.module.scss'
+import styles from './HomePage.module.scss'
 import network from '../../img/smm-prodvizhenie.png'
 
 
-export const NewsPage = () => {
+export const HomePage = () => {
     return (
         <div className={styles.news__page_root}>
             <div className={styles.news__header}>
