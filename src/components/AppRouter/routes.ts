@@ -1,7 +1,7 @@
 import {ProfilePage} from '../../pages/ProfilePage/ProfilePage'
 import {LoginPage} from '../../pages/LoginPage/LoginPage'
 import MainPage from '../../pages/MainPage/MainPage'
-import { HomePage } from '../../pages/HomePage/NewsPage'
+import { HomePage } from '../../pages/HomePage/HomePage'
 
 import {
     PROFILE_ROUTE,

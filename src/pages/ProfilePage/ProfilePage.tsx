@@ -11,8 +11,9 @@ import { AppStateType } from '../../redux/root_reducer'
 export const ProfilePage = () => {
 
     const dispatch = useDispatch()
-    const userId  = useSelector((state: AppStateType) => state.profileReducer.userId)
+    const userId  = useSelector((state: AppStateType) => state.authReducer.userId)
     const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
+    const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
     const history = useHistory()
 
     useEffect(() => {
@@ -29,7 +30,9 @@ export const ProfilePage = () => {
 
     return (
         <div className={styles.profile__page_root}>
-            <ProfileInfo />
+            {
+                profile ? <ProfileInfo profile={profile}/> : "Loading"
+            }
             <FriendsBlock />
         </div>
     )

@@ -1,9 +1,10 @@
 import { InferActionsTypes, BaseThunkType } from './root_reducer'
 import { profileAPI } from '../api/profileAPI'
+import { profileType } from '../types/profile_types'
 
 
 let initialState = {
-    userId: null as number | null
+    profile: null as profileType | null
 }
 export type InitialStateType = typeof initialState
 
@@ -12,7 +13,7 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
     switch (action.type) {
         case 'profile/GET_PROFILE': {
             return {
-                ...state, userId: action.payload.data.userId,
+                ...state, profile: action.payload
                 
             }
         }
@@ -28,9 +29,9 @@ export const actions = {
 
 export const getUserProfile = (userId: number): ThunkType => {
     return async (dispatch) => {
-        let response = await profileAPI.getUserProfile(userId)
+        let data = await profileAPI.getUserProfile(userId)
         debugger
-        dispatch(actions.getProfile(response.data))
+        dispatch(actions.getProfile(data))
     }
 }
 

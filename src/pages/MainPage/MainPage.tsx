@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import styles from './MainPage.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
