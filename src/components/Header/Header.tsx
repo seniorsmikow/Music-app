@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import styles from './Header.module.scss'
 import SearchIcon from '@material-ui/icons/Search'
 import Portrait from '../../img/portrait.jpg'
 import {useSelector, useDispatch} from 'react-redux'
 import {toogleOpenModalWindow} from '../../redux/app_reducer'
 import { AppStateType } from '../../redux/root_reducer'
-import {logout} from '../../redux/auth_reducer'
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
@@ -17,13 +16,6 @@ const Header = () => {
     const dispatch = useDispatch()
     const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
     const isOpen = useSelector((state: AppStateType) => state.appReducer.toggleOpen)
-    const [btnText, setBtnText] = useState('Login') 
-
-    useEffect(() => {
-        if(isAuth) {
-            setBtnText('Logout')
-        }
-    }, [isAuth])
 
     return (
         <div className={styles.header__container}>

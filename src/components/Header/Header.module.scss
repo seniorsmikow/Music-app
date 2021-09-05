@@ -1,5 +1,4 @@
 .header__container {
-    background-color: red;
     height: 60px;
     background-color: #fdfdfd;
     -webkit-box-shadow: 2px 3px 5px 0px rgba(50, 50, 50, 0.49);
@@ -9,6 +8,7 @@
     top: 0;
     right: 0;
     left: 0;
+    z-index: 2;
 }
 
 .header__wrapper {
@@ -24,7 +24,7 @@
     top: 0;
     right: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;
     background-color: #fdfdfd;
 }
 

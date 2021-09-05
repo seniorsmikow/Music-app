@@ -25,7 +25,7 @@ export const WaitGhost = () => {
                     <span></span>
                 </div>
             </div>
-            <div className={styles.text}>Please wait!</div>
+            {/* <div className={styles.text}>Hello!</div> */} 
         </div>
     )
 }

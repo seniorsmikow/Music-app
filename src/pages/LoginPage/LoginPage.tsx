@@ -17,8 +17,6 @@ export const LoginPage = () => {
         }
     }, [isAuth, history])
 
-    debugger
-
     return (
         <div className={styles.login__page_root}>
             <LoginForm />
