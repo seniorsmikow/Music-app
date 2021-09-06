@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Header.module.scss'
 import SearchIcon from '@material-ui/icons/Search'
-import Portrait from '../../img/portrait.jpg'
+import userWithoutPhoto from '../../img/user_without_photo.png'
 import {useSelector, useDispatch} from 'react-redux'
 import {toogleOpenModalWindow} from '../../redux/app_reducer'
 import { AppStateType } from '../../redux/root_reducer'
@@ -38,7 +38,7 @@ const Header = () => {
                 <div>
                     <div className={styles.header__user_block}>
                         {
-                            isAuth ? <img src={Portrait} alt="user_icon"/>
+                            isAuth ? <img src={userWithoutPhoto} alt="user_icon"/>
                             :
                             <div className={styles.header__user_logout}>
                                 войдите...

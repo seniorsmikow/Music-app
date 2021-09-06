@@ -16,6 +16,7 @@ export const HeaderMenu: React.FC<PropsType> = ({isOpen}) => {
 
     const dispatch = useDispatch()
     const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
+    const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)
 
     const userLogout = () => {
         dispatch(logout())
@@ -29,7 +30,7 @@ export const HeaderMenu: React.FC<PropsType> = ({isOpen}) => {
                     <NavLink to="/">Главная</NavLink>
                     <NavLink to="/users">Пользователи</NavLink>
                     { 
-                        isAuth ? <NavLink to="/profile">Профиль</NavLink> 
+                        isAuth && ownUserId ? <NavLink to={`/profile/${ownUserId}`}>Своя страница</NavLink> 
                         : null
                     }
                     {

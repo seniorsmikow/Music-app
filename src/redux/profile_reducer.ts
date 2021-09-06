@@ -30,7 +30,6 @@ export const actions = {
 export const getUserProfile = (userId: number): ThunkType => {
     return async (dispatch) => {
         let data = await profileAPI.getUserProfile(userId)
-        debugger
         dispatch(actions.getProfile(data))
     }
 }

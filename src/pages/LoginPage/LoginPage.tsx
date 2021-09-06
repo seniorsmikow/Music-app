@@ -9,13 +9,14 @@ import { useHistory } from 'react-router-dom'
 export const LoginPage = () => {
 
     const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
+    const userId = useSelector((state: AppStateType) => state.authReducer.userId)
     const history = useHistory()
 
     useEffect(() => {
-        if(isAuth) {
-            history.push("/profile")
+        if(isAuth && userId) {
+            history.push(`/profile/${userId}`)
         }
-    }, [isAuth, history])
+    }, [isAuth, userId, history])
 
     return (
         <div className={styles.login__page_root}>

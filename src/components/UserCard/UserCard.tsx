@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './UserCard.module.scss'
-import Portrait from '../../img/portrait.jpg'
+import userWithoutPhoto from '../../img/user_without_photo.png'
+import {useHistory} from 'react-router-dom'
 
 type PropsType = {
     name:string
@@ -8,15 +9,26 @@ type PropsType = {
     uniqueUrlName: string | null
     status: string | null
     followed: boolean
+    photo: string | null
 }
 
 
-const UserCard: React.FC<PropsType>  = ({id, name, status, uniqueUrlName, followed = false}) => {
+const UserCard: React.FC<PropsType> = ({name, id, status, followed, photo}) => {
+
+    const history = useHistory()
+
+    const showUserProfile = () => {
+        history.push(`/profile/${id}`)
+    }
 
     return (
         <div className={styles.userCard__wrapper}>
             <div className={styles.user__card_icon}>
-                <img src={Portrait} alt="user_icon"/>
+                {
+                    photo ? <img src={photo} alt="user_icon"/>
+                    : <img src={userWithoutPhoto} alt="user_icon" />
+                }
+                
             </div>
 
             <div className={styles.user__card_name}>
@@ -26,7 +38,7 @@ const UserCard: React.FC<PropsType>  = ({id, name, status, uniqueUrlName, follow
                 
                 <div>{status}</div>
                 <div>{followed}</div>
-            
+            <button onClick={() => showUserProfile()}>show profile</button>
         </div>
     )
 }

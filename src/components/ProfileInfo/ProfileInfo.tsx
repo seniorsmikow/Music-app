@@ -1,11 +1,9 @@
 import React from 'react'
 import styles from './ProfileInfo.module.scss'
-import portrait from '../../img/portrait.jpg'
-import { useSelector } from 'react-redux'
-import { AppStateType } from '../../redux/root_reducer'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CancelIcon from '@material-ui/icons/Cancel'
 import {profileType} from '../../types/profile_types'
+import userWithoutPhoto from '../../img/user_without_photo.png'
 
 type PropsType = {
     profile: profileType
@@ -14,23 +12,20 @@ type PropsType = {
 
 const ProfileInfo: React.FC<PropsType> = ({profile}) => {
 
-    const userLoginText = useSelector((state: AppStateType) => state.authReducer.login)
-    const userPhoto = useSelector((state: AppStateType) => state.profileReducer.profile?.photos.large)
-
     return (
         <div className={styles.profile__wrapper}>
             <div className={styles.profile__header}></div>
             <div className={styles.profile__header_round}></div>
             <div className={styles.profile__image}>
                 {
-                    userPhoto ? <img src={userPhoto} alt="user_icon"/> 
-                    : <img src={portrait} alt="user_icon"/>
+                    profile.photos.large ? <img src={profile.photos.large} alt="user_icon"/> 
+                    : <img src={userWithoutPhoto} alt="user_icon"/>
                 }
                 
             </div>
 
             <div className={styles.profile__user_name}>
-                {userLoginText ? userLoginText : "Имя отсутствует"}
+                {profile.fullName ? profile.fullName : "Имя отсутствует"}
             </div>
             <div>
                 о пользователе: {

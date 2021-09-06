@@ -8,19 +8,21 @@ import {getUserProfile} from '../../redux/profile_reducer'
 import { AppStateType } from '../../redux/root_reducer'
 
 
-export const ProfilePage = () => {
+export const ProfilePage = (props: any) => {
 
     const dispatch = useDispatch()
-    const userId  = useSelector((state: AppStateType) => state.authReducer.userId)
     const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
     const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
+
+    const propsUserId = props.match.params.userId
+
     const history = useHistory()
 
     useEffect(() => {
-        if(userId) {
-            dispatch(getUserProfile(userId))
+        if(propsUserId) {
+            dispatch(getUserProfile(propsUserId))
         }
-    }, [userId, dispatch])
+    }, [propsUserId, dispatch])
 
     useEffect(() => {
         if(!isAuth) {

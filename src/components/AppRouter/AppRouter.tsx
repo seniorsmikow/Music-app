@@ -20,7 +20,11 @@ export const AppRouter = () => {
                 {
                     publicRoutes.map(({path, Component}) => <Route key={path} path={path} component={Component} exact/>)
                 }
-                <Redirect to={MAIN_ROUTE} />
+                <Route path='*' render={() => <div style={{marginTop: '100px', display: 'flex', justifyContent: 'center', color: 'red', fontWeight: 'bold'}}>
+                    404 NOT FOUND
+                    </div>}
+                />
+                {/* <Redirect to={MAIN_ROUTE} /> */}
             </Switch>
         </div>
     )

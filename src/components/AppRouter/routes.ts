@@ -1,13 +1,13 @@
 import {ProfilePage} from '../../pages/ProfilePage/ProfilePage'
 import {LoginPage} from '../../pages/LoginPage/LoginPage'
-import MainPage from '../../pages/MainPage/MainPage'
+import { UsersPage } from '../../pages/UsersPage/UsersPage'
 import { HomePage } from '../../pages/HomePage/HomePage'
 
 import {
-    PROFILE_ROUTE,
     USERS_ROUTE,
     LOGIN_ROUTE,
-    MAIN_ROUTE
+    MAIN_ROUTE,
+    USER_PROFILE_ROUTE
 } from './constants'
 
 export const authRoutes = [
@@ -21,11 +21,7 @@ export const authRoutes = [
 export const publicRoutes = [
     {
         path: USERS_ROUTE,
-        Component: MainPage
-    },
-    {
-        path: PROFILE_ROUTE,
-        Component: ProfilePage
+        Component: UsersPage
     },
     {
         path: LOGIN_ROUTE,
@@ -34,5 +30,9 @@ export const publicRoutes = [
     {
         path: MAIN_ROUTE,
         Component: HomePage
+    },
+    {
+        path: USER_PROFILE_ROUTE,
+        Component: ProfilePage
     }
 ];

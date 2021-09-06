@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import styles from './MainPage.module.scss'
+import styles from './UsersPage.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
 import { getAllUsers } from '../../redux/users_reducer'
@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import { Pagination } from '../../components/Pagination/Pagination'
 
 
-const MainPage = React.memo(() => {
+export const UsersPage = React.memo(() => {
 
   const users = useSelector((state: AppStateType) => state.usersReducer.users)
   const dispatch = useDispatch()
@@ -28,11 +28,12 @@ const MainPage = React.memo(() => {
             users ? 
             users.map(user => <Grid item xs={6} sm={8} md={6} lg={6} xl={6} key={user.name} className={styles.root_two}> 
                                 <UserCard 
-                                id={user.id} 
-                                name={user.name}
-                                status={user.status}
-                                uniqueUrlName={user.uniqueUrlName}
-                                followed={user.followed}
+                                  id={user.id} 
+                                  name={user.name}
+                                  status={user.status}
+                                  uniqueUrlName={user.uniqueUrlName}
+                                  followed={user.followed}
+                                  photo={user.photos.large}
                                 />
                               </Grid>)
             : "Данные отсутствуют"
@@ -42,5 +43,3 @@ const MainPage = React.memo(() => {
     </div>
   );
 })
-
-export default MainPage
