@@ -35,9 +35,11 @@ const UserCard: React.FC<PropsType> = ({name, id, status, followed, photo}) => {
                 {name ? name : "Имя отсутствует"}
             </div>
             
-                
-                <div>{status}</div>
-                <div>{followed}</div>
+            <div className={styles.user__card_status}>
+                {
+                    status ? status : null
+                }
+            </div>    
             <button onClick={() => showUserProfile()}>show profile</button>
         </div>
     )

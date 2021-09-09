@@ -122,4 +122,10 @@
     align-items: center;
     color: #ff2e2e;
     font-weight: 700;
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 3px solid #bdb2b2;
+    }
 }

@@ -16,6 +16,9 @@ const Header = () => {
     const dispatch = useDispatch()
     const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
     const isOpen = useSelector((state: AppStateType) => state.appReducer.toggleOpen)
+    const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
+    const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)
+    const userId = useSelector((state: AppStateType) => state.profileReducer.profile?.userId)
 
     return (
         <div className={styles.header__container}>
@@ -36,17 +39,21 @@ const Header = () => {
                 </div>
 
                 <div>
-                    <div className={styles.header__user_block}>
-                        {
-                            isAuth ? <img src={userWithoutPhoto} alt="user_icon"/>
-                            :
-                            <div className={styles.header__user_logout}>
-                                войдите...
-                                <AccountCircleIcon fontSize="large"/>
-                            </div>
-                        }
-                        <ExpandMoreIcon fontSize="large" onClick={() => dispatch(toogleOpenModalWindow(!isOpen))}/>
-                    </div>
+                    
+                        
+                         {/* <div className={styles.header__user_block}>
+                             <img src={profile.photos.small} alt="user_icon"/> 
+                             <ExpandMoreIcon fontSize="large" onClick={() => dispatch(toogleOpenModalWindow(!isOpen))}/>
+                         </div> */}
+                        
+                        <div className={styles.header__user_logout}>
+                            {   (ownUserId === userId)  && profile && profile.photos.small ? <img src={profile.photos.small} alt="user_icon"/>
+                                : <img src={userWithoutPhoto} alt="user_icon"/>
+                            }
+                            
+                            <ExpandMoreIcon fontSize="large" onClick={() => dispatch(toogleOpenModalWindow(!isOpen))}/>
+                        </div>
+                    
                 </div>
             </div>
         </div>

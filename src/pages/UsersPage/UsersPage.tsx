@@ -6,16 +6,19 @@ import { getAllUsers } from '../../redux/users_reducer'
 import UserCard from '../../components/UserCard/UserCard'
 import Grid from '@material-ui/core/Grid'
 import { Pagination } from '../../components/Pagination/Pagination'
+import { WaitGhost } from '../../components/WaitGhost/WaitGhost'
 
 
 export const UsersPage = React.memo(() => {
 
   const users = useSelector((state: AppStateType) => state.usersReducer.users)
+  const showUsersCount = useSelector((state: AppStateType) => state.usersReducer.showUserCount)
+  const pageNumber = useSelector((state: AppStateType) => state.usersReducer.pageNumber)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAllUsers(50, 10))
-  }, [users, dispatch])
+    dispatch(getAllUsers(showUsersCount, pageNumber))
+  }, [dispatch, showUsersCount, pageNumber])
 
   return (
     <div className={styles.mainPage__wrapper}>
@@ -36,7 +39,7 @@ export const UsersPage = React.memo(() => {
                                   photo={user.photos.large}
                                 />
                               </Grid>)
-            : "Данные отсутствуют"
+            : <WaitGhost />
           }
         </Grid>
       </div>

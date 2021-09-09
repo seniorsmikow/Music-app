@@ -2,9 +2,8 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
-import {Switch, Route, Redirect} from 'react-router-dom'
+import {Switch, Route} from 'react-router-dom'
 import {authRoutes, publicRoutes} from './routes'
-import {MAIN_ROUTE} from './constants'
 
 
 export const AppRouter = () => {

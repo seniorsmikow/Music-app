@@ -1,62 +1,78 @@
-import React, {useState} from 'react'
-import {useSelector} from 'react-redux'
+import React  from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
 import styles from './Pagination.module.scss'
 import SkipNextIcon from '@material-ui/icons/SkipNext'
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
+import {toggleShowUsersCount, changeCurrentPage} from '../../redux/users_reducer'
+import { toNextPage, toPrevPage, isPageFinish } from '../../redux/users_reducer'
 
 
 export const Pagination = () => {
 
+    const dispatch = useDispatch()
+    const pageNumber = useSelector((state: AppStateType) => state.usersReducer.pageNumber)
+    const pages = useSelector((state: AppStateType) => state.usersReducer.pages)
+    const usersPortion = useSelector((state: AppStateType) => state.usersReducer.showUserCount)
     const totalUsersCount = useSelector((state: AppStateType) => state.usersReducer.totalCount)
-    const [usersPortionShow, setUsersPortionShow] = useState(10)
-    const [pages, setPages] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-    const pagesCount = Math.ceil(totalUsersCount / usersPortionShow)
-    // for(let i = 1; i <= pagesCount; i++) {
-    //     pages.push(i)
-    // }
-    let shortPages: Array<number> = []
-    let lastPage: number = 1
+    const lastPage = Math.round(totalUsersCount/usersPortion)
+    
 
 
-    // const letShowPages = () => {
-    //     if(pages.length > 10) {
-    //         for(let i = 1; i <= 10; i++) {
-    //             shortPages.push(i)
-    //         }
-    //         return shortPages
-    //     }
-    //     return pages
-    // }
-
-    const letShowFinalPage = () => {
-        return lastPage = pages[pages.length - 1]
+    const handleChangeSelectValue = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        let {value} = event.target
+        dispatch(toggleShowUsersCount(+value))
     }
 
-    
+    const selectPage = (page: number) => {
+        if(page === lastPage) {
+            dispatch(isPageFinish(pages, lastPage))
+        }
+        dispatch(changeCurrentPage(page))
+    }
+    const selectNextPage = (pages: number[], page: number) => {
+        if(pageNumber !== lastPage) {
+            dispatch(toNextPage(pages, pageNumber))
+        }
+    }
+
+    const selectPrevPage = (pages: number[], page: number) => {
+        dispatch(toPrevPage(pages, pageNumber))
+    }
+
+    const showEllipsis = () => {
+        if(pageNumber !== lastPage) {
+            return <div>...</div>
+        } else {
+            return null
+        }
+    }
 
     return (
         <div className={styles.pagination__root}>
             <div>
                 Показывать по 
-                <select name="usersCount">
-                    <option value="usersCount10">10</option>
-                    <option value="usersCount10">20</option>
-                    <option value="usersCount10">50</option>
+                <select name="usersCount" onChange={handleChangeSelectValue}>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">50</option>
                 </select>
                 пользователей на странице
             </div>
             <ul className={styles.pagination__list}>
-                <SkipPreviousIcon />
+                <button disabled={pages[0] <= 1} onClick={() => selectPrevPage(pages, pageNumber)}>
+                    <SkipPreviousIcon />
+                </button>
                 {
-                    //letShowPages().map((page: number) => <li>{page}</li>) 
-                    pages.map(page => <li key={page}>{page}</li>)
+                    pages.map(p => <li key={p} onClick={() => selectPage(p)}>{p}</li>)
                 }
-                <div>...</div>
                 {
-                    <li>{letShowFinalPage()}</li>
+                    showEllipsis()
                 }
-                <SkipNextIcon />
+                <li onClick={() => selectPage(lastPage)}>{lastPage}</li>
+                <button disabled={pageNumber >= lastPage} onClick={() => selectNextPage(pages, pageNumber)}>
+                    <SkipNextIcon />
+                </button>
             </ul>
         </div>
     )
