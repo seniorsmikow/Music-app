@@ -64,12 +64,16 @@ export const Pagination = () => {
                     <SkipPreviousIcon />
                 </button>
                 {
-                    pages.map(p => <li key={p} onClick={() => selectPage(p)}>{p}</li>)
+                    pages.map(p => <li key={p} onClick={() => selectPage(p)} className={
+                        pageNumber === p ? styles.pagination__list_active : styles.pagination__list
+                    }>{p}</li>)
                 }
                 {
                     showEllipsis()
                 }
-                <li onClick={() => selectPage(lastPage)}>{lastPage}</li>
+                <li onClick={() => selectPage(lastPage)} className={
+                        pageNumber === lastPage ? styles.pagination__list_active : styles.pagination__list
+                    }>{lastPage}</li>
                 <button disabled={pageNumber >= lastPage} onClick={() => selectNextPage(pages, pageNumber)}>
                     <SkipNextIcon />
                 </button>
