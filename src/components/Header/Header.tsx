@@ -7,14 +7,13 @@ import {toogleOpenModalWindow} from '../../redux/app_reducer'
 import { AppStateType } from '../../redux/root_reducer'
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { HeaderMenu } from '../HeaderMenu/HeaderMenu'
 
 
 const Header = () => {
 
     const dispatch = useDispatch()
-    const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
+    //const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
     const isOpen = useSelector((state: AppStateType) => state.appReducer.toggleOpen)
     const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
     const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)

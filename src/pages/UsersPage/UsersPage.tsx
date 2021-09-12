@@ -13,7 +13,7 @@ export const UsersPage = React.memo(() => {
 
   const users = useSelector((state: AppStateType) => state.usersReducer.users)
   const showUsersCount = useSelector((state: AppStateType) => state.usersReducer.showUserCount)
-  const pageNumber = useSelector((state: AppStateType) => state.usersReducer.pageNumber)
+  const pageNumber = useSelector((state: AppStateType) => state.usersReducer.currentPage)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export const UsersPage = React.memo(() => {
         <Grid container spacing={3}>
           {
             users ? 
-            users.map(user => <Grid item xs={6} sm={8} md={6} lg={6} xl={6} key={user.name} className={styles.root_two}> 
+            users.map(user => <Grid item xs={6} sm={8} md={6} lg={6} xl={6} key={user.id} className={styles.root_two}> 
                                 <UserCard 
                                   id={user.id} 
                                   name={user.name}

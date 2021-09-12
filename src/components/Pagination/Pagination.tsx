@@ -1,80 +1,121 @@
-import React  from 'react'
+import React, {useState}  from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
 import styles from './Pagination.module.scss'
 import SkipNextIcon from '@material-ui/icons/SkipNext'
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
-import {toggleShowUsersCount, changeCurrentPage} from '../../redux/users_reducer'
-import { toNextPage, toPrevPage, isPageFinish } from '../../redux/users_reducer'
+import { changeCurrentPage, toggleShowUsersCount} from '../../redux/users_reducer'
+
+
+
+// Later fix error: after return from profile page, disappear current page and pages
 
 
 export const Pagination = () => {
 
-    const dispatch = useDispatch()
-    const pageNumber = useSelector((state: AppStateType) => state.usersReducer.pageNumber)
-    const pages = useSelector((state: AppStateType) => state.usersReducer.pages)
-    const usersPortion = useSelector((state: AppStateType) => state.usersReducer.showUserCount)
     const totalUsersCount = useSelector((state: AppStateType) => state.usersReducer.totalCount)
-    const lastPage = Math.round(totalUsersCount/usersPortion)
-    
+    const currentPage = useSelector((state: AppStateType) => state.usersReducer.currentPage)
+    const usersPortionShow = useSelector((state: AppStateType) => state.usersReducer.showUserCount)
 
+    const dispatch = useDispatch()
 
-    const handleChangeSelectValue = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const [pages, setPages] = useState([1, 2, 3])
+    const lastPage = Math.ceil(totalUsersCount/usersPortionShow)
+
+    const handleSelectValue = (event: React.ChangeEvent<HTMLSelectElement>) => {
         let {value} = event.target
         dispatch(toggleShowUsersCount(+value))
+        dispatch(changeCurrentPage(1))
+        setPages([1, 2, 3])
     }
 
     const selectPage = (page: number) => {
-        if(page === lastPage) {
-            dispatch(isPageFinish(pages, lastPage))
-        }
         dispatch(changeCurrentPage(page))
-    }
-    const selectNextPage = (pages: number[], page: number) => {
-        if(pageNumber !== lastPage) {
-            dispatch(toNextPage(pages, pageNumber))
+        if(page === lastPage) {
+            setPages([pages[2] = lastPage , pages[1] = lastPage - 1, pages[0] = lastPage - 2].reverse())
+            dispatch(changeCurrentPage(lastPage))
         }
     }
 
-    const selectPrevPage = (pages: number[], page: number) => {
-        dispatch(toPrevPage(pages, pageNumber))
+    const selectNextPage = () => {
+        if(pages[2] < lastPage) {
+            setPages(pages.map(page => page + 1))
+        }
+        dispatch(changeCurrentPage(currentPage + 1))
     }
 
-    const showEllipsis = () => {
-        if(pageNumber !== lastPage) {
+    const selectPrevPage = () => {
+        if(pages[0] >= 2) {
+            setPages(pages.map(page => page - 1))
+        }
+        dispatch(changeCurrentPage(currentPage - 1))
+    }
+
+    const selectFirstPage = () => {
+        setPages([1, 2, 3])
+        dispatch(changeCurrentPage(1))
+    }
+
+    const showFirstEllipsis = () => {
+        if(pages[2] > 4 ) {
             return <div>...</div>
-        } else {
+        } return null
+    }
+
+    const showSecondEllipsis = () => {
+        if(pages[2] === lastPage) {
             return null
-        }
+        } return <div>...</div>
     }
 
     return (
         <div className={styles.pagination__root}>
             <div>
                 Показывать по 
-                <select name="usersCount" onChange={handleChangeSelectValue}>
+                <select name="usersCount" onChange={handleSelectValue}>
                     <option value="10">10</option>
                     <option value="20">20</option>
-                    <option value="30">50</option>
+                    <option value="50">50</option>
                 </select>
                 пользователей на странице
             </div>
             <ul className={styles.pagination__list}>
-                <button disabled={pages[0] <= 1} onClick={() => selectPrevPage(pages, pageNumber)}>
+                <button disabled={currentPage === 1} onClick={() => selectPrevPage()}>
                     <SkipPreviousIcon />
                 </button>
                 {
+                    pages[0] === 1
+                    ? null :
+                    <li onClick={() => selectFirstPage()} className={
+                        currentPage === 1 ? styles.pagination__list_active : styles.pagination__list}>
+                            {
+                                1
+                            }
+                    </li>
+                }
+                {
+                    showFirstEllipsis()
+                }
+                {
                     pages.map(p => <li key={p} onClick={() => selectPage(p)} className={
-                        pageNumber === p ? styles.pagination__list_active : styles.pagination__list
+                        currentPage === p ? styles.pagination__list_active : styles.pagination__list
                     }>{p}</li>)
                 }
                 {
-                    showEllipsis()
+                    showSecondEllipsis()
                 }
-                <li onClick={() => selectPage(lastPage)} className={
-                        pageNumber === lastPage ? styles.pagination__list_active : styles.pagination__list
-                    }>{lastPage}</li>
-                <button disabled={pageNumber >= lastPage} onClick={() => selectNextPage(pages, pageNumber)}>
+                {
+                    pages[2] === lastPage 
+                    ? null :
+                    <li onClick={() => selectPage(lastPage)} className={
+                        currentPage === lastPage ? styles.pagination__list_active : styles.pagination__list}>
+                            {
+                                lastPage
+                            }
+                    </li>
+                }
+                
+                <button disabled={currentPage >= lastPage} onClick={() => selectNextPage()}>
                     <SkipNextIcon />
                 </button>
             </ul>
