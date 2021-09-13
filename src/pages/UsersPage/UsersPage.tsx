@@ -7,6 +7,7 @@ import UserCard from '../../components/UserCard/UserCard'
 import Grid from '@material-ui/core/Grid'
 import { Pagination } from '../../components/Pagination/Pagination'
 import { WaitGhost } from '../../components/WaitGhost/WaitGhost'
+import { SearchUsers } from '../../forms/SearchUsers/SearchUsers'
 
 
 export const UsersPage = React.memo(() => {
@@ -14,14 +15,17 @@ export const UsersPage = React.memo(() => {
   const users = useSelector((state: AppStateType) => state.usersReducer.users)
   const showUsersCount = useSelector((state: AppStateType) => state.usersReducer.showUserCount)
   const pageNumber = useSelector((state: AppStateType) => state.usersReducer.currentPage)
+  const searchTerm = useSelector((state: AppStateType) => state.usersReducer.term)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAllUsers(showUsersCount, pageNumber))
-  }, [dispatch, showUsersCount, pageNumber])
+    dispatch(getAllUsers(showUsersCount, pageNumber, searchTerm))
+  }, [dispatch, showUsersCount, pageNumber, searchTerm])
 
   return (
     <div className={styles.mainPage__wrapper}>
+
+      <SearchUsers />
 
       <Pagination />
 

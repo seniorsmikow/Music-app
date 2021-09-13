@@ -70,15 +70,18 @@ export const Pagination = () => {
 
     return (
         <div className={styles.pagination__root}>
-            <div>
-                Показывать по 
-                <select name="usersCount" onChange={handleSelectValue}>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                </select>
-                пользователей на странице
-            </div>
+            {
+                totalUsersCount < 10 ? null :
+                <div>
+                    Показывать по 
+                    <select name="usersCount" onChange={handleSelectValue}>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                    пользователей на странице
+                </div>
+            }
             <ul className={styles.pagination__list}>
                 <button disabled={currentPage === 1} onClick={() => selectPrevPage()}>
                     <SkipPreviousIcon />

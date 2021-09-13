@@ -19,7 +19,7 @@ export type UserPhotosType = {
     large: string | null
 }
 
-export type GetItemsType = {
+export type GetUsersItemsType = {
     items: Array<UserType>
     totalCount: number
     error: string | null
