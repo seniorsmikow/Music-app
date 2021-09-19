@@ -1,4 +1,4 @@
-import React, {useState}  from 'react'
+import React, {useState, useEffect}  from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
 import styles from './Pagination.module.scss'
@@ -22,19 +22,34 @@ export const Pagination = () => {
     const [pages, setPages] = useState([1, 2, 3])
     const lastPage = Math.ceil(totalUsersCount/usersPortionShow)
 
+    useEffect(() => {
+        if(totalUsersCount < 10) {
+            setPages([1])
+        } else {
+            setPages([1, 2, 3])
+        }
+    }, [totalUsersCount])
+
     const handleSelectValue = (event: React.ChangeEvent<HTMLSelectElement>) => {
         let {value} = event.target
         dispatch(toggleShowUsersCount(+value))
         dispatch(changeCurrentPage(1))
-        setPages([1, 2, 3])
+        if(totalUsersCount < (+value)) {
+            setPages([1])
+        } else {
+            setPages([1, 2, 3])
+        }
     }
 
     const selectPage = (page: number) => {
         dispatch(changeCurrentPage(page))
         if(page === lastPage) {
+            if(page === 1 && pages.length === 1) {
+                return
+            }
             setPages([pages[2] = lastPage , pages[1] = lastPage - 1, pages[0] = lastPage - 2].reverse())
             dispatch(changeCurrentPage(lastPage))
-        }
+        } 
     }
 
     const selectNextPage = () => {
@@ -63,7 +78,7 @@ export const Pagination = () => {
     }
 
     const showSecondEllipsis = () => {
-        if(pages[2] === lastPage) {
+        if(pages[2] === lastPage || pages.length === 1) {
             return null
         } return <div>...</div>
     }
@@ -72,7 +87,7 @@ export const Pagination = () => {
         <div className={styles.pagination__root}>
             {
                 totalUsersCount < 10 ? null :
-                <div>
+                <div className={styles.pagination__select}>
                     Показывать по 
                     <select name="usersCount" onChange={handleSelectValue}>
                         <option value="10">10</option>
@@ -108,7 +123,7 @@ export const Pagination = () => {
                     showSecondEllipsis()
                 }
                 {
-                    pages[2] === lastPage 
+                    pages[2] === lastPage || pages.length === 1
                     ? null :
                     <li onClick={() => selectPage(lastPage)} className={
                         currentPage === lastPage ? styles.pagination__list_active : styles.pagination__list}>

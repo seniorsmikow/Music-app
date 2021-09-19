@@ -1,3 +1,20 @@
 .root {
     margin-top: 100px;
+    input {
+        width: 300px;
+        height: 40px;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 0 20px;
+    }
+    button {
+        width: 100px;
+        height: 40px;
+        background-color: rgb(27, 80, 226);
+        color: white;
+        text-align: center;
+        font-weight: 500;
+        border-radius: 5px;
+        margin-left: 10px;
+    }
 }

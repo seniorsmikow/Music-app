@@ -9,6 +9,7 @@ let initialState = {
     showUserCount: 10,
     currentPage: 1,
     term: '',
+    isLoading: false
 }
 export type InitialStateType = typeof initialState
 
@@ -41,6 +42,11 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
                 ...state, term: action.term
             }
         }
+        case 'users/TOGGLE_LOADING': {
+            return {
+                ...state, isLoading: action.loading
+            }
+        }
         default: 
             return state
     }
@@ -52,27 +58,35 @@ export const actions = {
     getUsersTotalCount: (totalCount: number) => ({type: 'users/GET_TOTAL_COUNT', totalCount} as const),
     setShowUsersCount: (count: number) => ({type: 'users/SET_USERS_COUNT', count} as const),
     setPageNumber: (page: number) => ({type: 'users/SET_CURRENT_PAGE', page} as const),
-    findUsersAction: (term: string) => ({type: 'users/FIND_USERS', term} as const)
+    findUsersAction: (term: string) => ({type: 'users/FIND_USERS', term} as const),
+    toggleLoading: (loading: boolean) => ({type: 'users/TOGGLE_LOADING', loading} as const),
 }
 
 export const getAllUsers = (count: number, page: number, term: string): ThunkType => {
     return async (dispatch) => {
+        dispatch(actions.toggleLoading(true))
+
         let data = await usersAPI.getAllUsers(count, page, term)
 
         dispatch(actions.allUsers(data.items))
         dispatch(actions.getUsersTotalCount(data.totalCount))
+        dispatch(actions.toggleLoading(false))
     }
 }
 
 export const toggleShowUsersCount = (count: number): ThunkType => {
     return async(dispatch) => {
+        dispatch(actions.toggleLoading(true))
         dispatch(actions.setShowUsersCount(count))
+        dispatch(actions.toggleLoading(false))
     }
 }
 
 export const changeCurrentPage = (page: number): ThunkType => {
     return async(dispatch) => {
+        dispatch(actions.toggleLoading(true))
         dispatch(actions.setPageNumber(page))
+        dispatch(actions.toggleLoading(false))
     }
 }
 

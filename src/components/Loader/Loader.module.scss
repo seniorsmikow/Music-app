@@ -1,0 +1,107 @@
+.loader__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: uppercase;
+    color: #071329;
+    font-weight: 700;
+}
+
+.loader__animation_block {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+}
+
+.loader__block_one , 
+.loader__block_two, 
+.loader__block_three, 
+.loader__block_four, 
+.loader__block_five {
+    width: 1px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.loader__block_one {
+    animation: jump_one 1s infinite ease-in-out;
+}
+.loader__block_two {
+    animation: jump_two 1s infinite ease-in-out;
+}
+.loader__block_three {
+    animation: jump_three 1s infinite ease-in-out;
+}
+.loader__block_four {
+    animation: jump_four 1s infinite ease-in-out;
+}
+.loader__block_five {
+    animation: jump_five 1s infinite ease-in-out;
+}
+
+@keyframes jump_one {
+    0% {
+        transform: translateY(+10px);
+    }
+    50% {
+        transform: translateY(-10px);
+        background-color: rgb(21, 95, 231);
+    }
+    100% {
+        transform: translateY(+10px);
+    }
+}
+
+@keyframes jump_two {
+    0% {
+        transform: translateY(+20px);
+    }
+    50% {
+        transform: translateY(-40px);
+        background-color: rgb(21, 95, 231);
+    }
+    100% {
+        transform: translateY(+20px);
+    }
+}
+
+@keyframes jump_three {
+    0% {
+        transform: translateY(+10px);
+    }
+    50% {
+        transform: translateY(-10px);
+        background-color: rgb(21, 95, 231);
+    }
+    100% {
+        transform: translateY(+10px);
+    }
+}
+
+@keyframes jump_four {
+    0% {
+        transform: translateY(+20px);
+    }
+    50% {
+        transform: translateY(-30px);
+        background-color: rgb(21, 95, 231);
+    }
+    100% {
+        transform: translateY(+20px);
+    }
+}
+
+@keyframes jump_five {
+    0% {
+        transform: translateY(+10px);
+    }
+    50% {
+        transform: translateY(-10px);
+        background-color: rgb(21, 95, 231);
+    }
+    100% {
+        transform: translateY(+10px);
+    }
+}

@@ -34,6 +34,14 @@ export const getUserProfile = (userId: number): ThunkType => {
     }
 }
 
+export const loadProfilePhoto = (file: any): ThunkType => {
+    return async(dispatch) => {
+        debugger
+        let response = await profileAPI.putProfilePhoto(file)
+        console.log(response)
+    }
+}
+
 export default profileReducer
 
 type ActionsType = InferActionsTypes<typeof actions>

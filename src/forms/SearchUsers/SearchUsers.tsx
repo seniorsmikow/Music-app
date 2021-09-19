@@ -21,7 +21,7 @@ export const SearchUsers = () => {
     return (
         <div className={styles.root}>
             <input placeholder="Search user..." onChange={(e) => handleChangeInput(e)}></input>
-            <button onClick={() => find(search)}>search</button>
+            <button onClick={() => find(search)}>найти</button>
         </div>
     )
 }
