@@ -7,6 +7,8 @@ import {useSelector} from 'react-redux'
 import {useDispatch} from 'react-redux'
 import {getOwnUserData} from './redux/auth_reducer'
 import {AppRouter} from './components/AppRouter/AppRouter'
+import { ScrollToTop } from './components/Buttons/ScroollToTop/ScrollToTop'
+import { ScrollToBottom } from './components/Buttons/ScrollToBottom/ScrollToBottom'
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
       <HashRouter>
         <Header />
         <AppRouter />
+        <ScrollToBottom />
+        <ScrollToTop />
       </HashRouter>
     </div>
   )

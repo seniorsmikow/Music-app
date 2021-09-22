@@ -9,7 +9,8 @@ let initialState = {
     showUserCount: 10,
     currentPage: 1,
     term: '',
-    isLoading: false
+    isLoading: false,
+    follow: false
 }
 export type InitialStateType = typeof initialState
 
@@ -47,6 +48,11 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
                 ...state, isLoading: action.loading
             }
         }
+        case 'users/FOLLOW_USER': {
+            return {
+                ...state, follow: action.response
+            }
+        }
         default: 
             return state
     }
@@ -60,13 +66,14 @@ export const actions = {
     setPageNumber: (page: number) => ({type: 'users/SET_CURRENT_PAGE', page} as const),
     findUsersAction: (term: string) => ({type: 'users/FIND_USERS', term} as const),
     toggleLoading: (loading: boolean) => ({type: 'users/TOGGLE_LOADING', loading} as const),
+    follow: (response: boolean) => ({type: 'users/FOLLOW_USER', response} as const)
 }
 
-export const getAllUsers = (count: number, page: number, term: string): ThunkType => {
+export const getAllUsers = (count: number, page: number, term: string, friend: boolean): ThunkType => {
     return async (dispatch) => {
         dispatch(actions.toggleLoading(true))
 
-        let data = await usersAPI.getAllUsers(count, page, term)
+        let data = await usersAPI.getAllUsers(count, page, term, friend)
 
         dispatch(actions.allUsers(data.items))
         dispatch(actions.getUsersTotalCount(data.totalCount))
@@ -92,7 +99,31 @@ export const changeCurrentPage = (page: number): ThunkType => {
 
 export const findUsers = (term: string): ThunkType => {
     return async(dispatch) => {
+        dispatch(actions.toggleLoading(true))
         dispatch(actions.findUsersAction(term))
+        dispatch(actions.toggleLoading(false))
+    }
+}
+
+export const followUser = (userId: number): ThunkType => {
+    return async(dispatch) => {
+        let response = await usersAPI.follow(userId)
+
+        if(response.resultCode === 0) {
+            dispatch(actions.follow(true))
+        }
+    }
+}
+
+export const checkIsUserFriend = (userId: number): ThunkType => {
+    return async(dispatch) => {
+        let response = await usersAPI.getFriend(userId)
+
+        if(response) {
+            dispatch(actions.follow(true))
+        } else {
+            dispatch(actions.follow(false))
+        }
     }
 }
 

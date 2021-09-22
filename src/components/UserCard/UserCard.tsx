@@ -13,7 +13,7 @@ type PropsType = {
 }
 
 
-const UserCard: React.FC<PropsType> = ({name, id, status, followed, photo}) => {
+const UserCard: React.FC<PropsType> = ({name, id, status,  photo}) => {
 
     const history = useHistory()
 

@@ -21,7 +21,7 @@ export const UsersPage = React.memo(() => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAllUsers(showUsersCount, pageNumber, searchTerm))
+    dispatch(getAllUsers(showUsersCount, pageNumber, searchTerm, true))
   }, [dispatch, showUsersCount, pageNumber, searchTerm])
 
   return (
@@ -32,7 +32,7 @@ export const UsersPage = React.memo(() => {
       <Pagination />
 
       {
-        totalUsersCount === 0 || users.length === 0 ? <div className={styles.users__page_text}>Пользователи не найдены</div> : null
+        totalUsersCount === 0 ? <div className={styles.users__page_text}>Пользователи не найдены</div> : null
       }
 
       <div className={styles.users__page_grid}>
