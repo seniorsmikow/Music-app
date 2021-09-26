@@ -1,0 +1,42 @@
+.main {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.slider__img_wrapper {
+    min-width: 100%;
+    height: 300px;
+    transition: 0.3s;
+    overflow: hidden;
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+    
+    
+.prev__button {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+} 
+
+.next__button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 300px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+}

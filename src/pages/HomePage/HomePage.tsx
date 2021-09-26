@@ -2,6 +2,7 @@ import React from 'react'
 import { WaitGhost } from '../../components/WaitGhost/WaitGhost'
 import styles from './HomePage.module.scss'
 import network from '../../img/smm-prodvizhenie.png'
+import { Slider } from '../../components/Slider/Slider'
 
 
 export const HomePage = () => {
@@ -10,6 +11,7 @@ export const HomePage = () => {
             <div className={styles.news__header}>
                 <WaitGhost /> 
             </div>
+            <Slider />
             <div className={styles.news__title}>
                 <h1>"В разработке"</h1>
                 <h3>Социальная сеть для разработчиков</h3>
