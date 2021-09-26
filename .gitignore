@@ -24,3 +24,5 @@ yarn-error.log*
 
 .env
 /src/img
+
+/src/api/api.ts/8
