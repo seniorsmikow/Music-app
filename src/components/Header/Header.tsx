@@ -1,19 +1,18 @@
 import React from 'react'
 import styles from './Header.module.scss'
-import SearchIcon from '@material-ui/icons/Search'
 import userWithoutPhoto from '../../img/user_without_photo.png'
-import {useSelector, useDispatch} from 'react-redux'
-import {toogleOpenModalWindow} from '../../redux/app_reducer'
+import { useSelector, useDispatch } from 'react-redux'
+import { toogleOpenModalWindow } from '../../redux/app_reducer'
 import { AppStateType } from '../../redux/root_reducer'
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import SearchIcon from '@material-ui/icons/Search'
 import { HeaderMenu } from '../HeaderMenu/HeaderMenu'
+import { Notification } from '../Notification/Notification'
 
 
 const Header = () => {
 
     const dispatch = useDispatch()
-    //const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
     const isOpen = useSelector((state: AppStateType) => state.appReducer.toggleOpen)
     const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
     const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)
@@ -30,28 +29,22 @@ const Header = () => {
                     </div>
                     <div className={styles.header__search_input}>
                         <input placeholder="Поиск..."/>
-                        <SearchIcon fontSize="large"/>  
+                        <SearchIcon />  
                     </div>
                     <div className={styles.header__note_icon}>
-                        <NotificationsNoneIcon fontSize="large"/>
+                        <Notification />
                     </div>
                 </div>
 
                 <div>
-                    
                         
-                         {/* <div className={styles.header__user_block}>
-                             <img src={profile.photos.small} alt="user_icon"/> 
-                             <ExpandMoreIcon fontSize="large" onClick={() => dispatch(toogleOpenModalWindow(!isOpen))}/>
-                         </div> */}
+                    <div className={styles.header__user_logout}>
+                        {   (ownUserId === userId)  && profile && profile.photos.small ? <img src={profile.photos.small} alt="user_icon"/>
+                            : <img src={userWithoutPhoto} alt="user_icon"/>
+                        }
                         
-                        <div className={styles.header__user_logout}>
-                            {   (ownUserId === userId)  && profile && profile.photos.small ? <img src={profile.photos.small} alt="user_icon"/>
-                                : <img src={userWithoutPhoto} alt="user_icon"/>
-                            }
-                            
-                            <ExpandMoreIcon fontSize="large" onClick={() => dispatch(toogleOpenModalWindow(!isOpen))}/>
-                        </div>
+                        <ExpandMoreIcon fontSize="large" onClick={() => dispatch(toogleOpenModalWindow(!isOpen))}/>
+                    </div>
                     
                 </div>
             </div>

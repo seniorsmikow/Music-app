@@ -69,9 +69,11 @@ export const actions = {
     follow: (response: boolean) => ({type: 'users/FOLLOW_USER', response} as const)
 }
 
-export const getAllUsers = (count: number, page: number, term: string, friend: boolean): ThunkType => {
+export const getAllUsers = (count: number, page: number, term: string, friend: boolean | ''): ThunkType => {
     return async (dispatch) => {
         dispatch(actions.toggleLoading(true))
+
+        debugger
 
         let data = await usersAPI.getAllUsers(count, page, term, friend)
 

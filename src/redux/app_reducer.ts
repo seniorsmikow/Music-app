@@ -2,7 +2,10 @@ import { InferActionsTypes, BaseThunkType } from './root_reducer'
 
 let initialState = {
     toggleOpen: false,
+    notificationCount: 0,
+    notificationText: [] as Array<string>
 }
+
 export type InitialStateType = typeof initialState
 
 const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -12,6 +15,21 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
                 ...state, toggleOpen: action.isOpen
             }
         }
+        case 'app/GET_NOTIFICATION': {
+            return {
+                ...state, notificationCount: action.count, notificationText: [...state.notificationText, action.text]
+            }
+        }
+        case 'app/DELETE_NOTIFICATIONS_COUNT': {
+            return {
+                ...state, notificationCount: 0
+            }
+        }
+        case 'app/CLEAR_NOTIFICATION': {
+            return {
+                ...state, notificationCount: 0, notificationText: []
+            }
+        }
         default: 
             return state
     }
@@ -19,12 +37,33 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
 }
 
 export const actions = {
-    toggleOpen: (isOpen: boolean) => ({type: 'app/TOGGLE_OPEN', isOpen} as const)
+    toggleOpen: (isOpen: boolean) => ({type: 'app/TOGGLE_OPEN', isOpen} as const),
+    notification: (count: number, text: string) => ({type: 'app/GET_NOTIFICATION', count, text} as const),
+    deleteNoteCount: () => ({type: 'app/DELETE_NOTIFICATIONS_COUNT'} as const),
+    clearNote: () => ({type: 'app/CLEAR_NOTIFICATION'} as const)
 }
 
 export const toogleOpenModalWindow = (isOpen: boolean): ThunkType => {
     return async (dispatch) => {
         await dispatch(actions.toggleOpen(isOpen))
+    }
+}
+
+export const getNotification = (count: number, text: string): ThunkType => {
+    return async(dispatch) => {
+        await dispatch(actions.notification(count, text))
+    }
+}
+
+export const deleteNotificationsCount = (): ThunkType => {
+    return async(dispatch) => {
+        await dispatch(actions.deleteNoteCount())
+    }
+}
+
+export const clearNotifications = (): ThunkType => {
+    return async(dispatch) => {
+        await dispatch(actions.clearNote())
     }
 }
 

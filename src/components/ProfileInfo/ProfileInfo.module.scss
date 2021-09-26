@@ -86,11 +86,20 @@
     margin-top: 15px;
 }
 
-.profile__button button {
+.followBtn {
     margin-top: 20px;
     width: 100px;
     height: 40px;
-    background-color: #3d4c82;
+    background-image: linear-gradient(to top, #0c3483 0%, #a2b6df 100%, #6b8cce 100%, #a2b6df 100%);
+    color: white;
+    border-radius: 5px;
+}
+
+.unFollowBtn {
+    margin-top: 20px;
+    width: 100px;
+    height: 40px;
+    background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
     color: white;
     border-radius: 5px;
 }

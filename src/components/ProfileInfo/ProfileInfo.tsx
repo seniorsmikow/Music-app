@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import styles from './ProfileInfo.module.scss'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CancelIcon from '@material-ui/icons/Cancel'
-import {profileType} from '../../types/profile_types'
+import { profileType } from '../../types/profile_types'
 import { AppStateType } from '../../redux/root_reducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { followUser, checkIsUserFriend } from '../../redux/users_reducer'
+import { getNotification } from '../../redux/app_reducer'
 import userWithoutPhoto from '../../img/user_without_photo.png'
 
 type PropsType = {
@@ -17,15 +18,16 @@ const ProfileInfo: React.FC<PropsType> = ({profile}) => {
 
     const dispatch = useDispatch()
     const isFollow = useSelector((state: AppStateType) => state.usersReducer.follow)
-
-    console.log(isFollow)
-
+    const notificationCount = useSelector((state: AppStateType) => state.appReducer.notificationCount)
+    const authUserId = useSelector((state: AppStateType) => state.authReducer.userId)
+    
     useEffect(() => {
         dispatch(checkIsUserFriend(profile.userId))
     }, [profile.userId, dispatch])
 
     const follow= (userId: number) => {
         dispatch(followUser(userId))
+        dispatch(getNotification(notificationCount + 1, `Вы добавили пользователя ${profile.fullName} в друзья`))
     }
 
     return (
@@ -73,15 +75,17 @@ const ProfileInfo: React.FC<PropsType> = ({profile}) => {
                 </div>
             }
             
-
-            <div className={styles.profile__button}>
-                <button onClick={() => follow(profile.userId)}>
-                    { 
-                        isFollow ? "Удалить из друзей" : "Добавить в друзья"
-                    }
-                </button>
-            </div>
-
+            {
+                authUserId === profile.userId ? null 
+                :
+                <div className={styles.profile__button}>
+                    <button onClick={() => follow(profile.userId)} className={isFollow ? styles.unFollowBtn : styles.followBtn}>
+                        { 
+                            isFollow ? "Удалить из друзей" : "Добавить в друзья"
+                        }
+                    </button>
+                </div>
+            }
         </div>
     )
 }

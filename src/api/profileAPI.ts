@@ -6,7 +6,6 @@ export const profileAPI = {
         return instance.get<getUserProfile>(`/profile/${userId}`).then(res => res.data)
     },
     putProfilePhoto(image: any) {
-        debugger
         return instance.put('/profile/photo', image)
     },
 

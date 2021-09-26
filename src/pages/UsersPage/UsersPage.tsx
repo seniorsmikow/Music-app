@@ -21,7 +21,7 @@ export const UsersPage = React.memo(() => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getAllUsers(showUsersCount, pageNumber, searchTerm, true))
+    dispatch(getAllUsers(showUsersCount, pageNumber, searchTerm, ''))
   }, [dispatch, showUsersCount, pageNumber, searchTerm])
 
   return (

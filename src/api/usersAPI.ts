@@ -3,7 +3,8 @@ import {GetUsersItemsType} from '../types/users_types'
 
 
 export const usersAPI = {
-    getAllUsers(count: number, page: number, term: string = '', friend: boolean) {
+    getAllUsers(count: number, page: number, term: string = '', friend: boolean | '') {
+        debugger
         return instance.get<GetUsersItemsType>(`/users?count=${count}&page=${page}&term=${term}&friend=${friend}`).then(res => res.data)
     },
     follow(userId: number) {
