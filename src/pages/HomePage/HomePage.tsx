@@ -7,17 +7,17 @@ import { Slider } from '../../components/Slider/Slider'
 
 export const HomePage = () => {
     return (
-        <div className={styles.news__page_root}>
-            <div className={styles.news__header}>
+        <div className={styles.home__page_root}>
+            <Slider />
+            <div className={styles.home__animation_block}>
                 <WaitGhost /> 
             </div>
-            <Slider />
-            <div className={styles.news__title}>
+            <div className={styles.home__title}>
                 <h1>"В разработке"</h1>
                 <h3>Социальная сеть для разработчиков</h3>
             </div>
-            <div className={styles.news__main}>
-                <div className={styles.news__schema_img}>
+            <div className={styles.home__main}>
+                <div className={styles.home__schema_img}>
                     <img src={network} alt="social network"/>
                 </div>
                 <p>
@@ -32,7 +32,7 @@ export const HomePage = () => {
                     </span>
                 </p>
             </div>
-            <div className={styles.news__youtube_video}>
+            <div className={styles.home__youtube_video}>
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/RKrkQxFYJ1c" title="YouTube video player"  
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ></iframe>
             </div>

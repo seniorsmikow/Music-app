@@ -1,5 +1,5 @@
 import { ProfilePage } from '../../pages/ProfilePage/ProfilePage'
-import { LoginPage } from '../../pages/LoginPage/LoginPage'
+import { LoginRegPage } from '../../pages/LoginRegPage/LoginRegPage'
 import { UsersPage } from '../../pages/UsersPage/UsersPage'
 import { HomePage } from '../../pages/HomePage/HomePage'
 import { FriendsPage } from '../../pages/FriendsPage/FriendsPage'
@@ -27,7 +27,7 @@ export const publicRoutes = [
     },
     {
         path: LOGIN_ROUTE,
-        Component: LoginPage
+        Component: LoginRegPage
     },
     {
         path: MAIN_ROUTE,

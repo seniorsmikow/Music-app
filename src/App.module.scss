@@ -4,7 +4,27 @@
 :focus,:active{outline:none;}
 a:focus,a:active{outline:none;}
 nav,footer,header,aside{display:block;}
-html,body{height:100%;width:100%;font-size:100%;line-height:1;font-size:14px;-ms-text-size-adjust:100%;-moz-text-size-adjust:100%;-webkit-text-size-adjust:100%;}
+html,body{
+    height:100%;
+    width:100%;
+    font-size:100%;
+    line-height:1;
+    font-size:14px;
+    -ms-text-size-adjust:100%;
+    -moz-text-size-adjust:100%;
+    -webkit-text-size-adjust:100%;
+}
+body::-webkit-scrollbar {
+    width: 18px;               
+}
+body::-webkit-scrollbar-track {
+    background: rgb(236, 236, 236);        
+}
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(145, 145, 145); 
+    border-radius: 10px;      
+    height: 50px;
+}
 input,button,textarea{font-family:inherit;}
 input::-ms-clear{display:none;}
 button{cursor:pointer;}

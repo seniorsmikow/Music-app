@@ -4,8 +4,8 @@ import classes from './Slider.module.scss'
 import ImgOne from '../../img/react-js-banner.png'
 import ImgTwo from '../../img/typescript.png'
 import ImgThree from '../../img/social-network-cubes-concept-1140x747.jpg'
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
 
 export const Slider = () => {
@@ -46,10 +46,10 @@ export const Slider = () => {
                 })
             }
             <button className={classes.prev__button} onClick={toPrev} disabled={isFinishPrev}>
-                <ArrowBackIosIcon fontSize="large"/>
-                </button>
+                <ChevronLeftIcon fontSize="large"/>
+            </button>
             <button className={classes.next__button} onClick={toNext} disabled={isFinishNext}>
-                <ArrowForwardIosIcon fontSize="large"/>
+                <ChevronRightIcon fontSize="large"/>
             </button>
         </div>
     )

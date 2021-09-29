@@ -9,6 +9,7 @@ let initialState = {
     email: null as string | null,
     login: null as string | null,
     isAuth: false,
+    error: '' as string | unknown
 }
 export type InitialStateType = typeof initialState
 
@@ -33,7 +34,11 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
                 login: action.payload.login, isAuth: action.payload.isAuth,
             }
         }
-        
+        case 'auth/CATCH_ERROR': {
+            return {
+                ...state, error: action.error
+            }
+        }
         default: 
             return state
     }
@@ -50,12 +55,24 @@ export const actions = {
     payload: {
         userId, login, email, isAuth
     }} as const),
+    catchError: (error: unknown | string) => ({type: 'auth/CATCH_ERROR', error} as const)
 }
 
-export const login = (email: string, password: string, rememberMe: boolean): ThunkType => {
+export const loginOrRegistration = (email: string, password: string, rememberMe: boolean, formType: string): ThunkType => {
     return async (dispatch) => {
-        let response = await authAPI.login(email, password, rememberMe)
-        dispatch(actions.loginAction(response.data))
+        try {
+            if(formType === 'login') {
+                debugger
+                let response = await authAPI.login(email, password, rememberMe)
+                dispatch(actions.loginAction(response.data))
+            } else {
+                let response = await authAPI.login(email, password, rememberMe)
+                dispatch(actions.loginAction(response.data))
+            }
+            
+        } catch(err) {
+            dispatch(actions.catchError(err))
+        }
     }
 }
 

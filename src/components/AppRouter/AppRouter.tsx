@@ -22,7 +22,6 @@ export const AppRouter = () => {
                     404 NOT FOUND
                     </div>}
                 />
-                {/* <Redirect to={MAIN_ROUTE} /> */}
             </Switch>
         </div>
     )

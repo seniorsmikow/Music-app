@@ -4,8 +4,9 @@ import {
     Form,
     Field,
 } from 'formik'
-import { useDispatch } from 'react-redux'
-import { login } from '../../redux/auth_reducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppStateType } from '../../redux/root_reducer'
+import { loginOrRegistration } from '../../redux/auth_reducer'
 import styles from './Login.module.scss'
  
     interface MyFormValues {
@@ -14,7 +15,7 @@ import styles from './Login.module.scss'
         rememberMe: boolean
     }
  
- export const LoginForm: React.FC<{}> = () => {
+ export const LoginRegForm: React.FC<{}> = () => {
 
    const initialValues: MyFormValues = { 
                                         email: '', 
@@ -23,13 +24,14 @@ import styles from './Login.module.scss'
                                     }
 
   const dispatch = useDispatch()
+  const formType = useSelector((state: AppStateType) => state.appReducer.formType)
 
    return (
      <div className={styles.login__form_wrapper}>
        <Formik
          initialValues={initialValues}
          onSubmit={(values, actions) => {
-           dispatch(login(values.email, values.password, values.rememberMe))
+           dispatch(loginOrRegistration(values.email, values.password, values.rememberMe, formType))
          }}
        >
          <Form>
@@ -43,7 +45,11 @@ import styles from './Login.module.scss'
             <Field id="rememberMe" name="rememberMe"  type="checkbox"/>
            </div>
 
-           <button type="submit">вход</button>
+          <button type="submit">
+             {
+               formType === 'login' ? 'Вход' : 'Регистрация'
+             }
+          </button>
          </Form>
        </Formik>
      </div>

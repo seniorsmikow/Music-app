@@ -40,7 +40,7 @@ const UserCard: React.FC<PropsType> = ({name, id, status,  photo}) => {
                     status ? status : null
                 }
             </div>    
-            <button onClick={() => showUserProfile()}>show profile</button>
+            <button onClick={() => showUserProfile()}>Показать профиль</button>
         </div>
     )
 }

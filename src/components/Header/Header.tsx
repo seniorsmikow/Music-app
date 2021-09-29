@@ -8,6 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import SearchIcon from '@material-ui/icons/Search'
 import { HeaderMenu } from '../HeaderMenu/HeaderMenu'
 import { Notification } from '../Notification/Notification'
+import { NavLink } from 'react-router-dom'
 
 
 const Header = () => {
@@ -25,7 +26,7 @@ const Header = () => {
                 <div className={styles.header__left_block}>
                     <HeaderMenu isOpen={isOpen}/>
                     <div className={styles.header__logo}>
-                        Вразработке
+                        <NavLink to="/">Вразработке</NavLink>
                     </div>
                     <div className={styles.header__search_input}>
                         <input placeholder="Поиск..."/>
