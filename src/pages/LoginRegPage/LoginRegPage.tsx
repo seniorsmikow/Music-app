@@ -5,6 +5,7 @@ import { toggleFormType } from '../../redux/app_reducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
 import { useHistory } from 'react-router-dom'
+import { EntryFormType } from '../../types/auth_types'
 
 
 export const LoginRegPage = () => {
@@ -13,6 +14,7 @@ export const LoginRegPage = () => {
     const userId = useSelector((state: AppStateType) => state.authReducer.userId)
     const formType = useSelector((state: AppStateType) => state.appReducer.formType)
     const error = useSelector((state: AppStateType) => state.authReducer.error)
+    const registrationMessage = useSelector((state: AppStateType) => state.authReducer.registrationMessage)
     const dispatch = useDispatch()
     const [type, setType] = useState<string>(formType)
     const history = useHistory()
@@ -29,7 +31,13 @@ export const LoginRegPage = () => {
         }
     }, [error])
 
-    const changeFormType = (type: string) => {
+    useEffect(() => {
+        if(registrationMessage) {
+            return alert(registrationMessage)
+        }
+    }, [registrationMessage])
+
+    const changeFormType = (type: EntryFormType) => {
         setType(type)
         dispatch(toggleFormType(type))
     }

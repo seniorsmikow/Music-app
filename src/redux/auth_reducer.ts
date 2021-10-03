@@ -1,15 +1,17 @@
 import { InferActionsTypes, BaseThunkType } from './root_reducer'
-import { authAPI } from '../api/authAPI'
+import { authAPI, securityAPI } from '../api/authAPI'
 import { AuthType, ResultCodesEnum } from '../types/auth_types'
 
 let initialState = {
     userId: null as number | null,
-    messages: [],
+    messages: [] as Array<string>,
     resultCode: 0,
     email: null as string | null,
     login: null as string | null,
     isAuth: false,
-    error: '' as string | unknown
+    error: null,
+    registrationMessage: null as string | null, // регистрация в API пока не предусмотрена, вызывается alert с оповещением
+    captcha: null as string | null
 }
 export type InitialStateType = typeof initialState
 
@@ -39,6 +41,14 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
                 ...state, error: action.error
             }
         }
+        case 'auth/REGISTRATION': 
+            return {
+                ...state, registrationMessage: action.message
+            }
+        case 'auth/GET_CAPTCHA': 
+            return {
+                ...state, captcha: action.captcha
+            }
         default: 
             return state
     }
@@ -55,24 +65,41 @@ export const actions = {
     payload: {
         userId, login, email, isAuth
     }} as const),
-    catchError: (error: unknown | string) => ({type: 'auth/CATCH_ERROR', error} as const)
+    catchError: (error: any) => ({type: 'auth/CATCH_ERROR', error} as const),
+    registration: (message: string | null) => ({type: 'auth/REGISTRATION', message} as const),
+    captcha: (captcha: string | null) => ({type: 'auth/GET_CAPTCHA', captcha} as const)
 }
 
-export const loginOrRegistration = (email: string, password: string, rememberMe: boolean, formType: string): ThunkType => {
+export const loginOrRegistration = (email: string, password: string, rememberMe: boolean, formType: string, captcha: string | null): ThunkType => {
     return async (dispatch) => {
         try {
             if(formType === 'login') {
                 debugger
-                let response = await authAPI.login(email, password, rememberMe)
-                dispatch(actions.loginAction(response.data))
+                let response = await authAPI.login(email, password, rememberMe, captcha)
+                dispatch(actions.loginAction(response.data)) 
+
+                if(response.data.resultCode === 10) {
+                    dispatch(getCaptcha())
+                }
+
             } else {
-                let response = await authAPI.login(email, password, rememberMe)
-                dispatch(actions.loginAction(response.data))
+
+                //В SamuraiJS Social Network API пока не предусмотрена регистрация пользователей. Вызывается alert
+                // с информацией, что пока регистрация не возможна. 
+                
+                dispatch(actions.registration(`API, на базе которого создан сайт, пока не предоставляет возможность для регистрации пользователей`))
             }
             
         } catch(err) {
             dispatch(actions.catchError(err))
         }
+    }
+}
+
+export const getCaptcha = (): ThunkType => {
+    return async(dispatch) => {
+        let response = await securityAPI.getCaptcha()
+        dispatch(actions.captcha(response.data.url))
     }
 }
 
@@ -91,6 +118,7 @@ export const logout = (): ThunkType => {
         let response = await authAPI.logout()
         if(response.data.resultCode === 0) {
             dispatch(actions.logoutAction(null, null, null, false))
+            dispatch(actions.registration(null))
         }
     }
 }

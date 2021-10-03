@@ -13,6 +13,7 @@ import styles from './Login.module.scss'
         email: string
         password: string
         rememberMe: boolean
+        captcha: string | null
     }
  
  export const LoginRegForm: React.FC<{}> = () => {
@@ -20,18 +21,20 @@ import styles from './Login.module.scss'
    const initialValues: MyFormValues = { 
                                         email: '', 
                                         password: '', 
-                                        rememberMe: false 
+                                        rememberMe: false,
+                                        captcha: ''
                                     }
 
   const dispatch = useDispatch()
-  const formType = useSelector((state: AppStateType) => state.appReducer.formType)
+  const formType: 'login' | 'registration'  = useSelector((state: AppStateType) => state.appReducer.formType)
+  const captchaUrl = useSelector((state: AppStateType) => state.authReducer.captcha)
 
    return (
      <div className={styles.login__form_wrapper}>
        <Formik
          initialValues={initialValues}
          onSubmit={(values, actions) => {
-           dispatch(loginOrRegistration(values.email, values.password, values.rememberMe, formType))
+           dispatch(loginOrRegistration(values.email, values.password, values.rememberMe, formType, values.captcha))
          }}
        >
          <Form>
@@ -44,6 +47,16 @@ import styles from './Login.module.scss'
             <label htmlFor="rememberMe">Запомнить</label>
             <Field id="rememberMe" name="rememberMe"  type="checkbox"/>
            </div>
+
+           {
+             captchaUrl ? 
+              <div className={styles.captcha}>
+                Введите символы
+                <img src={captchaUrl} alt="captcha"/>
+                <Field id="captcha" name="captcha"/>
+              </div>
+             : null
+           }
 
           <button type="submit">
              {

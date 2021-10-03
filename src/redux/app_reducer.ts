@@ -1,10 +1,11 @@
 import { InferActionsTypes, BaseThunkType } from './root_reducer'
+import { EntryFormType } from '../types/auth_types'
 
 let initialState = {
     toggleOpen: false,
     notificationCount: 0,
     notificationText: [] as Array<string>,
-    formType: 'login' as string
+    formType: 'login' as EntryFormType
 }
 
 export type InitialStateType = typeof initialState
@@ -47,7 +48,7 @@ export const actions = {
     notification: (count: number, text: string) => ({type: 'app/GET_NOTIFICATION', count, text} as const),
     deleteNoteCount: () => ({type: 'app/DELETE_NOTIFICATIONS_COUNT'} as const),
     clearNote: () => ({type: 'app/CLEAR_NOTIFICATION'} as const),
-    changeFormType: (formType: string) => ({type: 'app/TOGGLE_FORM_TYPE', formType} as const)
+    changeFormType: (formType: EntryFormType) => ({type: 'app/TOGGLE_FORM_TYPE', formType} as const)
 }
 
 export const toogleOpenModalWindow = (isOpen: boolean): ThunkType => {
@@ -74,7 +75,7 @@ export const clearNotifications = (): ThunkType => {
     }
 }
 
-export const toggleFormType = (type: string): ThunkType => {
+export const toggleFormType = (type: EntryFormType): ThunkType => {
     return async(dispatch) => {
         await dispatch(actions.changeFormType(type))
     }

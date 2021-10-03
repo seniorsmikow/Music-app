@@ -34,3 +34,5 @@ export type UserType = {
     email: string | null,
     isAuth: boolean
 }
+
+export type EntryFormType = 'login' | 'registration'
