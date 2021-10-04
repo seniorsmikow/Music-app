@@ -17,6 +17,7 @@ export const LoginRegPage = () => {
     const registrationMessage = useSelector((state: AppStateType) => state.authReducer.registrationMessage)
     const dispatch = useDispatch()
     const [type, setType] = useState<string>(formType)
+    const [loginError, setLoginError] = useState<string | null>(null)
     const history = useHistory()
 
     useEffect(() => {
@@ -26,24 +27,30 @@ export const LoginRegPage = () => {
     }, [isAuth, userId, history])
 
     useEffect(() => {
-        if(error) {
-            return alert(error)
-        }
-    }, [error])
-
-    useEffect(() => {
         if(registrationMessage) {
             return alert(registrationMessage)
         }
     }, [registrationMessage])
 
+    useEffect(() => {
+        if(error) {
+            setLoginError(error)
+        }
+    }, [error])
+
     const changeFormType = (type: EntryFormType) => {
         setType(type)
         dispatch(toggleFormType(type))
+        setLoginError(null)
     }
 
     return (
         <div className={styles.login__page_root}>
+
+            {
+                loginError && <div className={styles.login_page_error}>{loginError}</div>
+            }
+
             <LoginRegForm />
             {
                 type === 'login' ? 

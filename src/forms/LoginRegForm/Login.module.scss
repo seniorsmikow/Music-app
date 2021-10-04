@@ -21,14 +21,19 @@
             text-transform: uppercase;
             background-color: #1d5eaf;
         }
+        input {
+            margin-top: 20px;
+            border-radius: 5px;
+        }
     }
 }
 
 .form__remember_me {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-around;
     input {
+        margin-left: 10px;
         width: 20px;
         height: 20px;
         border-radius: 2px;
@@ -76,5 +81,38 @@
         border-radius: 5px;
         background-image: linear-gradient(to top, #48c6ef 0%, #6f86d6 100%);
         color: white;
+    }
+}
+
+.email__errors {
+    color: red;
+}
+
+.password__errors {
+    @extend .email__errors;
+}
+
+.form__remember_me {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100px;
+}
+
+.remember_me_text {
+    margin-top: 20px;
+}
+
+.remember__me_checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    input {
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        margin: 0;
+        padding: 0;
     }
 }

@@ -9,7 +9,7 @@ let initialState = {
     email: null as string | null,
     login: null as string | null,
     isAuth: false,
-    error: null,
+    error: null as string | null,
     registrationMessage: null as string | null, // регистрация в API пока не предусмотрена, вызывается alert с оповещением
     captcha: null as string | null
 }
@@ -65,34 +65,36 @@ export const actions = {
     payload: {
         userId, login, email, isAuth
     }} as const),
-    catchError: (error: any) => ({type: 'auth/CATCH_ERROR', error} as const),
+    catchError: (error: string | null) => ({type: 'auth/CATCH_ERROR', error} as const),
     registration: (message: string | null) => ({type: 'auth/REGISTRATION', message} as const),
     captcha: (captcha: string | null) => ({type: 'auth/GET_CAPTCHA', captcha} as const)
 }
 
 export const loginOrRegistration = (email: string, password: string, rememberMe: boolean, formType: string, captcha: string | null): ThunkType => {
     return async (dispatch) => {
-        try {
-            if(formType === 'login') {
-                debugger
-                let response = await authAPI.login(email, password, rememberMe, captcha)
-                dispatch(actions.loginAction(response.data)) 
 
-                if(response.data.resultCode === 10) {
-                    dispatch(getCaptcha())
-                }
+        if(formType === 'login') {
+            let response = await authAPI.login(email, password, rememberMe, captcha)
 
+            if(response.data.resultCode === ResultCodesEnum.Success) {
+                dispatch(actions.loginAction(response.data))
+            } else if(response.data.resultCode === ResultCodesEnum.Captcha) {
+                dispatch(getCaptcha())
+            } else if(response.data.resultCode === ResultCodesEnum.Error) {
+                dispatch(actions.catchError('Неверный Email или Password'))
             } else {
-
-                //В SamuraiJS Social Network API пока не предусмотрена регистрация пользователей. Вызывается alert
-                // с информацией, что пока регистрация не возможна. 
-                
-                dispatch(actions.registration(`API, на базе которого создан сайт, пока не предоставляет возможность для регистрации пользователей`))
+                dispatch(actions.catchError('Неизвестная ошибка'))
             }
+
+        } else {
+
+            //В SamuraiJS Social Network API пока не предусмотрена регистрация пользователей. Вызывается alert
+            // с информацией, что пока регистрация не возможна. 
             
-        } catch(err) {
-            dispatch(actions.catchError(err))
+            dispatch(actions.registration(`API, на базе которого создан сайт, пока не предоставляет возможность для регистрации пользователей`))
         }
+            
+        
     }
 }
 

@@ -25,7 +25,8 @@ export type LoginResponseType = {
 
 export enum ResultCodesEnum {
     Success = 0,
-    Error = 1
+    Error = 1,
+    Captcha = 10
 }
 
 export type UserType = {
