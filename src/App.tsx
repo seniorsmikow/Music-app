@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { HashRouter } from 'react-router-dom'
 import styles from './App.module.scss'
 import Header from './components/Header/Header'

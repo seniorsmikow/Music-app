@@ -29,6 +29,7 @@ export const HeaderMenu: React.FC<PropsType> = ({isOpen}) => {
                 <ul>
                     <NavLink to="/">Главная</NavLink>
                     <NavLink to="/users">Пользователи</NavLink>
+                    <NavLink to="/music">Music</NavLink>
                     { 
                         isAuth && ownUserId ? <ul>
                                                 <NavLink to={`/profile/${ownUserId}`}>Своя страница</NavLink> 
@@ -40,6 +41,7 @@ export const HeaderMenu: React.FC<PropsType> = ({isOpen}) => {
                     {
                         isAuth ? <button onClick={() => userLogout()}>Выйти</button> 
                         :
+                        
                         <NavLink to="/login">Войти</NavLink>
                     }
                 </ul>

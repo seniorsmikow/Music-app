@@ -3,13 +3,15 @@ import { LoginRegPage } from '../../pages/LoginRegPage/LoginRegPage'
 import { UsersPage } from '../../pages/UsersPage/UsersPage'
 import { HomePage } from '../../pages/HomePage/HomePage'
 import { FriendsPage } from '../../pages/FriendsPage/FriendsPage'
+import { MusicPage } from '../../pages/MusicPage/MusicPage'
 
 import {
     USERS_ROUTE,
     LOGIN_ROUTE,
     MAIN_ROUTE,
     USER_PROFILE_ROUTE,
-    FRIENDS_ROUTE
+    FRIENDS_ROUTE,
+    MUSIC_ROUTE
 } from './constants'
 
 export const authRoutes = [
@@ -36,5 +38,9 @@ export const publicRoutes = [
     {
         path: USER_PROFILE_ROUTE,
         Component: ProfilePage
+    },
+    {
+        path: MUSIC_ROUTE,
+        Component: MusicPage
     }
 ];
