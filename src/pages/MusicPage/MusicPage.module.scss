@@ -1,5 +1,11 @@
 .music__page_root {
-    padding-top: 200px;
+    width: 1000px;
+    margin: 0 auto;
+    padding: 100px 30px 50px 30px;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     button {
         width: 200px;
         height: 30px;
