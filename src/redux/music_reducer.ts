@@ -3,7 +3,9 @@ import { musicAPI } from '../api/spotifyAPI'
 
 let initialState = {
     data: null as any,
-    error: null as any
+    error: null as any,
+    categories: null as any,
+    queryResponse: null as any
 }
 
 export type InitialStateType = typeof initialState
@@ -20,9 +22,14 @@ const musicReducer = (state = initialState, action: ActionsType): InitialStateTy
                 ...state, error: action.error
             }
         }
-        case 'music/GET_ELSE_MUSIC': {
+        case 'music/GET_CATEGORIES': {
             return {
-                ...state, data: [...state.data, ...action.data]
+                ...state, categories: action.data
+            }
+        }
+        case 'music/SEARCH': {
+            return {
+                ...state, queryResponse: action.data
             }
         }
         default: 
@@ -34,12 +41,13 @@ const musicReducer = (state = initialState, action: ActionsType): InitialStateTy
 export const actions = {
     music: (data: any) => ({type: 'music/GET_DATA', data} as const),
     error: (error: any) => ({type: 'music/CATCH_ERROR', error} as const),
-    elseMusic: (data: any) => ({type: 'music/GET_ELSE_MUSIC', data} as const)
+    categories: (data: any) => ({type: 'music/GET_CATEGORIES', data} as const),
+    search: (data: any) => ({type: 'music/SEARCH', data} as const)
 }
 
-export const getMusic = (country: string): ThunkType => {
+export const getMusic = (country: string, limit: number): ThunkType => {
     return async (dispatch) => {
-        let albums = await musicAPI.getNewReleases(country)
+        let albums = await musicAPI.getNewReleases(country, limit)
         try{
             dispatch(actions.music(albums.albums.items))
         } catch {
@@ -48,11 +56,22 @@ export const getMusic = (country: string): ThunkType => {
     }
 }
 
-export const getElseMusic = (country: string, offset: number): ThunkType => {
-    return async(dispatch) => {
-        let albums = await musicAPI.getElseNewReleases(country, offset)
+export const getCategories = (): ThunkType => {
+    return async (dispatch) => {
+        let categories = await musicAPI.getAllCategories()
         try{
-            dispatch(actions.elseMusic(albums.albums.items))
+            dispatch(actions.categories(categories.categories.items))
+        } catch {
+            dispatch(actions.error('some error'))
+        }
+    }
+}
+
+export const search = (query: string): ThunkType => {
+    return async (dispatch) => {
+        let response = await musicAPI.search(query)
+        try{
+            dispatch(actions.search(response.artists.items))
         } catch {
             dispatch(actions.error('some error'))
         }

@@ -1,9 +1,7 @@
-
-import React from 'react'
 import styles from './WaitGhost.module.scss'
 
 
-export const WaitGhost = () => {
+export const GhostAnimation = () => {
     return (
         <div className={styles.main}>
             <div className={styles.ghost__body}>

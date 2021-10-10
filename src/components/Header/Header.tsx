@@ -1,4 +1,5 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
+import { search } from '../../redux/music_reducer'
 import styles from './Header.module.scss'
 import userWithoutPhoto from '../../img/user_without_photo.png'
 import { useSelector, useDispatch } from 'react-redux'
@@ -18,6 +19,22 @@ const Header = () => {
     const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
     const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)
     const userId = useSelector((state: AppStateType) => state.profileReducer.profile?.userId)
+    const answer = useSelector((state: AppStateType) => state.musicReducer.queryResponse)
+
+    const [query, setQuery] = useState('')
+
+    const searchMusic = (e: any) => {
+        let searchString = e.target.value
+        setQuery(searchString)
+    }
+
+    const letSearch = () => {
+        if(query) {
+            dispatch(search(query))
+        }
+    }
+
+    console.log(answer)
 
     return (
         <div className={styles.header__container}>
@@ -29,8 +46,8 @@ const Header = () => {
                         <NavLink to="/">Вразработке</NavLink>
                     </div>
                     <div className={styles.header__search_input}>
-                        <input placeholder="Поиск..."/>
-                        <SearchIcon />  
+                        <input placeholder="Поиск..." onChange={searchMusic}/>
+                        <SearchIcon onClick={() => letSearch()} />  
                     </div>
                     <div className={styles.header__note_icon}>
                         <Notification />

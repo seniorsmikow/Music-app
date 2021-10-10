@@ -18,17 +18,25 @@ export const musicTokenAPI = {
 }
 
 export const musicAPI = {
-  getNewReleases(country: string) {
+  getNewReleases(country: string, limit: number) {
     return musicTokenAPI.getToken().then(token => {
-      return axios(`https://api.spotify.com/v1/browse/new-releases?country=${country}&limit=2`, {
+      return axios(`https://api.spotify.com/v1/browse/new-releases?country=${country}&limit=${limit}`, {
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token.data.access_token}
           }).then(res => res.data)
     })
   },
-  getElseNewReleases(country: string, offset: number ) {
+  getAllCategories() {
     return musicTokenAPI.getToken().then(token => {
-      return axios(`https://api.spotify.com/v1/browse/new-releases?country=${country}&limit=2&offset=${offset}`, {
+      return axios(`https://api.spotify.com/v1/browse/categories`, {
+            method: 'GET',
+            headers: { 'Authorization' : 'Bearer ' + token.data.access_token}
+          }).then(res => res.data)
+    })
+  },
+  search(query: string) {
+    return musicTokenAPI.getToken().then(token => {
+      return axios(`https://api.spotify.com/v1/search?query=${query}&type=artist`, {
             method: 'GET',
             headers: { 'Authorization' : 'Bearer ' + token.data.access_token}
           }).then(res => res.data)

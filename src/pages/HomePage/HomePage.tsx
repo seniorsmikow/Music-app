@@ -1,5 +1,5 @@
 import React from 'react'
-import { WaitGhost } from '../../components/WaitGhost/WaitGhost'
+import { GhostAnimation } from '../../components/GhostAnimation/GhostAnimation'
 import styles from './HomePage.module.scss'
 import network from '../../img/smm-prodvizhenie.png'
 import { Slider } from '../../components/Slider/Slider'
@@ -10,7 +10,7 @@ export const HomePage = () => {
         <div className={styles.home__page_root}>
             <Slider />
             <div className={styles.home__animation_block}>
-                <WaitGhost /> 
+                <GhostAnimation /> 
             </div>
             <div className={styles.home__title}>
                 <h1>"В разработке"</h1>
