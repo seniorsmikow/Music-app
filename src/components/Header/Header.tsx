@@ -43,11 +43,11 @@ const Header = () => {
                 <div className={styles.header__left_block}>
                     <HeaderMenu isOpen={isOpen}/>
                     <div className={styles.header__logo}>
-                        <NavLink to="/">Вразработке</NavLink>
+                        <NavLink to="/">Music for developers</NavLink>
                     </div>
                     <div className={styles.header__search_input}>
                         <input placeholder="Поиск..." onChange={searchMusic}/>
-                        <SearchIcon onClick={() => letSearch()} />  
+                        <SearchIcon onClick={() => letSearch()} className={styles.header__search_icon}/>  
                     </div>
                     <div className={styles.header__note_icon}>
                         <Notification />

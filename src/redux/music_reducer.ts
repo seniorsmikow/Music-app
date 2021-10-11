@@ -45,7 +45,7 @@ export const actions = {
     search: (data: any) => ({type: 'music/SEARCH', data} as const)
 }
 
-export const getMusic = (country: string, limit: number): ThunkType => {
+export const getNewReleases = (country: string, limit: number): ThunkType => {
     return async (dispatch) => {
         let albums = await musicAPI.getNewReleases(country, limit)
         try{

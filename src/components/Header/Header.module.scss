@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
 .header__container {
     height: 60px;
     background-color: #fdfdfd;
@@ -34,21 +36,16 @@
 }
 
 .header__logo {
-    font-size: 20px;
+    font-size: 40px;
     font-weight: 700;
     cursor: pointer;
+    font-family: 'Staatliches', cursive;
     a {
-        color: #39469e;
+        color: #ff7272;
     }
 }
 .header__logo::first-letter {
-    margin-right: 5px;
-    font-size: 22px;
-    color: white;
-    font-weight: 900;
-    border-radius: 3px;
-    background-color: #687bff;
-    border-radius: 3px;
+    color: rgb(29, 29, 29);
 }
 
 .header__search_input {
@@ -69,6 +66,14 @@
 .header__note_icon {
     margin-left: 20px;
     color: #7b7b7b;
+}
+
+.header__search_icon {
+    cursor: pointer; 
+    &:hover {
+        transform: scale(1.1);
+        color: red;
+    }
 }
 
 .header__listWrapper {

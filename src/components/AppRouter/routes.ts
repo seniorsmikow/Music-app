@@ -4,6 +4,7 @@ import { UsersPage } from '../../pages/UsersPage/UsersPage'
 import { HomePage } from '../../pages/HomePage/HomePage'
 import { FriendsPage } from '../../pages/FriendsPage/FriendsPage'
 import { MusicPage } from '../../pages/MusicPage/MusicPage'
+import { NewReleasesPage } from '../../pages/NewReleasesPage/NewReleasesPage'
 
 import {
     USERS_ROUTE,
@@ -11,7 +12,8 @@ import {
     MAIN_ROUTE,
     USER_PROFILE_ROUTE,
     FRIENDS_ROUTE,
-    MUSIC_ROUTE
+    MUSIC_ROUTE,
+    NEW_RELEASES_ROUTE
 } from './constants'
 
 export const authRoutes = [
@@ -42,5 +44,9 @@ export const publicRoutes = [
     {
         path: MUSIC_ROUTE,
         Component: MusicPage
+    },
+    {
+        path: NEW_RELEASES_ROUTE,
+        Component: NewReleasesPage
     }
 ];
