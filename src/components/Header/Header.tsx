@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { search } from '../../redux/music_reducer'
 import styles from './Header.module.scss'
 import userWithoutPhoto from '../../img/user_without_photo.png'

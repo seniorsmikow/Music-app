@@ -1,0 +1,47 @@
+.loader__root {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    animation: note 1s infinite ease-in-out;
+}
+
+.loader__block_one {
+    color: #6d6dff;
+    animation: colorOne 1s infinite ease-in-out;
+}
+
+.loader__block_two {
+    color: #5cbedc;
+    animation: colorTwo 1s infinite ease-in-out;
+}
+
+.loader__block_three {
+    color: #efb6b6;
+    animation: colorThree 1s infinite ease-in-out;
+}
+
+@keyframes note {
+    50% {
+        transform: scale(1.5);
+    }
+}
+
+@keyframes colorOne {
+    50% {
+        color: rgb(212, 85, 85);
+        transform: translateY(5px);
+    }
+}
+
+@keyframes colorTwo {
+    50% {
+        color: rgb(157, 230, 150);
+    }
+}
+
+@keyframes colorThree {
+    50% {
+        color: rgb(138, 120, 202);
+        transform: translateY(-5px);
+    }
+}

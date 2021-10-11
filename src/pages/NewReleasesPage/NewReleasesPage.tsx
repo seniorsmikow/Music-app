@@ -5,12 +5,14 @@ import { useSelector } from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
 import { MusicAlbumCard } from '../../components/MusicAlbumCard/MusicAlbumCard'
 import { getNewReleases } from '../../redux/music_reducer'
+import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 
 
 export const NewReleasesPage = () => {
 
     const dispatch = useDispatch()
     const data = useSelector((state: AppStateType) => state.musicReducer.data)
+    const isLoader = useSelector((state: AppStateType) => state.musicReducer.isLoading)
     const [newReleases, setNewReleases] = useState(data)
     const [country, setCountry] = useState('US')
     const [countAlbum, setAlbumCount] = useState(5)
@@ -59,7 +61,29 @@ export const NewReleasesPage = () => {
                     </select>
                 новых релизов
             </div>
-            {
+
+            <div>
+                {
+                    isLoader ? <LoaderTwo /> :
+                    <div>
+                        {
+                        newReleases ? 
+                        newReleases.map((release: any) => <div key={release.id}>
+                            <MusicAlbumCard 
+                            album_type={release.album_type}
+                            name={release.name}
+                            release_date={release.release_date}
+                            total_tracks={release.total_tracks}
+                            image={release.images[0].url}
+                            artistName={release.artists[0].name}
+                            artistId={release.artists[0].id}
+                        /></div>) : null
+                        }
+                    </div>
+                }
+            </div>
+            
+            {/* {
                 newReleases ? 
                 newReleases.map((release: any) => <div key={release.id}>
                     <MusicAlbumCard 
@@ -71,7 +95,7 @@ export const NewReleasesPage = () => {
                     artistName={release.artists[0].name}
                     artistId={release.artists[0].id}
                 /></div>) : null
-            }
+            } */}
         </div>
     )
 }

@@ -5,7 +5,8 @@ let initialState = {
     data: null as any,
     error: null as any,
     categories: null as any,
-    queryResponse: null as any
+    queryResponse: null as any,
+    isLoading: false
 }
 
 export type InitialStateType = typeof initialState
@@ -32,6 +33,11 @@ const musicReducer = (state = initialState, action: ActionsType): InitialStateTy
                 ...state, queryResponse: action.data
             }
         }
+        case 'music/LOAD_DATA': {
+            return {
+                ...state, isLoading: action.load
+            }
+        }
         default: 
             return state
     }
@@ -42,16 +48,22 @@ export const actions = {
     music: (data: any) => ({type: 'music/GET_DATA', data} as const),
     error: (error: any) => ({type: 'music/CATCH_ERROR', error} as const),
     categories: (data: any) => ({type: 'music/GET_CATEGORIES', data} as const),
-    search: (data: any) => ({type: 'music/SEARCH', data} as const)
+    search: (data: any) => ({type: 'music/SEARCH', data} as const),
+    loader: (load: boolean) => ({type: 'music/LOAD_DATA', load} as const)
 }
 
 export const getNewReleases = (country: string, limit: number): ThunkType => {
     return async (dispatch) => {
+        dispatch(actions.loader(true))
         let albums = await musicAPI.getNewReleases(country, limit)
         try{
             dispatch(actions.music(albums.albums.items))
+            dispatch(actions.loader(false))
         } catch {
             dispatch(actions.error('some error'))
+        }
+        finally {
+            dispatch(actions.loader(false))
         }
     }
 }
