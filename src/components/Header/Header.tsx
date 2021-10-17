@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useHistory } from 'react-router'
 import { search } from '../../redux/music_reducer'
 import styles from './Header.module.scss'
 import userWithoutPhoto from '../../img/user_without_photo.png'
@@ -15,6 +16,7 @@ import { NavLink } from 'react-router-dom'
 const Header = () => {
 
     const dispatch = useDispatch()
+    const history = useHistory()
     const isOpen = useSelector((state: AppStateType) => state.appReducer.toggleOpen)
     const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
     const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)
@@ -31,6 +33,7 @@ const Header = () => {
     const letSearch = () => {
         if(query) {
             dispatch(search(query))
+            history.push('/musicFind')
         }
     }
 

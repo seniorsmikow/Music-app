@@ -1,8 +1,9 @@
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Typography from '@mui/material/Typography'
+import { useHistory } from 'react-router'
 
 type PropsType = {
     album_type: string,
@@ -16,6 +17,12 @@ type PropsType = {
 
 
 export const MusicAlbumCard: React.FC<PropsType> = ({album_type, name, release_date, total_tracks, image, artistName, artistId}) => {
+
+    const history = useHistory()
+
+    const showArtistPage = (id: string) => {
+        history.push(`/artist/${id}`)
+    }
 
     return (
         <Card sx={{ display: 'flex', 
@@ -35,7 +42,7 @@ export const MusicAlbumCard: React.FC<PropsType> = ({album_type, name, release_d
                     {album_type}
                 </Typography>
                 <Typography variant="subtitle1"  component="div">
-                    {artistName}
+                    <button onClick={() => showArtistPage(artistId)}>{artistName}</button>
                 </Typography>
                 <Typography component="div" variant="subtitle1" sx={{ width: 300 }} color="text.secondary">
                     дата выхода {release_date}

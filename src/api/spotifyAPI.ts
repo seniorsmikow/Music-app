@@ -41,5 +41,21 @@ export const musicAPI = {
             headers: { 'Authorization' : 'Bearer ' + token.data.access_token}
           }).then(res => res.data)
     })
+  },
+  getArtistData(artistId: string) {
+    return musicTokenAPI.getToken().then(token => {
+      return axios(`https://api.spotify.com/v1/artists/${artistId}`, {
+            method: 'GET',
+            headers: { 'Authorization' : 'Bearer ' + token.data.access_token}
+          }).then(res => res.data)
+    })
+  },
+  getArtistAlbums(artistId: string) {
+    return musicTokenAPI.getToken().then(token => {
+      return axios(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
+            method: 'GET',
+            headers: { 'Authorization' : 'Bearer ' + token.data.access_token}
+          }).then(res => res.data)
+    })
   }
 }

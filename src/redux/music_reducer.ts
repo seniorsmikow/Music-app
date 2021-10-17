@@ -6,7 +6,9 @@ let initialState = {
     error: null as any,
     categories: null as any,
     queryResponse: null as any,
-    isLoading: false
+    isLoading: false,
+    artistData: null as any,
+    albumsData: null as any
 }
 
 export type InitialStateType = typeof initialState
@@ -38,6 +40,16 @@ const musicReducer = (state = initialState, action: ActionsType): InitialStateTy
                 ...state, isLoading: action.load
             }
         }
+        case 'music/GET_ARTIST': {
+            return {
+                ...state, artistData: action.data
+            }
+        }
+        case 'music/GET_ARTIST_ALBUMS': {
+            return {
+                ...state, albumsData: action.data
+            }
+        }
         default: 
             return state
     }
@@ -49,7 +61,9 @@ export const actions = {
     error: (error: any) => ({type: 'music/CATCH_ERROR', error} as const),
     categories: (data: any) => ({type: 'music/GET_CATEGORIES', data} as const),
     search: (data: any) => ({type: 'music/SEARCH', data} as const),
-    loader: (load: boolean) => ({type: 'music/LOAD_DATA', load} as const)
+    loader: (load: boolean) => ({type: 'music/LOAD_DATA', load} as const),
+    getArtistInfo: (data: any) => ({type: 'music/GET_ARTIST', data} as const),
+    getArtistMusic: (data: any) => ({type: 'music/GET_ARTIST_ALBUMS', data} as const)
 }
 
 export const getNewReleases = (country: string, limit: number): ThunkType => {
@@ -90,6 +104,23 @@ export const search = (query: string): ThunkType => {
     }
 }
 
+export const getArtistData = (artistId: string): ThunkType => {
+    return async(dispatch) => {
+        dispatch(actions.loader(true))
+        let data = await musicAPI.getArtistData(artistId)
+        let albums = await musicAPI.getArtistAlbums(artistId)
+        try{
+            dispatch(actions.getArtistInfo(data))
+            dispatch(actions.getArtistMusic(albums))
+            dispatch(actions.loader(false))
+        } catch {
+            dispatch(actions.error('some error'))
+        }
+        finally {
+            dispatch(actions.loader(false))
+        }
+    }
+}
 
 export default musicReducer
 

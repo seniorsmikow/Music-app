@@ -14,8 +14,8 @@ export const NewReleasesPage = () => {
     const data = useSelector((state: AppStateType) => state.musicReducer.data)
     const isLoader = useSelector((state: AppStateType) => state.musicReducer.isLoading)
     const [newReleases, setNewReleases] = useState(data)
-    const [country, setCountry] = useState('US')
-    const [countAlbum, setAlbumCount] = useState(5)
+    const [country, setCountry] = useState<string>('US')
+    const [countAlbum, setAlbumCount] = useState<number>(5)
 
     useEffect(() => {
         dispatch(getNewReleases(country, countAlbum))
@@ -62,10 +62,10 @@ export const NewReleasesPage = () => {
                 новых релизов
             </div>
 
-            <div>
+            <>
                 {
                     isLoader ? <LoaderTwo /> :
-                    <div>
+                    <>
                         {
                         newReleases ? 
                         newReleases.map((release: any) => <div key={release.id}>
@@ -79,23 +79,9 @@ export const NewReleasesPage = () => {
                             artistId={release.artists[0].id}
                         /></div>) : null
                         }
-                    </div>
+                    </>
                 }
-            </div>
-            
-            {/* {
-                newReleases ? 
-                newReleases.map((release: any) => <div key={release.id}>
-                    <MusicAlbumCard 
-                    album_type={release.album_type}
-                    name={release.name}
-                    release_date={release.release_date}
-                    total_tracks={release.total_tracks}
-                    image={release.images[0].url}
-                    artistName={release.artists[0].name}
-                    artistId={release.artists[0].id}
-                /></div>) : null
-            } */}
+            </>
         </div>
     )
 }
