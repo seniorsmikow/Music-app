@@ -4,6 +4,11 @@ import { getArtistData} from '../../redux/music_reducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
+import Chip from '@mui/material/Chip'
+import Stack from '@mui/material/Stack'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
+import { ArtistAlbums } from '../../components/ArtistAlbums/ArtistAlbums'
 
 
 export const ArtistPage = (props: any) => {
@@ -12,6 +17,7 @@ export const ArtistPage = (props: any) => {
     const dispatch = useDispatch()
     const artistData = useSelector((state: AppStateType) => state.musicReducer.artistData)
     const [data, setData] = useState(artistData)
+    const [isLikeArtist, setIsLikeArtist] = useState(false)
 
     useEffect(() => {
         if(artistId) {
@@ -25,7 +31,11 @@ export const ArtistPage = (props: any) => {
         }
     }, [artistData])
 
-    console.log(data)
+    const likeArtist = () => {
+        setIsLikeArtist(!isLikeArtist)
+    }
+
+    console.log(data.id)
 
     return (
         <div className={styles.artist__page_root}>
@@ -33,27 +43,34 @@ export const ArtistPage = (props: any) => {
                 data ? 
                 <>
                     <div>
-                        {data.name}
+                        <h1>{data.name}</h1>
                     </div>
-                    <div>
-                        <img src={data.images[0].url} alt="artist"/>
+                    <div className={styles.artist__main_icon}>
+                        <img src={data.images[1].url} alt="artist"/>
                     </div>
-                    <ul>
+                    <div className={styles.artists__total_likes}>
+                        <div onClick={() => likeArtist()} className={styles.artist__like_icon}>
+                            {
+                                isLikeArtist ? <FavoriteIcon color="error" fontSize="large"/> : <FavoriteBorderIcon color="error" fontSize="large"/>
+                            }
+                        </div>
+                        <>{data.followers.total}</>
+                    </div>
+                    <div className={styles.artists__genres_list}>
                         {
-                            data.genres.map((genre: string) => <li key={genre}>{genre}</li>)
+                            <Stack direction="row" spacing={1}>
+                             { data.genres.map((genre: string) => <Chip label={genre} key={genre} className={styles.genre}/>) }
+                            </Stack>
+                            
                         }
-                    </ul>
-                    <div>
-                        {data.followers.total}
-                    </div>
-                    <div>
-                        {data.popularity}
                     </div>
                 </>
                 : 
                 <LoaderTwo />
             }
-            
+            {/* <div>
+                <ArtistAlbums artistId={data.id}/>
+            </div> */}
         </div>
     )
 }

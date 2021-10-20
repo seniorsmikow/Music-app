@@ -1,3 +1,76 @@
 .artist__page_root {
-    padding-top: 200px;
+    margin: 0 auto;
+    width: 1000px;
+    height: 100vh;
+    padding-top: 100px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+        color: #ff0000;
+    }
+}
+
+.artist__like_icon {
+    cursor: pointer;
+    position: relative;
+    &:hover {
+        transform: scale(1.1);
+        &::after {
+            position: absolute;
+            top: -10px;
+            left: 30px;
+            width: 200px;
+            height: 30px;
+            border-radius: 10px;
+            background-color: rgba(131, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            content: "Добавить в коллекцию";
+            color: white;
+        }
+    }
+}
+
+.artists__total_likes {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    justify-content: space-around;
+    margin-top: 30px;
+    color: black;
+}
+
+.genre {
+    cursor: pointer;
+    background-image: linear-gradient(-20deg, #f9f9f9 0%, #efefef 100%);
+    -webkit-box-shadow: 1px 3px 5px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    1px 3px 5px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         1px 3px 5px 0px rgba(50, 50, 50, 0.75);
+    cursor: pointer;
+    &:hover {
+        transform: scale(1.1);
+        background-image: linear-gradient(-20deg, #f9f9f9 0%, #757474 100%);
+    }
+}
+
+.artist__main_icon {
+    margin-top: 30px;
+    -webkit-box-shadow: 4px 4px 19px 0px rgba(50, 50, 50, 0.75);
+-moz-box-shadow:    4px 4px 19px 0px rgba(50, 50, 50, 0.75);
+box-shadow:         4px 4px 19px 0px rgba(50, 50, 50, 0.75);
+}
+
+.artists__genres_list {
+    margin-top: 30px;
+    span {
+        color: #24756a;
+        font-weight: 900;
+        cursor: pointer;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
 }

@@ -22,7 +22,7 @@ export const FriendsPage = React.memo(() => {
 
     useEffect(() => {
     dispatch(getAllUsers(10, 1, '', true))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
     dispatch(getAllUsers(showUsersCount, pageNumber, searchTerm, true))
