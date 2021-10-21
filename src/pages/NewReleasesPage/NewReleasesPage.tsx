@@ -6,26 +6,20 @@ import { AppStateType } from '../../redux/root_reducer'
 import { MusicAlbumCard } from '../../components/MusicAlbumCard/MusicAlbumCard'
 import { getNewReleases } from '../../redux/music_reducer'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
+import { getReleases } from '../../redux/selectors/newReleasesSelectors'
 
 
 export const NewReleasesPage = () => {
 
     const dispatch = useDispatch()
-    const data = useSelector((state: AppStateType) => state.musicReducer.data)
+    const releases = useSelector(getReleases)
     const isLoader = useSelector((state: AppStateType) => state.musicReducer.isLoading)
-    const [newReleases, setNewReleases] = useState(data)
     const [country, setCountry] = useState<string>('US')
     const [countAlbum, setAlbumCount] = useState<number>(5)
 
     useEffect(() => {
         dispatch(getNewReleases(country, countAlbum))
     }, [country, countAlbum, dispatch])
-
-    useEffect(() => {
-        if(data) {
-            setNewReleases(data)
-        }
-    }, [data])
 
     const selectCountry = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = event.target.value
@@ -67,8 +61,7 @@ export const NewReleasesPage = () => {
                     isLoader ? <LoaderTwo /> :
                     <>
                         {
-                        newReleases ? 
-                        newReleases.map((release: any) => <div key={release.id}>
+                        releases.map((release: any) => <div key={release.id}>
                             <MusicAlbumCard 
                             album_type={release.album_type}
                             name={release.name}
@@ -77,7 +70,7 @@ export const NewReleasesPage = () => {
                             image={release.images[0].url}
                             artistName={release.artists[0].name}
                             artistId={release.artists[0].id}
-                        /></div>) : null
+                        /></div>) 
                         }
                     </>
                 }
