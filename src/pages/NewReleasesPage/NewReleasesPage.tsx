@@ -2,18 +2,17 @@ import { useState, useEffect} from 'react'
 import styles from './NewReleases.module.scss'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { AppStateType } from '../../redux/root_reducer'
 import { MusicAlbumCard } from '../../components/MusicAlbumCard/MusicAlbumCard'
 import { getNewReleases } from '../../redux/music_reducer'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
-import { getReleases } from '../../redux/selectors/newReleasesSelectors'
+import { getReleases, handlerLoading } from '../../redux/selectors/musicSelectors'
 
 
 export const NewReleasesPage = () => {
 
     const dispatch = useDispatch()
     const releases = useSelector(getReleases)
-    const isLoader = useSelector((state: AppStateType) => state.musicReducer.isLoading)
+    const isLoader = useSelector(handlerLoading)
     const [country, setCountry] = useState<string>('US')
     const [countAlbum, setAlbumCount] = useState<number>(5)
 

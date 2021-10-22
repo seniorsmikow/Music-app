@@ -2,11 +2,11 @@ import { InferActionsTypes, BaseThunkType } from './root_reducer'
 import { musicAPI } from '../api/spotifyAPI'
 
 let initialState = {
-    data: null as any,
+    newReleasesData: null as any,
     error: null as any,
     categories: null as any,
     queryResponse: null as any,
-    isLoading: false,
+    isLoading: true,
     artistData: null as any,
     albumsData: null as any
 }
@@ -15,9 +15,9 @@ export type InitialStateType = typeof initialState
 
 const musicReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case 'music/GET_DATA': {
+        case 'music/GET_NEW_RELEASES': {
             return {
-                ...state, data: action.data
+                ...state, newReleasesData: action.releases
             }
         }
         case 'music/CATCH_ERROR': {
@@ -57,7 +57,7 @@ const musicReducer = (state = initialState, action: ActionsType): InitialStateTy
 }
 
 export const actions = {
-    music: (data: any) => ({type: 'music/GET_DATA', data} as const),
+    getReleases: (releases: any) => ({type: 'music/GET_NEW_RELEASES', releases} as const),
     error: (error: any) => ({type: 'music/CATCH_ERROR', error} as const),
     categories: (data: any) => ({type: 'music/GET_CATEGORIES', data} as const),
     search: (data: any) => ({type: 'music/SEARCH', data} as const),
@@ -71,7 +71,7 @@ export const getNewReleases = (country: string, limit: number): ThunkType => {
         dispatch(actions.loader(true))
         let albums = await musicAPI.getNewReleases(country, limit)
         try{
-            dispatch(actions.music(albums.albums.items))
+            dispatch(actions.getReleases(albums.albums.items))
             dispatch(actions.loader(false))
         } catch {
             dispatch(actions.error('some error'))
@@ -108,10 +108,24 @@ export const getArtistData = (artistId: string): ThunkType => {
     return async(dispatch) => {
         dispatch(actions.loader(true))
         let data = await musicAPI.getArtistData(artistId)
-        let albums = await musicAPI.getArtistAlbums(artistId)
         try{
             dispatch(actions.getArtistInfo(data))
-            dispatch(actions.getArtistMusic(albums))
+            dispatch(actions.loader(false))
+        } catch {
+            dispatch(actions.error('some error'))
+        }
+        finally {
+            dispatch(actions.loader(false))
+        }
+    }
+}
+
+export const getArtistAlbums = (artistId: string): ThunkType => {
+    return async(dispatch) => {
+        dispatch(actions.loader(true))
+        let data = await musicAPI.getArtistAlbums(artistId)
+        try{
+            dispatch(actions.getArtistMusic(data))
             dispatch(actions.loader(false))
         } catch {
             dispatch(actions.error('some error'))

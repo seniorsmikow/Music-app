@@ -10,11 +10,11 @@ import { MusicAlbumCard } from '../../components/MusicAlbumCard/MusicAlbumCard'
 export const MusicPage = () => {
 
     const dispatch = useDispatch()
-    const albums = useSelector((state: AppStateType) => state.musicReducer.data)
+    const albums = useSelector((state: AppStateType) => state.musicReducer.newReleasesData)
     const categories = useSelector((state: AppStateType) => state.musicReducer.categories)
     const searchAnswer = useSelector((state: AppStateType) => state.musicReducer.queryResponse)
     const [items, setItems] = useState(albums)
-    const [data, setData] = useState(categories)
+    const [setData] = useState(categories)
     const [answer, setAnswer] = useState(searchAnswer)
 
     
@@ -33,7 +33,7 @@ export const MusicPage = () => {
         if(categories) {
             setData(categories)
         }
-    }, [categories])
+    }, [categories, setData])
 
     useEffect(() => {
         if(searchAnswer) {
@@ -41,7 +41,6 @@ export const MusicPage = () => {
         }
     }, [searchAnswer])
 
-    console.log(data)
     
     return (
         <div className={styles.music__page_root}>
