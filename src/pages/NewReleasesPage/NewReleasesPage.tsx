@@ -5,14 +5,13 @@ import { useSelector } from 'react-redux'
 import { MusicAlbumCard } from '../../components/MusicAlbumCard/MusicAlbumCard'
 import { getNewReleases } from '../../redux/music_reducer'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
-import { getReleases, handlerLoading } from '../../redux/selectors/musicSelectors'
+import { getReleases } from '../../redux/selectors/musicSelectors'
 
 
 export const NewReleasesPage = () => {
 
     const dispatch = useDispatch()
     const releases = useSelector(getReleases)
-    const isLoader = useSelector(handlerLoading)
     const [country, setCountry] = useState<string>('US')
     const [countAlbum, setAlbumCount] = useState<number>(5)
 
@@ -57,7 +56,7 @@ export const NewReleasesPage = () => {
 
             <>
                 {
-                    isLoader ? <LoaderTwo /> :
+                    releases ? 
                     <>
                         {
                         releases.map((release: any) => <div key={release.id}>
@@ -72,6 +71,8 @@ export const NewReleasesPage = () => {
                         /></div>) 
                         }
                     </>
+                    :
+                    <LoaderTwo />
                 }
             </>
         </div>

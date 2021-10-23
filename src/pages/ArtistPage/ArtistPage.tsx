@@ -14,6 +14,7 @@ import { getArtist, handlerLoading } from '../../redux/selectors/musicSelectors'
 export const ArtistPage = (props: any) => {
 
     const artistId = props.match.params.artistId
+    console.log(artistId)
     const dispatch = useDispatch()
     const artistData = useSelector(getArtist)
     const isLoading = useSelector(handlerLoading)
