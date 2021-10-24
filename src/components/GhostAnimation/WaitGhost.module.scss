@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nerko+One&display=swap');
 
-$dark-color: #d4ebff;
-$light-color: #5c91f3;
+$dark-color: #fff;
+$light-color: #1a4273;
 
 .main {
     width: 100%;
@@ -82,7 +82,7 @@ $light-color: #5c91f3;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: $dark-color;
     font-size: 50px;
     background-color: $light-color;
     position: absolute;
