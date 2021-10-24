@@ -12,28 +12,33 @@ export const musicTokenAPI = {
         },
         data: 'grant_type=client_credentials',
         method: 'POST'
-      }).then(token => localStorage.setItem('spotifyToken', token.data.access_token))
+      }).then(token => token.data.access_token).then(token => localStorage.setItem('spotifyToken', token))
   }
 }
 
-const axiosHeaders = {
-  headers: { 'Authorization' : 'Bearer ' + localStorage.getItem('spotifyToken')}
+const authInterceptor = (config: any) => { // TODO learn what is config!!!
+  config.headers.authorization = `Bearer ${localStorage.getItem('spotifyToken')}`
+  return config
 }
+
+const $authHost = axios.create()
+
+$authHost.interceptors.request.use(authInterceptor)
 
 export const musicAPI = {
   getNewReleases(country: string, limit: number) {
-        return axios.get(`https://api.spotify.com/v1/browse/new-releases?country=${country}&limit=${limit}`, axiosHeaders).then(res => res.data)
+    return $authHost.get(`https://api.spotify.com/v1/browse/new-releases?country=${country}&limit=${limit}`).then(res => res.data)
   },
   getAllCategories() {
-    return axios.get(`https://api.spotify.com/v1/browse/categories`, axiosHeaders).then(res => res.data)
+    return $authHost.get(`https://api.spotify.com/v1/browse/categories`).then(res => res.data)
   },
   search(query: string) {
-    return axios.get(`https://api.spotify.com/v1/search?query=${query}&type=artist`, axiosHeaders).then(res => res.data)
+    return $authHost.get(`https://api.spotify.com/v1/search?query=${query}&type=artist`).then(res => res.data)
   },
   getArtistData(artistId: string) {
-    return axios.get(`https://api.spotify.com/v1/artists/${artistId}`, axiosHeaders).then(res => res.data)
+    return $authHost.get(`https://api.spotify.com/v1/artists/${artistId}`).then(res => res.data)
   },
   getArtistAlbums(artistId: string) {
-    return axios.get(`https://api.spotify.com/v1/artists/${artistId}/albums`, axiosHeaders).then(res => res.data)
+    return $authHost.get(`https://api.spotify.com/v1/artists/${artistId}/albums`).then(res => res.data)
   }
 }

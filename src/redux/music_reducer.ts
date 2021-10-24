@@ -107,7 +107,6 @@ export const search = (query: string): ThunkType => {
 export const getArtistData = (artistId: string): ThunkType => {
     return async(dispatch) => {
         dispatch(actions.loader(true))
-        debugger
         let data = await musicAPI.getArtistData(artistId)
         try{
             dispatch(actions.getArtistInfo(data))
