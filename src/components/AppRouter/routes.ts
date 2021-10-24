@@ -3,7 +3,6 @@ import { LoginRegPage } from '../../pages/LoginRegPage/LoginRegPage'
 import { UsersPage } from '../../pages/UsersPage/UsersPage'
 import { HomePage } from '../../pages/HomePage/HomePage'
 import { FriendsPage } from '../../pages/FriendsPage/FriendsPage'
-import { MusicPage } from '../../pages/MusicPage/MusicPage'
 import { NewReleasesPage } from '../../pages/NewReleasesPage/NewReleasesPage'
 import { MusicFindPage } from '../../pages/MusicFindPage/MusicFindPage'
 import { ArtistPage } from '../../pages/ArtistPage/ArtistPage'
@@ -14,7 +13,6 @@ import {
     MAIN_ROUTE,
     USER_PROFILE_ROUTE,
     FRIENDS_ROUTE,
-    MUSIC_ROUTE,
     NEW_RELEASES_ROUTE,
     MUSIC_FIND_ROUTE,
     ARTIST_PAGE_ROUTE
@@ -44,10 +42,6 @@ export const publicRoutes = [
     {
         path: USER_PROFILE_ROUTE,
         Component: ProfilePage
-    },
-    {
-        path: MUSIC_ROUTE,
-        Component: MusicPage
     },
     {
         path: NEW_RELEASES_ROUTE,

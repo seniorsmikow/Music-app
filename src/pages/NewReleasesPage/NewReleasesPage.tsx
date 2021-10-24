@@ -2,7 +2,7 @@ import { useState, useEffect} from 'react'
 import styles from './NewReleases.module.scss'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { MusicAlbumCard } from '../../components/MusicAlbumCard/MusicAlbumCard'
+import { NewReleaseCard } from '../../components/NewReleaseCard/NewReleaseCard'
 import { getNewReleases } from '../../redux/music_reducer'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 import { getReleases } from '../../redux/selectors/musicSelectors'
@@ -60,13 +60,13 @@ export const NewReleasesPage = () => {
                     <>
                         {
                         releases.map((release: any) => <div key={release.id}>
-                            <MusicAlbumCard 
+                            <NewReleaseCard 
                             album_type={release.album_type}
                             name={release.name}
                             release_date={release.release_date}
                             total_tracks={release.total_tracks}
                             image={release.images[0].url}
-                            artistName={release.artists[0].name}
+                            artistsNames={release.artists}
                             artistId={release.artists[0].id}
                         /></div>) 
                         }

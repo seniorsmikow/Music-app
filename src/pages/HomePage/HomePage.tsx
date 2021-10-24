@@ -2,14 +2,21 @@ import { GhostAnimation } from '../../components/GhostAnimation/GhostAnimation'
 import styles from './HomePage.module.scss'
 import Button from '@mui/material/Button'
 import { useHistory } from 'react-router'
+import { useSelector } from 'react-redux'
+import { getAuth } from '../../redux/selectors/authSelectors'
 
 
 export const HomePage = () => {
 
     const history = useHistory()
+    const isLogin = useSelector(getAuth)
 
     const toNewReleases = () => {
-        history.push('/new_releases')
+        if(isLogin) {
+            history.push('/new_releases')
+        } else {
+            history.push('/login')
+        }
     }
 
     return (

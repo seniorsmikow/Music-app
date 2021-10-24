@@ -1,4 +1,3 @@
-import React from 'react'
 import {useSelector} from 'react-redux'
 import { AppStateType } from '../../redux/root_reducer'
 import {Switch, Route} from 'react-router-dom'

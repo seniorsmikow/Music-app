@@ -1,63 +1,17 @@
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import { useHistory } from 'react-router'
+import styles from './MusicAlbumCard.module.scss'
 
 type PropsType = {
-    album_type: string,
-    name: string,
-    release_date: string,
-    total_tracks: number,
-    image: string,
-    artistName: string,
-    artistId: string
+    img: string
+    name: string
+    albumType: string
 }
 
-
-export const MusicAlbumCard: React.FC<PropsType> = ({album_type, name, release_date, total_tracks, image, artistName, artistId}) => {
-
-    const history = useHistory()
-
-    const showArtistPage = (id: string) => {
-        history.push(`/artist/${id}`)
-    }
-
+export const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType}) => {
     return (
-        <Card sx={{ display: 'flex', 
-                    backgroundColor: '#f1f1f1', 
-                    justifyContent: 'center', 
-                    margin: '0 auto', 
-                    marginTop: '20px', 
-                    color: '#414208', 
-                    width: '600px',
-                    padding: '0px' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <CardContent sx={{ flex: '1 0 auto' }}>
-                <Typography component="div" variant="h5" sx={{ width: 300 }}>
-                    {name}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                    {album_type}
-                </Typography>
-                <Typography variant="subtitle1"  component="div">
-                    <button onClick={() => showArtistPage(artistId)}>{artistName}</button>
-                </Typography>
-                <Typography component="div" variant="subtitle1" sx={{ width: 300 }} color="text.secondary">
-                    дата выхода {release_date}
-                </Typography>
-                <Typography variant="subtitle1" color="text.secondary" component="div">
-                    количество треков {total_tracks}
-                </Typography>
-                </CardContent>
-            </Box>
-            <CardMedia
-                component="img"
-                sx={{ width: 151 }}
-                image={image}
-                alt="Live from space album cover"
-            />
-        </Card>
+        <div className={styles.music__album_root}>
+           <img src={img} alt="music album"/>
+            {name}
+            {albumType}
+        </div>
     )
 }
