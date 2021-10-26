@@ -14,7 +14,6 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
         case 'profile/GET_PROFILE': {
             return {
                 ...state, profile: action.payload
-                
             }
         }
         default: 
@@ -36,9 +35,7 @@ export const getUserProfile = (userId: number): ThunkType => {
 
 export const loadProfilePhoto = (file: any): ThunkType => {
     return async(dispatch) => {
-        debugger
         let response = await profileAPI.putProfilePhoto(file)
-        console.log(response)
     }
 }
 

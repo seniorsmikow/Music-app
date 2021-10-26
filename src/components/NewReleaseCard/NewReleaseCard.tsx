@@ -43,7 +43,7 @@ export const NewReleaseCard: React.FC<PropsType> = ({album_type, name, release_d
                     {album_type}
                 </Typography>
                 {
-                    artistsNames.map(artist => <Typography variant="subtitle1"  component="div">
+                    artistsNames.map(artist => <Typography variant="subtitle1"  component="div" key={artist.id}>
                                                 <button onClick={() => showArtistPage(artist.id)} key={artist.id}>
                                                     {artist.name}
                                                 </button>

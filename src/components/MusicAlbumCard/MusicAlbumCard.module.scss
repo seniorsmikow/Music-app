@@ -1,5 +1,37 @@
 .music__album_root {
     display: flex;
-    color: black;
-    background-color: #fff;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    width: 100%;
+    position: relative;
+    padding-left: 5px;
+    margin-top: 30px;
+    border-radius: 10px;
+    &:hover {
+        transform: scale(1.01);
+        background-color: rgb(46, 46, 46);
+        img {
+            transform: scale(1.15);
+            cursor: pointer;
+        }
+    }
+}
+
+.music__album_title,  {
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+.music__album_type {
+    position: absolute;
+    right: 150px;
+    color:rgb(94, 94, 94);
+    font-size: 12px;
+}
+
+.music__album_date {
+    position: absolute;
+    right: 40px;
+    color: #ff8e8e;
 }
