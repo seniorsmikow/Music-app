@@ -9,15 +9,20 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import { ArtistAlbums } from '../../components/ArtistAlbums/ArtistAlbums'
 import { getArtist, handlerLoading } from '../../redux/selectors/musicSelectors'
+import { useWindowScroll, useWindowSize } from 'react-use'
 
 
 export const ArtistPage = (props: any) => {
+
+    const {height} = useWindowSize()
+    const {y} = useWindowScroll()
 
     const artistId = props.match.params.artistId
     const dispatch = useDispatch()
     const artistData = useSelector(getArtist)
     const isLoading = useSelector(handlerLoading)
     const [isLikeArtist, setIsLikeArtist] = useState(false)
+    const[offset, setOffset] = useState<number>(0)
 
     useEffect(() => {
         if(artistId) {
@@ -26,12 +31,26 @@ export const ArtistPage = (props: any) => {
     }, [artistId, dispatch])
 
     useEffect(() => {
-        dispatch(getArtistAlbums(artistId))
-    }, [artistId, dispatch])
+        dispatch(getArtistAlbums(artistId, offset, 5))
+    }, [artistId, dispatch, offset])
 
     const likeArtist = () => {
         setIsLikeArtist(!isLikeArtist)
     }
+
+    const doTo = () => {
+        dispatch(getArtistAlbums(artistId, offset + 1, 5))
+        setOffset(offset + 1)
+        console.log(offset)
+    }
+
+    // useEffect(() => {
+    //     if (y > height) {
+    //         dispatch(getArtistAlbums(artistId, offset + 1, 5))
+    //         setOffset(offset + 1)
+    //         console.log('yes', offset)
+    //       }
+    // }, [y, height, dispatch, artistId, offset])
 
     return (
         <div className={styles.artist__page_root}>
@@ -57,7 +76,6 @@ export const ArtistPage = (props: any) => {
                             <Stack direction="row" spacing={1}>
                              { artistData.genres.map((genre: string) => <Chip label={genre} key={genre} className={styles.genre}/>) }
                             </Stack>
-                            
                         }
                     </div>
                 </>
@@ -68,6 +86,7 @@ export const ArtistPage = (props: any) => {
                 {
                     isLoading ? <LoaderTwo /> : <ArtistAlbums />
                 }
+                <button onClick={() => doTo()}>to</button>
             </div>
         </div>
     )

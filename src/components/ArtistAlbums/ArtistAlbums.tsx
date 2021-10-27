@@ -12,7 +12,7 @@ export const ArtistAlbums = () => {
     const [albums, setAlbums] = useState<Array<AlbumType>>()
 
     useEffect(() => {
-        if(data) {
+        if(data.items) {
             let sortData = [...data.items.reduce((map: any, album: AlbumType) => map.set(album.name, album), new Map()).values()]
             setAlbums(sortData)
         }
@@ -23,13 +23,17 @@ export const ArtistAlbums = () => {
             <h1>Дискография</h1>
             {
                 albums ?
-                albums.map((album: AlbumType) => <MusicAlbumCard 
-                                                img={album.images[2].url}
-                                                name={album.name}
-                                                albumType={album.album_type}
-                                                releaseDate={album.release_date}
-                                                key={album.id}
-                                                />)
+                <div>
+                    {
+                        albums.map((album: AlbumType) => <MusicAlbumCard 
+                                                            img={album.images[2].url}
+                                                            name={album.name}
+                                                            albumType={album.album_type}
+                                                            releaseDate={album.release_date}
+                                                            key={album.id}
+                        />)
+                    }
+                </div>
                 : <div>Loading...</div>
             }
         </div>

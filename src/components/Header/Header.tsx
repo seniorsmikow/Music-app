@@ -21,7 +21,6 @@ const Header = () => {
     const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
     const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)
     const userId = useSelector((state: AppStateType) => state.profileReducer.profile?.userId)
-    const answer = useSelector((state: AppStateType) => state.musicReducer.queryResponse)
 
     const [query, setQuery] = useState('')
 
@@ -36,8 +35,6 @@ const Header = () => {
             history.push('/musicFind')
         }
     }
-
-    console.log(answer)
 
     return (
         <div className={styles.header__container}>

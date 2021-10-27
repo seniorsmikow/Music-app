@@ -1,5 +1,6 @@
 import axios from "axios"
 import { SpotifyCredentials } from '../credentials/credentials'
+import { ArtistDataType, AlbumsDataType } from '../types/music_types'
 
 const credentials = SpotifyCredentials()
 
@@ -36,9 +37,9 @@ export const musicAPI = {
     return $authHost.get(`https://api.spotify.com/v1/search?query=${query}&type=artist`).then(res => res.data)
   },
   getArtistData(artistId: string) {
-    return $authHost.get(`https://api.spotify.com/v1/artists/${artistId}`).then(res => res.data)
+    return $authHost.get<ArtistDataType>(`https://api.spotify.com/v1/artists/${artistId}`).then(res => res.data)
   },
-  getArtistAlbums(artistId: string) {
-    return $authHost.get(`https://api.spotify.com/v1/artists/${artistId}/albums`).then(res => res.data)
+  getArtistAlbums(artistId: string, offset: number = 0, limit: number = 50) {
+    return $authHost.get<AlbumsDataType>(`https://api.spotify.com/v1/artists/${artistId}/albums?offset=${offset}&limit=${limit}`).then(res => res.data)
   }
 }
