@@ -1,9 +1,15 @@
 import { AppStateType } from '../root_reducer'
+import { createSelector } from 'reselect'
+import { AlbumType, AlbumsDataType } from '../../types/music_types'
 
-export const getReleases = (state: AppStateType) => state.musicReducer.newReleasesData
+export const selectNewReleases = (state: AppStateType) => state.musicReducer.newReleasesData
 
-export const handlerLoading = (state: AppStateType) => state.musicReducer.isLoading
+export const selectLoading = (state: AppStateType) => state.musicReducer.isLoading
 
-export const getArtist = (state: AppStateType) => state.musicReducer.artistData
+export const selectArtistData = (state: AppStateType) => state.musicReducer.artistData
 
-export const artistAlbums = (state: AppStateType) => state.musicReducer.albumsData
+const selectArtistAlbums = (state: AppStateType) => state.musicReducer.albumsData
+
+export const getArtistAlbums = createSelector(selectArtistAlbums, (data: AlbumsDataType) => {
+    return [...data.items.reduce((map: any, album: AlbumType) => map.set(album.name, album), new Map()).values()]
+})

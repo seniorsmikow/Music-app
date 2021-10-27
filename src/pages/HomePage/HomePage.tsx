@@ -3,13 +3,13 @@ import styles from './HomePage.module.scss'
 import Button from '@mui/material/Button'
 import { useHistory } from 'react-router'
 import { useSelector } from 'react-redux'
-import { getAuth } from '../../redux/selectors/authSelectors'
+import { selectAuth } from '../../redux/selectors/authSelectors'
 
 
 export const HomePage = () => {
 
     const history = useHistory()
-    const isLogin = useSelector(getAuth)
+    const isLogin = useSelector(selectAuth)
 
     const toNewReleases = () => {
         if(isLogin) {
