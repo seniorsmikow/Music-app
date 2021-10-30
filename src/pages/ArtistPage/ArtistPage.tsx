@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import { ArtistAlbums } from '../../components/ArtistAlbums/ArtistAlbums'
-import { selectArtistData, selectLoading } from '../../redux/selectors/musicSelectors'
+import { fetchArtistData, getLoading } from '../../redux/selectors/musicSelectors'
 import { useWindowScroll, useWindowSize } from 'react-use'
 
 
@@ -19,8 +19,8 @@ export const ArtistPage = (props: any) => {
 
     const artistId = props.match.params.artistId
     const dispatch = useDispatch()
-    const artistData = useSelector(selectArtistData)
-    const isLoading = useSelector(selectLoading)
+    const artistData = useSelector(fetchArtistData)
+    const isLoading = useSelector(getLoading)
     const [isLikeArtist, setIsLikeArtist] = useState(false)
     const[offset, setOffset] = useState<number>(0)
 

@@ -41,5 +41,8 @@ export const musicAPI = {
   },
   getArtistAlbums(artistId: string, offset: number = 0, limit: number = 50) {
     return $authHost.get<AlbumsDataType>(`https://api.spotify.com/v1/artists/${artistId}/albums?offset=${offset}&limit=${limit}`).then(res => res.data)
+  },
+  getAlbumData(albumId: string) {
+    return $authHost.get(`https://api.spotify.com/v1/albums/${albumId}/tracks`).then(res => res.data)
   }
 }

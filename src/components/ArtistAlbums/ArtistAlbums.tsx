@@ -6,22 +6,23 @@ import { AlbumType } from '../../types/music_types'
 
 
 export const ArtistAlbums = () => {
-
-    let data = useSelector(getArtistAlbums)
+    
+    let albums = useSelector(getArtistAlbums)
 
     return (
         <div className={styles.artist__albums_root}>
             <h1>Дискография</h1>
             {
-                data ?
+                albums ?
                 <div>
                     {
-                        data.map((album: AlbumType) => <MusicAlbumCard 
+                        albums.map((album: AlbumType) => <MusicAlbumCard 
                                                             img={album.images[2].url}
                                                             name={album.name}
                                                             albumType={album.album_type}
                                                             releaseDate={album.release_date}
                                                             key={album.id}
+                                                            id={album.id}
                         />)
                     }
                 </div>

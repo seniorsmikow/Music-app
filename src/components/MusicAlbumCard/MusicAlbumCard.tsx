@@ -6,9 +6,10 @@ type PropsType = {
     albumType: string
     totalTracks?: number
     releaseDate: string
+    id: string
 }
 
-export const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType, releaseDate}) => {
+export const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType, releaseDate, id}) => {
     return (
         <div className={styles.music__album_root}>
            <img src={img} alt="music album"/>

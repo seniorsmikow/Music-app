@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux'
 import { NewReleaseCard } from '../../components/NewReleaseCard/NewReleaseCard'
 import { getNewReleases } from '../../redux/music_reducer'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
-import { selectNewReleases } from '../../redux/selectors/musicSelectors'
+import { fetchNewReleases } from '../../redux/selectors/musicSelectors'
 
 
 export const NewReleasesPage = () => {
 
     const dispatch = useDispatch()
-    const releases = useSelector(selectNewReleases)
+    const releases = useSelector(fetchNewReleases)
     const [country, setCountry] = useState<string>('US')
     const [countAlbum, setAlbumCount] = useState<number>(5)
 
