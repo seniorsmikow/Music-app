@@ -1,14 +1,19 @@
 import styles from './ArtistAlbums.module.scss'
 import { useSelector } from 'react-redux'
-import { getArtistAlbums } from '../../redux/selectors/musicSelectors'
+import { getAlbums } from '../../redux/selectors/musicSelectors'
 import { MusicAlbumCard } from '../MusicAlbumCard/MusicAlbumCard'
 import { AlbumType } from '../../types/music_types'
+import Button from '@mui/material/Button'
 
 
 export const ArtistAlbums = () => {
     
-    let albums = useSelector(getArtistAlbums)
-
+    let albums = useSelector(getAlbums)
+    // const getNextAlbums = () => {
+    //     dispatch(getArtistAlbums(artistId, offset + 5, 5))
+    //     setOffset(offset + 5)
+    // }
+    
     return (
         <div className={styles.artist__albums_root}>
             <h1>Дискография</h1>
@@ -28,6 +33,7 @@ export const ArtistAlbums = () => {
                 </div>
                 : <div>Loading...</div>
             }
+            <Button variant="contained" >Загрузить ещё</Button>
         </div>
     )
 }

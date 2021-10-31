@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import styles from './ArtistPage.module.scss'
-import { getArtistData, getArtistAlbums } from '../../redux/music_reducer'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
@@ -9,48 +8,28 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import { ArtistAlbums } from '../../components/ArtistAlbums/ArtistAlbums'
 import { fetchArtistData, getLoading } from '../../redux/selectors/musicSelectors'
-import { useWindowScroll, useWindowSize } from 'react-use'
+import { getArtistData, getArtistAlbums } from '../../redux/music_reducer'
 
 
 export const ArtistPage = (props: any) => {
 
-    const {height} = useWindowSize()
-    const {y} = useWindowScroll()
-
     const artistId = props.match.params.artistId
-    const dispatch = useDispatch()
     const artistData = useSelector(fetchArtistData)
     const isLoading = useSelector(getLoading)
     const [isLikeArtist, setIsLikeArtist] = useState(false)
-    const[offset, setOffset] = useState<number>(0)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        if(artistId) {
-            dispatch(getArtistData(artistId))
-        }
-    }, [artistId, dispatch])
+        dispatch(getArtistData(artistId))
+    }, [dispatch, artistId])
 
     useEffect(() => {
-        dispatch(getArtistAlbums(artistId, offset, 5))
-    }, [artistId, dispatch, offset])
+        dispatch(getArtistAlbums(artistId, 0, 5))
+    }, [dispatch, artistId])
 
     const likeArtist = () => {
         setIsLikeArtist(!isLikeArtist)
     }
-
-    const doTo = () => {
-        dispatch(getArtistAlbums(artistId, offset + 1, 5))
-        setOffset(offset + 1)
-        console.log(offset)
-    }
-
-    // useEffect(() => {
-    //     if (y > height) {
-    //         dispatch(getArtistAlbums(artistId, offset + 1, 5))
-    //         setOffset(offset + 1)
-    //         console.log('yes', offset)
-    //       }
-    // }, [y, height, dispatch, artistId, offset])
 
     return (
         <div className={styles.artist__page_root}>
@@ -86,7 +65,6 @@ export const ArtistPage = (props: any) => {
                 {
                     isLoading ? <LoaderTwo /> : <ArtistAlbums />
                 }
-                <button onClick={() => doTo()}>to</button>
             </div>
         </div>
     )

@@ -28,7 +28,7 @@ $authHost.interceptors.request.use(authInterceptor)
 
 export const musicAPI = {
   getNewReleases(country: string, limit: number) {
-    return $authHost.get(`https://api.spotify.com/v1/browse/new-releases?country=${country}&limit=${limit}`).then(res => res.data)
+    return $authHost.get(`https://api.spotify.com/v1/browse/new-releases?country=${country}&limit=${limit}`).then(res => res.data.albums)
   },
   getAllCategories() {
     return $authHost.get(`https://api.spotify.com/v1/browse/categories`).then(res => res.data)
@@ -39,7 +39,7 @@ export const musicAPI = {
   getArtistData(artistId: string) {
     return $authHost.get<ArtistDataType>(`https://api.spotify.com/v1/artists/${artistId}`).then(res => res.data)
   },
-  getArtistAlbums(artistId: string, offset: number = 0, limit: number = 50) {
+  getArtistAlbums(artistId: string, offset: number = 5, limit: number = 50) {
     return $authHost.get<AlbumsDataType>(`https://api.spotify.com/v1/artists/${artistId}/albums?offset=${offset}&limit=${limit}`).then(res => res.data)
   },
   getAlbumData(albumId: string) {

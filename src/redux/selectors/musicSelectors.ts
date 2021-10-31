@@ -8,9 +8,9 @@ export const getLoading = (state: AppStateType) => state.musicReducer.isLoading
 
 export const fetchArtistData = (state: AppStateType) => state.musicReducer.artistData
 
-const getAlbums = (state: AppStateType) => state.musicReducer.albumsData
+const getArtistAlbums = (state: AppStateType) => state.musicReducer.albumsData
 
-export const getArtistAlbums = createSelector(
-    getAlbums, 
+export const getAlbums = createSelector(
+    getArtistAlbums, 
     (items: Array<AlbumType>) => [...items.reduce((map: any, album: AlbumType) => map.set(album.name, album), new Map()).values()]
 )

@@ -79,7 +79,7 @@ export const getNewReleases = (country: string, limit: number): ThunkType => {
         dispatch(actions.loader(true))
         let albums = await musicAPI.getNewReleases(country, limit)
         try{
-            dispatch(actions.getReleases(albums.albums.items))
+            dispatch(actions.getReleases(albums.items))
             dispatch(actions.loader(false))
         } catch {
             dispatch(actions.error('some error'))
@@ -131,6 +131,7 @@ export const getArtistData = (artistId: string): ThunkType => {
 export const getArtistAlbums = (artistId: string, offset: number, limit: number): ThunkType => {
     return async(dispatch) => {
         dispatch(actions.loader(true))
+        debugger
         let data = await musicAPI.getArtistAlbums(artistId, offset, limit)
         try{
             dispatch(actions.getAlbums(data.items))
