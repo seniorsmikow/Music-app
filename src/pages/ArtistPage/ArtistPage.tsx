@@ -9,15 +9,22 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder'
 import { ArtistAlbums } from '../../components/ArtistAlbums/ArtistAlbums'
 import { fetchArtistData, getLoading } from '../../redux/selectors/musicSelectors'
 import { getArtistData, getArtistAlbums } from '../../redux/music_reducer'
+import { useParams } from 'react-router-dom'
+interface RouteParams {
+    artistId: string
+}
 
 
-export const ArtistPage = (props: any) => {
+export const ArtistPage = () => {
 
-    const artistId = props.match.params.artistId
+    const params = useParams<RouteParams>()
+    const {artistId} = params
+
     const artistData = useSelector(fetchArtistData)
     const isLoading = useSelector(getLoading)
     const [isLikeArtist, setIsLikeArtist] = useState(false)
     const dispatch = useDispatch()
+
 
     useEffect(() => {
         dispatch(getArtistData(artistId))

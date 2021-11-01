@@ -2,7 +2,7 @@ import styles from './MusicAlbumCard.module.scss'
 import { useDispatch } from 'react-redux'
 import { getAlbumData } from '../../redux/music_reducer'
 import { AlbumInfo } from '../AlbumInfo/AlbumInfo'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 type PropsType = {
     img: string
@@ -17,10 +17,6 @@ export const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType, relea
 
     const dispatch = useDispatch()
     const[visible, setVisible] = useState(false)
-
-    // useEffect(() => {
-    //     setVisible(true)
-    // }, [])
 
     const getAlbum = (albumId: string) => {
         setVisible(!visible)

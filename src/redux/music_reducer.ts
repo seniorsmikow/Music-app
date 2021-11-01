@@ -131,7 +131,6 @@ export const getArtistData = (artistId: string): ThunkType => {
 export const getArtistAlbums = (artistId: string, offset: number, limit: number): ThunkType => {
     return async(dispatch) => {
         dispatch(actions.loader(true))
-        debugger
         let data = await musicAPI.getArtistAlbums(artistId, offset, limit)
         try{
             dispatch(actions.getAlbums(data.items))

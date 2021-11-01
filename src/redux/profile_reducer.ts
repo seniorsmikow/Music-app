@@ -35,7 +35,7 @@ export const getUserProfile = (userId: number): ThunkType => {
 
 export const loadProfilePhoto = (file: any): ThunkType => {
     return async(dispatch) => {
-        let response = await profileAPI.putProfilePhoto(file)
+        //let response = await profileAPI.putProfilePhoto(file)
     }
 }
 
