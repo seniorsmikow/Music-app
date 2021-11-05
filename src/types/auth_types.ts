@@ -37,3 +37,22 @@ export type UserType = {
 }
 
 export type EntryFormType = 'login' | 'registration'
+
+export type AuthInterceptorConfig = {
+    adapter?: () => void
+    data?: {}
+    headers: {
+        Accept: string
+        authorization: string
+    }
+    maxBodyLength: number
+    maxContentLength: number
+    method: string
+    timeout: number
+    transformRequest?: () => void
+    transformResponse?: () => void
+    url: string
+    validateStatus?: () => void
+    xsrfCookieName: string
+    xsrfHeaderName: string
+}

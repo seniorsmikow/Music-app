@@ -10,6 +10,7 @@ import { ArtistAlbums } from '../../components/ArtistAlbums/ArtistAlbums'
 import { fetchArtistData, getLoading } from '../../redux/selectors/musicSelectors'
 import { getArtistData, getArtistAlbums } from '../../redux/music_reducer'
 import { useParams } from 'react-router-dom'
+
 interface RouteParams {
     artistId: string
 }

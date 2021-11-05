@@ -1,6 +1,7 @@
-import axios from "axios"
+import axios from 'axios'
 import { SpotifyCredentials } from '../credentials/credentials'
 import { ArtistDataType, AlbumsDataType } from '../types/music_types'
+import { AxiosRequestConfig } from 'axios'
 
 const credentials = SpotifyCredentials()
 
@@ -17,7 +18,7 @@ export const musicTokenAPI = {
   }
 }
 
-const authInterceptor = (config: any) => { // TODO learn what is config!!!
+const authInterceptor = (config: AxiosRequestConfig) => { 
   config.headers.authorization = `Bearer ${localStorage.getItem('spotifyToken')}`
   return config
 }
