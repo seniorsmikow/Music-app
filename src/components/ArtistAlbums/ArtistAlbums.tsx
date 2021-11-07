@@ -3,12 +3,13 @@ import { useSelector } from 'react-redux'
 import { getAlbums } from '../../redux/selectors/musicSelectors'
 import { MusicAlbumCard } from '../MusicAlbumCard/MusicAlbumCard'
 import { AlbumType } from '../../types/music_types'
+import { LoaderTwo } from '../LoaderTwo/LoaderTwo'
 
 
 export const ArtistAlbums = () => {
     
-    let albums = useSelector(getAlbums)
-    
+    const albums = useSelector(getAlbums)
+
     return (
         <div className={styles.artist__albums_root}>
             <h1>Дискография</h1>
@@ -26,7 +27,7 @@ export const ArtistAlbums = () => {
                         />)
                     }
                 </div>
-                : <div>Loading...</div>
+                : <LoaderTwo />
             }
         </div>
     )

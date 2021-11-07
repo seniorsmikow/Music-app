@@ -26,7 +26,6 @@ export const ArtistPage = () => {
     const [isLikeArtist, setIsLikeArtist] = useState(false)
     const dispatch = useDispatch()
 
-
     useEffect(() => {
         dispatch(getArtistData(artistId))
     }, [dispatch, artistId])

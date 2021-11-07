@@ -14,3 +14,7 @@ export const getAlbums = createSelector(
     getArtistAlbums, 
     (items: Array<AlbumType>) => [...items.reduce((map: any, album: AlbumType) => map.set(album.name, album), new Map()).values()]
 )
+
+export const getAlbum = (state: AppStateType) => state.musicReducer.albumData
+
+export const getAlbumId = (state: AppStateType) => state.artistReducer.albumId

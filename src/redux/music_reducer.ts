@@ -10,7 +10,6 @@ let initialState = {
     isLoading: true,
     artistData: null as any,
     albumsData: [] as Array<AlbumType>,
-    albumData: null as any
 }
 
 export type InitialStateType = typeof initialState
@@ -52,11 +51,6 @@ const musicReducer = (state = initialState, action: ActionsType): InitialStateTy
                 ...state, albumsData: action.data
             }
         }
-        case 'music/GET_ALBUM_DATA': {
-            return {
-                ...state, albumData: action.data
-            }
-        }
         default: 
             return state
     }
@@ -71,7 +65,6 @@ export const actions = {
     loader: (load: boolean) => ({type: 'music/LOAD_DATA', load} as const),
     getArtistInfo: (data: ArtistDataType) => ({type: 'music/GET_ARTIST', data} as const),
     getAlbums: (data: Array<AlbumType>) => ({type: 'music/GET_ARTIST_ALBUMS', data} as const),
-    getAlbum: (data: any) => ({type: 'music/GET_ALBUM_DATA', data} as const)
 }
 
 export const getNewReleases = (country: string, limit: number): ThunkType => {
@@ -134,22 +127,6 @@ export const getArtistAlbums = (artistId: string, offset: number, limit: number)
         let data = await musicAPI.getArtistAlbums(artistId, offset, limit)
         try{
             dispatch(actions.getAlbums(data.items))
-            dispatch(actions.loader(false))
-        } catch {
-            dispatch(actions.error('some error'))
-        }
-        finally {
-            dispatch(actions.loader(false))
-        }
-    }
-}
-
-export const getAlbumData = (albumId: string): ThunkType => {
-    return async(dispatch) => {
-        dispatch(actions.loader(true))
-        let data = await musicAPI.getAlbumData(albumId)
-        try{
-            dispatch(actions.getAlbum(data))
             dispatch(actions.loader(false))
         } catch {
             dispatch(actions.error('some error'))

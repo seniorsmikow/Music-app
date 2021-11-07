@@ -1,9 +1,10 @@
-.album__info_root {
+.visible {
     height: 400px;
     background-color: red;
     display: block;
+    
 }
 
-.not {
+.visible.notVisible {
     display: none;
 }
