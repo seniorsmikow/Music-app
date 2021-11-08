@@ -16,6 +16,13 @@ export type ImagesType = {
 export type ExternalUrlType = {
     spotify: string
     href?: string
+    id?: string
+    is_local?: boolean
+    name?: string
+    preview_url?: string | null
+    track_number?: number
+    type?: string
+    uri?: string
 }
 
 export type AlbumArtistType = {
@@ -84,4 +91,21 @@ export type ArtistDataType = {
         href: null | string
         total: number
     }
+}
+
+export type AlbumInfoType = {
+    disc_number: number
+    duration_ms: number
+    explicit: boolean
+    href: string
+    id: string
+    is_local: boolean
+    name: string
+    preview_url?: string | null
+    track_number: number
+    type: string
+    uri: string
+    external_urls: ExternalUrlType
+    artists: Array<AlbumArtistType>
+    available_markets: Array<string>
 }

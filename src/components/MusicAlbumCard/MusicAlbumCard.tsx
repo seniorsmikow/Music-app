@@ -1,11 +1,10 @@
 import styles from './MusicAlbumCard.module.scss'
 import { AlbumInfo } from '../AlbumInfo/AlbumInfo'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { setArtistAlbumId } from '../../redux/artist_reducer'
-import { getAlbumId } from '../../redux/selectors/musicSelectors'
-import { getAlbumData } from '../../redux/artist_reducer'
+import { getAlbum, getActive } from '../../redux/selectors/musicSelectors'
+import { getAlbumData, handleActiveElement } from '../../redux/artist_reducer'
 
 type PropsType = {
     img: string
@@ -18,22 +17,19 @@ type PropsType = {
 
 export const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType, releaseDate, id}) => {
 
-    const[active] = useState(false)
+    const active = useSelector(getActive)
+    const[activeEl, setActiveEl] = useState(active)
     const dispatch = useDispatch()
-    const albumId = useSelector(getAlbumId)
+    const album = useSelector(getAlbum)
 
-    const handleAlbumId = () => {
-        dispatch(setArtistAlbumId(id))
+    const handleActive = () => {
+        dispatch(handleActiveElement(true))
+        setActiveEl(true)
+        dispatch(getAlbumData(id))
     }
 
-    useEffect(() => {
-        if(albumId) {
-            dispatch(getAlbumData(albumId))
-        }
-    })
-
     return (
-        <div className={styles.music__album_root} onClick={() => handleAlbumId()}>
+        <div className={styles.music__album_root} onClick={() => handleActive()}>
             <div className={styles.music__album_info}>
                 <img src={img} alt="music album"/>
                 <div className={styles.music__album_title}>{name}</div>
@@ -42,8 +38,14 @@ export const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType, relea
                 }
                 <div className={styles.music__album_date}>{releaseDate}</div>
             </div>
-            <div className = {cn(styles.visible, active ? styles.visible_active : '')}>
-                <AlbumInfo />
+            <div className = {cn(styles.visible, activeEl ? styles.visible_active : '')}>
+                {
+                    album ? <AlbumInfo 
+                                items={album.items}
+                            />
+                            : "Loading..."
+                }
+                
             </div>
         </div>
     )

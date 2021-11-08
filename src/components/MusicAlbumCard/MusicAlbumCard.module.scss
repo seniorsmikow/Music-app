@@ -54,8 +54,9 @@
 .visible_active {
     width: 100%;
     top: 100px;
-    height: 200px;
-    background-color: green;
+    min-height: 200px;
     display: block;
     z-index: 1;
+    overflow: hidden;
+    background-image: linear-gradient(to top, #f43b47 0%, #453a94 100%);
 }
