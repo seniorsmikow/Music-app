@@ -1,10 +1,15 @@
+import { useCallback, useState, useEffect  } from 'react'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Typography from '@mui/material/Typography'
+import Avatar from '@mui/material/Avatar'
 import styles from './MusicAlbumCard.module.scss'
 import { AlbumInfo } from '../AlbumInfo/AlbumInfo'
-import { useState } from 'react'
-import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAlbum, getActive } from '../../redux/selectors/musicSelectors'
-import { getAlbumData, handleActiveElement } from '../../redux/artist_reducer'
+import { getAlbum } from '../../redux/selectors/musicSelectors'
+import { getAlbumData } from '../../redux/artist_reducer'
+import { AlbumDataType } from '../../types/albums_types'
 
 type PropsType = {
     img: string
@@ -15,38 +20,52 @@ type PropsType = {
     id: string
 }
 
-export const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType, releaseDate, id}) => {
+export  const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType, releaseDate, id}) => {
 
-    const active = useSelector(getActive)
-    const[activeEl, setActiveEl] = useState(active)
     const dispatch = useDispatch()
     const album = useSelector(getAlbum)
+    console.log(album)
+    const [albumData, setAlbumData] = useState<AlbumDataType | null>(album)
 
-    const handleActive = () => {
-        dispatch(handleActiveElement(true))
-        setActiveEl(true)
-        dispatch(getAlbumData(id))
-    }
+    const showAlbum = useCallback(
+        () => {
+            setAlbumData(null)
+            dispatch(getAlbumData(id))
+        },
+        [id, dispatch],
+    )
+
+    useEffect(() => {
+        if(album) {
+            setAlbumData(album)
+        }
+    }, [album])
 
     return (
-        <div className={styles.music__album_root} onClick={() => handleActive()}>
-            <div className={styles.music__album_info}>
-                <img src={img} alt="music album"/>
-                <div className={styles.music__album_title}>{name}</div>
-                { 
-                    albumType === 'single' ? <div className={styles.music__album_type}>{albumType}</div> : null
-                }
-                <div className={styles.music__album_date}>{releaseDate}</div>
-            </div>
-            <div className = {cn(styles.visible, activeEl ? styles.visible_active : '')}>
+        <div className={styles.root} onClick={() => showAlbum()}>
+            <Accordion className={styles.root2}>
+            <AccordionSummary >
+                <Avatar alt="Album" src={img} />
+                <Typography>{name}</Typography>
+                <Typography>{albumType}</Typography>
+                <Typography>{releaseDate}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                
                 {
-                    album ? <AlbumInfo 
-                                items={album.items}
-                            />
+                    albumData ? <AlbumInfo 
+                                items={[...albumData.items]}/>
                             : "Loading..."
                 }
-                
-            </div>
+
+            </AccordionDetails>
+            </Accordion>
+            <Accordion disabled>
+            <AccordionSummary
+                aria-controls="panel3a-content"
+                id="panel3a-header">
+            </AccordionSummary>
+            </Accordion>
         </div>
     )
 }

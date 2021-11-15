@@ -60,3 +60,15 @@
     overflow: hidden;
     background-image: linear-gradient(to top, #f43b47 0%, #453a94 100%);
 }
+
+.root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.root2 {
+    background-color: red;
+    width: 100%;
+}

@@ -16,7 +16,3 @@ export const getAlbums = createSelector(
 )
 
 export const getAlbum = (state: AppStateType) => state.artistReducer.albumData
-
-export const getAlbumId = (state: AppStateType) => state.artistReducer.albumId
-
-export const getActive = (state: AppStateType) => state.artistReducer.isActive
