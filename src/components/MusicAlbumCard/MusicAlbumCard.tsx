@@ -1,15 +1,8 @@
-import { useCallback, useState, useEffect  } from 'react'
-import Accordion from '@mui/material/Accordion'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import Typography from '@mui/material/Typography'
-import Avatar from '@mui/material/Avatar'
+import React from "react"
 import styles from './MusicAlbumCard.module.scss'
-import { AlbumInfo } from '../AlbumInfo/AlbumInfo'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAlbum } from '../../redux/selectors/musicSelectors'
-import { getAlbumData } from '../../redux/artist_reducer'
-import { AlbumDataType } from '../../types/albums_types'
+import { useHistory } from 'react-router-dom'
+import { useDispatch } from "react-redux"
+import { setAlbumTitle, setAlbumImage } from '../../redux/album_reducer'
 
 type PropsType = {
     img: string
@@ -20,52 +13,22 @@ type PropsType = {
     id: string
 }
 
-export  const MusicAlbumCard: React.FC<PropsType> = ({img, name, albumType, releaseDate, id}) => {
+export  const MusicAlbumCard: React.FC<PropsType> = React.memo(({img, name, albumType, releaseDate, id}) => {
 
+    const history = useHistory()
     const dispatch = useDispatch()
-    const album = useSelector(getAlbum)
-    console.log(album)
-    const [albumData, setAlbumData] = useState<AlbumDataType | null>(album)
 
-    const showAlbum = useCallback(
-        () => {
-            setAlbumData(null)
-            dispatch(getAlbumData(id))
-        },
-        [id, dispatch],
-    )
-
-    useEffect(() => {
-        if(album) {
-            setAlbumData(album)
-        }
-    }, [album])
+    const showAlbum = (albumId: string) => {
+        dispatch(setAlbumTitle(name))
+        dispatch(setAlbumImage(img))
+        history.push(`/musicAlbum/${albumId}`)
+    }
 
     return (
-        <div className={styles.root} onClick={() => showAlbum()}>
-            <Accordion className={styles.root2}>
-            <AccordionSummary >
-                <Avatar alt="Album" src={img} />
-                <Typography>{name}</Typography>
-                <Typography>{albumType}</Typography>
-                <Typography>{releaseDate}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-                
-                {
-                    albumData ? <AlbumInfo 
-                                items={[...albumData.items]}/>
-                            : "Loading..."
-                }
-
-            </AccordionDetails>
-            </Accordion>
-            <Accordion disabled>
-            <AccordionSummary
-                aria-controls="panel3a-content"
-                id="panel3a-header">
-            </AccordionSummary>
-            </Accordion>
+        <div className={styles.album__card_root} onClick={() => showAlbum(id)}>
+            <div>{name}</div>
+            <div>{albumType}</div>
+            <div>{releaseDate}</div>
         </div>
     )
-}
+})

@@ -7,7 +7,6 @@ let initialState = {
     error: '' as string,
     isLoading: true,
     albumsData: [] as Array<AlbumType>,
-    albumData: null as AlbumDataType | null,
 }
 
 export type InitialStateType = typeof initialState
@@ -22,11 +21,6 @@ const musicReducer = (state = initialState, action: ActionsType): InitialStateTy
         case 'artist/CATCH_ERROR': {
             return {
                 ...state, error: action.error
-            }
-        }
-        case 'artist/GET_ALBUM_DATA': {
-            return {
-                ...state, albumData: action.data
             }
         }
         default: 

@@ -1,74 +1,8 @@
-.music__album_root {
+.album__card_root {
     display: flex;
     flex-direction: column;
-    position: relative;
-}
-
-.music__album_info {
-    display: flex;
     align-items: center;
-    color: rgb(255, 255, 255);
-    margin-bottom: 20px;
-    width: 100%;
-    position: relative;
-    padding-left: 5px;
-    margin-top: 30px;
-    border-radius: 10px;
-    &:hover {
-        transform: scale(1.01);
-        background-color: rgb(46, 46, 46);
-        img {
-            transform: scale(1.15);
-            cursor: pointer;
-        }
-    }
-}
-
-.music__album_title,  {
-    margin-left: 30px;
-    cursor: pointer;
-}
-
-.music__album_type {
-    position: absolute;
-    right: 150px;
-    color:rgb(94, 94, 94);
-    font-size: 12px;
-}
-
-.music__album_date {
-    position: absolute;
-    right: 40px;
-    color: #ff8e8e;
-}
-
-.visible {
-    width: 100%;
-    position: absolute;
-    top: -200px;
-    display: block;
-    overflow: hidden;
-    display: none;
-}
-
-.visible_active {
-    width: 100%;
-    top: 100px;
-    min-height: 200px;
-    display: block;
-    z-index: 1;
-    overflow: hidden;
-    background-image: linear-gradient(to top, #f43b47 0%, #453a94 100%);
-}
-
-.root {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.root2 {
+    justify-content: space-between;
     background-color: red;
-    width: 100%;
+    margin-bottom: 20px;
 }

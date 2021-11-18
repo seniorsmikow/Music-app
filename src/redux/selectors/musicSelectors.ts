@@ -15,4 +15,8 @@ export const getAlbums = createSelector(
     (items: Array<AlbumType>) => [...items.reduce((map: any, album: AlbumType) => map.set(album.name, album), new Map()).values()]
 )
 
-export const getAlbum = (state: AppStateType) => state.artistReducer.albumData
+export const getAlbum = (state: AppStateType) => state.albumReducer.albumData
+
+export const getAlbumTitle = (state: AppStateType) => state.albumReducer.albumTitle
+
+export const getAlbumImage = (state: AppStateType) => state.albumReducer.albumImage

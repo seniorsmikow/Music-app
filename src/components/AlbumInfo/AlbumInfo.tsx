@@ -1,57 +1,77 @@
 import { showTrackTime } from '../../helpers/time'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAlbumData } from '../../redux/album_reducer'
+import { getAlbum } from '../../redux/selectors/musicSelectors'
 import styles from './AlbumInfo.module.scss'
 import { useState, useEffect, useCallback } from 'react'
-import { AlbumItemType} from '../../types/albums_types'
+import { AlbumDataType, AlbumItemType} from '../../types/albums_types'
 import Button from '@mui/material/Button'
 
 type PropsType = {
-    items: Array<AlbumItemType>
+    albumId: string
 }
 
 
-export const AlbumInfo: React.FC<PropsType> = ({items}) => {
+export const AlbumInfo: React.FC<PropsType> = ({albumId}) => {
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getAlbumData(albumId))
+    }, [albumId, dispatch])
+
+    const album = useSelector(getAlbum)
     const [totalTime, setTotalTime] = useState(0)
     const [time, setTime] = useState<Array<number>>([])
-    const [tracks, setTracks] = useState<Array<AlbumItemType>>([...items])
     const [sorted, setSorted] = useState(false)
+    const [tracks, setTracks] = useState<Array<AlbumItemType> | null>(null)
 
-    const getTotalTracksTime = useCallback((items: Array<AlbumItemType>) => {
-        setTime(items.map((item: AlbumItemType) => time.push(item.duration_ms)))
+    useEffect(() => {
+        if(album) {
+            setTracks(album.items)
+        }
+    }, [])
+
+    //console.log(tracks[0].name)
+    
+    const getTotalTracksTime = useCallback((tracks: Array<AlbumItemType>) => {
+        setTime(tracks.map((track: AlbumItemType) => time.push(track.duration_ms)))
         setTotalTime(Math.round(time.reduce((sum: number, current: number) => sum + current, 0) / 1000 / 60))
     }, [time])
 
     useEffect(() => {
-        getTotalTracksTime(items)
-    }, [items])
+        if(album && tracks) {
+            getTotalTracksTime(tracks)
+        }
+    }, [album])
 
     const sortedTracks = () => {
-        if(sorted) {
-            setTracks([...items])
+        if(sorted && album) {
+            setTracks(album.items)
             setSorted(false)
-        } else {
-            setTracks(tracks.sort(function(a,b){
+        } else if (album) {
+            setTracks(album.items.sort(function(a,b){
                 if(a.duration_ms > b.duration_ms) return -1
                 return 0
             }))
             setSorted(true)
         }
-    }   
-    
+    } 
+
     return (
         <div className={styles.album__info_root}>
+            <Button variant="outlined" className={styles.album__info_button} onClick={() => sortedTracks()}>
+                    {
+                        sorted ? 'Отменить' : 'Начать с долгих треков'
+                    }
+            </Button>
 
             <div>Длительность альбома: {totalTime} мин</div>
-
-            <Button variant="outlined" className={styles.album__info_button} onClick={() => sortedTracks()}>
-                {
-                    sorted ? 'Отменить' : 'Начать с долгих треков'
-                }
-            </Button>
+            
             <div className={styles.album__info_tracks}>
                 {
-                    tracks.map((track: AlbumItemType) => <div key={track.id} className={styles.album__info_track}>
-                        {track.track_number} - {track.name} - {showTrackTime(track.duration_ms)} мин
+                    tracks && tracks.map((item: AlbumItemType) => <div key={item.id} className={styles.album__info_track}>
+                        {item.track_number} - {item.name} - {showTrackTime(item.duration_ms)} мин
                     </div>)
                 }
             </div>

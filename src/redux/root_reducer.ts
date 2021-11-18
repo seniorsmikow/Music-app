@@ -6,6 +6,7 @@ import profile_reducer from './profile_reducer'
 import users_reducer from './users_reducer'
 import music_reducer from './music_reducer'
 import artist_reducer from './artist_reducer'
+import album_reducer from './album_reducer'
 import thunkMiddleware, { ThunkAction } from 'redux-thunk'
 
 let rootReducer = combineReducers({
@@ -14,7 +15,8 @@ let rootReducer = combineReducers({
     profileReducer: profile_reducer,
     usersReducer: users_reducer,
     musicReducer: music_reducer,
-    artistReducer: artist_reducer
+    artistReducer: artist_reducer,
+    albumReducer: album_reducer
 });
 
 type RootState = typeof rootReducer
