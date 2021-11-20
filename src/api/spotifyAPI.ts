@@ -34,8 +34,8 @@ export const musicAPI = {
   getAllCategories() {
     return $authHost.get(`https://api.spotify.com/v1/browse/categories`).then(res => res.data)
   },
-  search(query: string) {
-    return $authHost.get(`https://api.spotify.com/v1/search?query=${query}&type=artist`).then(res => res.data)
+  search(query: string, type: string ) {
+    return $authHost.get(`https://api.spotify.com/v1/search?query=${query}&type=${type}`).then(res => res.data)
   },
   getArtistData(artistId: string) {
     return $authHost.get<ArtistDataType>(`https://api.spotify.com/v1/artists/${artistId}`).then(res => res.data)
@@ -45,5 +45,8 @@ export const musicAPI = {
   },
   getAlbumData(albumId: string) {
     return $authHost.get(`https://api.spotify.com/v1/albums/${albumId}/tracks`).then(res => res.data)
+  },
+  getGenres() {
+    return $authHost.get(`https://api.spotify.com/v1/recommendations/available-genre-seeds`).then(res => res.data)
   }
 }

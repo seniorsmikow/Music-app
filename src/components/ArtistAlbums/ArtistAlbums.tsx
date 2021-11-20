@@ -15,10 +15,11 @@ export const ArtistAlbums = () => {
             <h1>Дискография</h1>
             {
                 albums ?
-                <div>
+                <div className={styles.artist__albums_wrapper}>
                     {
                         albums.map((album: AlbumType) => <MusicAlbumCard 
-                                                            img={album.images[2].url}
+                                                            img={album.images[1].url}
+                                                            albumImg={album.images[0].url}
                                                             name={album.name}
                                                             albumType={album.album_type}
                                                             releaseDate={album.release_date}

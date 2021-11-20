@@ -20,3 +20,11 @@ export const getAlbum = (state: AppStateType) => state.albumReducer.albumData
 export const getAlbumTitle = (state: AppStateType) => state.albumReducer.albumTitle
 
 export const getAlbumImage = (state: AppStateType) => state.albumReducer.albumImage
+
+export const getGenres = (state: AppStateType) => state.genresReducer.genres
+
+export const albumsSearchResponse = (state: AppStateType) => state.searchReducer.albums
+export const artistsSearchResponse = (state: AppStateType) => state.searchReducer.artists
+export const tracksSearchResponse = (state: AppStateType) => state.searchReducer.tracks
+
+export const searchResponse = albumsSearchResponse || artistsSearchResponse || tracksSearchResponse

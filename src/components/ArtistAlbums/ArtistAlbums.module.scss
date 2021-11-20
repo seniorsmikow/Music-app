@@ -10,3 +10,8 @@
         text-align: center;
     }
 }
+
+.artist__albums_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}

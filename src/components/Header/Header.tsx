@@ -1,16 +1,16 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { SearchForm } from '../../forms/SearchForm/SearchForm'
 import { useHistory } from 'react-router'
-import { search } from '../../redux/music_reducer'
 import styles from './Header.module.scss'
 import userWithoutPhoto from '../../img/user_without_photo.png'
 import { useSelector, useDispatch } from 'react-redux'
 import { toogleOpenModalWindow } from '../../redux/app_reducer'
 import { AppStateType } from '../../redux/root_reducer'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import SearchIcon from '@material-ui/icons/Search'
 import { HeaderMenu } from '../HeaderMenu/HeaderMenu'
 import { Notification } from '../Notification/Notification'
 import { NavLink } from 'react-router-dom'
+import { searchResponse } from '../../redux/selectors/musicSelectors'
 
 
 const Header = () => {
@@ -21,20 +21,13 @@ const Header = () => {
     const profile = useSelector((state: AppStateType) => state.profileReducer.profile)
     const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)
     const userId = useSelector((state: AppStateType) => state.profileReducer.profile?.userId)
+    const response = useSelector(searchResponse)
 
-    const [query, setQuery] = useState('')
-
-    const searchMusic = (e: any) => {
-        let searchString = e.target.value
-        setQuery(searchString)
-    }
-
-    const letSearch = () => {
-        if(query) {
-            dispatch(search(query))
+    useEffect(() => {
+        if(response) {
             history.push('/musicFind')
         }
-    }
+    }, [response, history]) 
 
     return (
         <div className={styles.header__container}>
@@ -46,8 +39,7 @@ const Header = () => {
                         <NavLink to="/">Music for developers</NavLink>
                     </div>
                     <div className={styles.header__search_input}>
-                        <input placeholder="Поиск..." onChange={searchMusic}/>
-                        <SearchIcon onClick={() => letSearch()} className={styles.header__search_icon}/>  
+                        <SearchForm />
                     </div>
                     <div className={styles.header__note_icon}>
                         <Notification />
@@ -55,7 +47,6 @@ const Header = () => {
                 </div>
 
                 <div>
-                        
                     <div className={styles.header__user_logout}>
                         {   (ownUserId === userId)  && profile && profile.photos.small ? <img src={profile.photos.small} alt="user_icon"/>
                             : <img src={userWithoutPhoto} alt="user_icon"/>
@@ -63,7 +54,6 @@ const Header = () => {
                         
                         <ExpandMoreIcon fontSize="large" onClick={() => dispatch(toogleOpenModalWindow(!isOpen))}/>
                     </div>
-                    
                 </div>
             </div>
         </div>

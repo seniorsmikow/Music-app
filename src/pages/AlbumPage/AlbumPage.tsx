@@ -7,6 +7,7 @@ import { getAlbum, getAlbumTitle, getAlbumImage } from '../../redux/selectors/mu
 import { AlbumItemType } from '../../types/albums_types'
 import Button from '@mui/material/Button'
 import { showTrackTime } from '../../helpers/time'
+import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 
 interface RouteParams {
     albumId: string
@@ -32,8 +33,6 @@ export const AlbumPage = () => {
         Cancel = 'Cancel'
     }
     const[typeSort, setTypeSort] = useState<SortTypes>(SortTypes.Cancel)
-
-    console.log(savedTitle, savedAlbumImage)
 
     const getTotalTracksTime = useCallback((items: Array<AlbumItemType>) => {
         setTime(items.map((item: AlbumItemType) => time.push(item.duration_ms)))
@@ -74,7 +73,7 @@ export const AlbumPage = () => {
         <div className={styles.album__page_root}>
             <div className={styles.album__page_header}>
                 <h1>{savedTitle}</h1>
-                <div>{totalTime}</div>
+                {/* <div>{totalTime}</div> */}
                 <img src={savedAlbumImage} alt="album"/>
             </div>
             <div className={styles.album__page_buttons}>
@@ -85,8 +84,11 @@ export const AlbumPage = () => {
             </div>
             <div className={styles.album__page_tracks}>
                 {
-                    tracks && tracks.map((item: AlbumItemType) => <div key={item.id} className={styles.album__info_track}>
+                    tracks ? tracks.map((item: AlbumItemType) => <div key={item.id} className={styles.album__info_track}>
                     {item.track_number} - {item.name} <span>{showTrackTime(item.duration_ms)}</span></div> )
+                    : <div className={styles.album__page_loader}>
+                        <LoaderTwo />
+                    </div>
                 }
             </div>
         </div>

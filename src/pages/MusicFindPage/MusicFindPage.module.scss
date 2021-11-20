@@ -1,3 +1,21 @@
 .find__page_root {
-    padding-top: 200px;
+    margin: 0 auto;
+    width: 1000px;
+    height: 100%;
+    padding-top: 100px;
+    h2 {
+        font-size: 20px;
+        color: red;
+        text-align: center;
+    }
+}
+
+.find__page_list {
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.find__albums_wrapper, .find__artists_wrapper, .find__tracks_wrapper {
+    display: flex;
+    flex-wrap: wrap;
 }

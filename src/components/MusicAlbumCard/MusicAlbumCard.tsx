@@ -5,28 +5,32 @@ import { useDispatch } from "react-redux"
 import { setAlbumTitle, setAlbumImage } from '../../redux/album_reducer'
 
 type PropsType = {
-    img: string
+    img?: string
     name: string
-    albumType: string
+    albumType?: string
     totalTracks?: number
-    releaseDate: string
+    releaseDate?: string
     id: string
+    albumImg: string
 }
 
-export  const MusicAlbumCard: React.FC<PropsType> = React.memo(({img, name, albumType, releaseDate, id}) => {
+export  const MusicAlbumCard: React.FC<PropsType> = React.memo(({img, name, albumType, releaseDate, id, albumImg}) => {
 
     const history = useHistory()
     const dispatch = useDispatch()
 
     const showAlbum = (albumId: string) => {
         dispatch(setAlbumTitle(name))
-        dispatch(setAlbumImage(img))
+        dispatch(setAlbumImage(albumImg))
         history.push(`/musicAlbum/${albumId}`)
     }
 
     return (
         <div className={styles.album__card_root} onClick={() => showAlbum(id)}>
-            <div>{name}</div>
+            <div className={styles.album__card_image}>
+                <img src={img} alt="icon"/>
+            </div>
+            <div className={styles.album__card_title}>{name}</div>
             <div>{albumType}</div>
             <div>{releaseDate}</div>
         </div>
