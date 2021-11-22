@@ -1,6 +1,6 @@
 .album__card_root {
     width: 200px;
-    height: 280px;
+    height: 400px;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -8,25 +8,30 @@
     justify-content: space-between;
     margin-bottom: 20px;
     transition: all .5s ease-in-out;
-    margin-left: 23px;
+    margin: 15px;
     overflow: hidden;
     cursor: pointer;
     font-size: 14px;
     font-weight: 200;
+    position: relative;
     &:hover {
         transform: scale(1.05);
     }
 }
 
 .album__card_image{
-    width: 200px;
+    overflow: hidden;
     img {
-        width: 100%;
+        text-align: center;
+        width: auto;
+        height: 220px;
+        overflow: hidden;
     }
 }
 
 .album__card_title {
-    margin-top: 15px;
-    font-weight: 700;
+    margin-top: 5px;
+    font-weight: 200;
     font-size: 18px;
+    color: rgb(160, 160, 160);
 }

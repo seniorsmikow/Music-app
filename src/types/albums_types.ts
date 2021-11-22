@@ -1,3 +1,5 @@
+import { ArtistType, ImagesType } from './artists_types'
+
 export type AlbumDataType = {
     href: string
     limit: number
@@ -24,16 +26,23 @@ export type AlbumItemType = {
     external_urls: {
         spotify: string
     }
-    artists: Array<any>
+    artists: Array<ArtistType>
 }
 
-export type ArtistType = {
+export type AlbumsSearchType = {
+    album_type: string
     href: string
     id: string
     name: string
+    release_date: string
+    release_date_precision: string
+    total_tracks: number
     type: string
     uri: string
     external_urls: {
         spotify: string
     }
+    available_markets: Array<string>
+    images: Array<ImagesType>
+    artists: Array<ArtistType>
 }

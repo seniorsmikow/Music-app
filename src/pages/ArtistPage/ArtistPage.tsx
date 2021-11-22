@@ -10,6 +10,8 @@ import { ArtistAlbums } from '../../components/ArtistAlbums/ArtistAlbums'
 import { fetchArtistData, getLoading } from '../../redux/selectors/musicSelectors'
 import { getArtistData, getArtistAlbums } from '../../redux/music_reducer'
 import { useParams } from 'react-router-dom'
+import { setIdOfLikedMusic, MusicData } from '../../redux/profile_reducer'
+import { MusicEnum } from '../../redux/profile_reducer'
 
 interface RouteParams {
     artistId: string
@@ -24,6 +26,7 @@ export const ArtistPage = () => {
     const artistData = useSelector(fetchArtistData)
     const isLoading = useSelector(getLoading)
     const [isLikeArtist, setIsLikeArtist] = useState(false)
+    const [data, setData] = useState<MusicData | null>(null)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -32,10 +35,16 @@ export const ArtistPage = () => {
 
     useEffect(() => {
         dispatch(getArtistAlbums(artistId, 0, 5))
-    }, [dispatch, artistId])
+        if(artistData && artistId) {
+            setData({name: artistData.name, id: artistId, image: artistData.images[1].url})
+        }
+    }, [dispatch, artistId, artistData])
 
     const likeArtist = () => {
         setIsLikeArtist(!isLikeArtist)
+        if(data) {
+            dispatch(setIdOfLikedMusic(data, MusicEnum.ARTIST))
+        }
     }
 
     return (

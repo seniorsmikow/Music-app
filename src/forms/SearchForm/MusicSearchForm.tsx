@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './SearchForm.module.scss'
 import { getMusicSearchResponse } from '../../redux/music_search'
 import SearchIcon from '@material-ui/icons/Search'
+import { useHistory } from 'react-router'
 
-
-export const SearchForm = () => {
+export const MusicSearchForm = () => {
     const [search, setSearch] = useState('')
     const [type, setType] = useState('')
     const dispatch =  useDispatch()
+    const history = useHistory()
 
     const selectType = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = event.target.value
@@ -20,8 +21,9 @@ export const SearchForm = () => {
         setSearch(value)
     }
 
-    const find = (search: string, type: string) => {
-        dispatch(getMusicSearchResponse(search, type))
+    const find = (search: string, type: string, path: string = '/musicFind') => {
+            dispatch(getMusicSearchResponse(search, type))
+            history.push(path)
     }
 
     return (

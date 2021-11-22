@@ -1,14 +1,33 @@
 .profile__page_root {
+    margin: 0 auto;
     width: 1000px;
     height: 100vh;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    padding-top: 40px;
-    overflow: hidden;
-    z-index: 1;
+    padding: 100px 60px;
+    color: #f34d3c;
+    position: relative;
+    background-image: linear-gradient(to right, #434343 0%, black 100%);
 }
 
-.profile__input {
-    margin-top: 200px;
+.profile__page_title {
+    h1 {
+        text-align: center;
+        color: #d51c1c;
+        font-size: 20px;
+        font-weight: 500;
+    }
+}
+
+.profile__page_tabs {
+    margin-top: 40px;
+    color: white;
+    button {
+        color: white;
+    }
+}
+
+.profile__page_artists {
+    button {
+        color: red;
+        background-color: rgba(0, 0, 0, 0);
+    }
 }

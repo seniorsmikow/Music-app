@@ -5,7 +5,7 @@
     width: 1000px;
     height: 100vh;
     padding-top: 150px;
-    background-color: #efeaea;
+    background-image: linear-gradient(to top, #666666 0%, #000000 100%);
 }
 
 .login_page_error {
@@ -29,7 +29,8 @@
     color: black;
     button {
         margin-left: 5px;
-        color: #1d5eaf;
+        color: #cccccc;
         font-size: 15px;
+        background-color: #323232;
     }
 }

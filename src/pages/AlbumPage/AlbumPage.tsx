@@ -8,6 +8,8 @@ import { AlbumItemType } from '../../types/albums_types'
 import Button from '@mui/material/Button'
 import { showTrackTime } from '../../helpers/time'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
+import AddIcon from '@mui/icons-material/Add'
+import CheckIcon from '@mui/icons-material/Check'
 
 interface RouteParams {
     albumId: string
@@ -21,6 +23,7 @@ export const AlbumPage = () => {
     const dispatch = useDispatch()
     const album = useSelector(getAlbum)
     const title = useSelector(getAlbumTitle)
+    const [plus, setPlus] = useState(false)
     const [savedTitle, setSavedTitle] = useState(title)
     const albumImage = useSelector(getAlbumImage)
     const [savedAlbumImage, setSavedAlbumImage] = useState(albumImage)
@@ -75,6 +78,9 @@ export const AlbumPage = () => {
                 <h1>{savedTitle}</h1>
                 {/* <div>{totalTime}</div> */}
                 <img src={savedAlbumImage} alt="album"/>
+                {
+                    plus ? <AddIcon /> : <CheckIcon />
+                }
             </div>
             <div className={styles.album__page_buttons}>
                 <h3>Сортировать треки</h3>

@@ -28,3 +28,5 @@ export const artistsSearchResponse = (state: AppStateType) => state.searchReduce
 export const tracksSearchResponse = (state: AppStateType) => state.searchReducer.tracks
 
 export const searchResponse = albumsSearchResponse || artistsSearchResponse || tracksSearchResponse
+
+export const getArtistsNames = (state: AppStateType) => state.profileReducer.likedArtistNames
