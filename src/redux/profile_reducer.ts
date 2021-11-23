@@ -46,6 +46,11 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
                 ...state, likedTracks: [...state.likedTracks, action.data]
             }
         }
+        case 'profile/DELETE_MUSIC_IN_COLL': {
+            return {
+                ...state, likedArtistNames: [...state.likedArtistNames.filter(el => el.id !== action.id)]
+            }
+        }
         default: 
             return state
     }
@@ -58,6 +63,7 @@ export const actions = {
     setArtistsName: (data: MusicData) => ({type: 'profile/SET_ARTIST_ID', data} as const),
     setAlbumsName: (data: MusicData) => ({type: 'profile/SET_ALBUM_ID', data} as const),
     setTrack: (data: MusicData) => ({type: 'profile/SET_TRACK_ID', data} as const),
+    deleteMusic: (id: string) => ({type: 'profile/DELETE_MUSIC_IN_COLL', id} as const)
 }
 
 export const getUserProfile = (userId: number): ThunkType => {
@@ -86,6 +92,12 @@ export const setIdOfLikedMusic = (data: MusicData, type: MusicEnum): ThunkType =
             dispatch(actions.setTrack(data))
         }
         dispatch(actions.loading(false))
+    }
+}
+
+export const deleteMusicInCollection = (id: string): ThunkType => {
+    return async(dispatch) => {
+        dispatch(actions.deleteMusic(id))
     }
 }
 

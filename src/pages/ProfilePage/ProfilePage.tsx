@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import styles from './ProfilePage.module.scss'
-import { MusicData } from '../../redux/profile_reducer'
+import { MusicData, deleteMusicInCollection } from '../../redux/profile_reducer'
 import { AppStateType } from '../../redux/root_reducer'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
 import { TabPanel } from '../../components/Tabs/TabPanel/TabPanel'
 import { getArtistsNames } from '../../redux/selectors/musicSelectors'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 
 
 export const ProfilePage = () => {
@@ -18,6 +19,7 @@ export const ProfilePage = () => {
     const artistsNames = useSelector(getArtistsNames)
     const [value, setValue] = useState(0)
     const history = useHistory()
+    const dispatch = useDispatch()
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue)
@@ -39,6 +41,14 @@ export const ProfilePage = () => {
         history.push(`/artist/${id}`)
     }
 
+    const deleteArtistInCollection = (artistId: string) => {
+        dispatch(deleteMusicInCollection(artistId))
+    }
+
+    const toNewRelisesPage = () => {
+        history.push('/new_releases')
+    }
+
     return (
         <div className={styles.profile__page_root}>
             <div className={styles.profile__page_title}>
@@ -58,12 +68,18 @@ export const ProfilePage = () => {
                     {
                         artistsNames.length ? artistsNames.map((data: MusicData) => <div key={data.id} className={styles.profile__page_artists}>
                             <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
-                            <div>
+                            <div className={styles.artist__image}>
                                 <img src={data.image} alt="artist"/>
                             </div>
+                            <button onClick={() => deleteArtistInCollection(data.id)}>
+                                <HighlightOffIcon />
+                            </button>
                         </div>)
                         : 
-                        <div>Ваша коллекция пуста</div>
+                        <div className={styles.profile__page_empty}>
+                            Ваша коллекция пуста
+                            <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
+                        </div>
                     }
                 </TabPanel>
                 <TabPanel value={value} index={1}>
