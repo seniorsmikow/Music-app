@@ -4,7 +4,7 @@ import styles from './HomePage.module.scss'
 import Button from '@mui/material/Button'
 import { useHistory } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectAuth } from '../../redux/selectors/authSelectors'
+import { isAuth } from '../../redux/selectors/authSelectors'
 import { getMusicGenres } from '../../redux/genres_reducer'
 import { getGenres } from '../../redux/selectors/musicSelectors'
 import Chip from '@mui/material/Chip'
@@ -14,7 +14,7 @@ import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 export const HomePage = () => {
 
     const history = useHistory()
-    const isLogin = useSelector(selectAuth)
+    const userAuth = useSelector(isAuth)
     const dispatch = useDispatch()
     const genres = useSelector(getGenres)
 
@@ -23,7 +23,7 @@ export const HomePage = () => {
     }, [dispatch])
 
     const toNewReleases = () => {
-        if(isLogin) {
+        if(userAuth) {
             history.push('/new_releases')
         } else {
             history.push('/login')

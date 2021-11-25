@@ -28,11 +28,9 @@ export const HeaderMenu: React.FC<PropsType> = ({isOpen}) => {
         >
                 <ul>
                     <NavLink to="/">Главная</NavLink>
-                    <NavLink to="/users">Пользователи</NavLink>
                     { 
                         isAuth && ownUserId ? <ul>
                                                 <NavLink to={`/profile/${ownUserId}`}>Своя страница</NavLink> 
-                                                <NavLink to="/friends">Друзья</NavLink>
                                                 <NavLink to="/new_releases">Новые релизы</NavLink>
                                             </ul> 
 

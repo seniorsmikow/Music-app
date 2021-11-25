@@ -1,3 +1,5 @@
 import { AppStateType } from '../root_reducer'
 
-export const selectAuth = (state: AppStateType) => state.authReducer.isAuth
+export const isAuth = (state: AppStateType) => state.authReducer.isAuth
+
+export const userId = (state: AppStateType) => state.authReducer.userId

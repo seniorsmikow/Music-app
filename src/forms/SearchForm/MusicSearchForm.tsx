@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import styles from './SearchForm.module.scss'
 import { getMusicSearchResponse } from '../../redux/music_search'
@@ -8,6 +8,7 @@ import { useHistory } from 'react-router'
 export const MusicSearchForm = () => {
     const [search, setSearch] = useState('')
     const [type, setType] = useState('')
+    const [inputValue, setInputValue] = useState('')
     const dispatch =  useDispatch()
     const history = useHistory()
 
@@ -17,18 +18,20 @@ export const MusicSearchForm = () => {
     }
 
     const handleChangeInput = (event: React.FormEvent<HTMLInputElement>) => {
-        let {value} = event.currentTarget
+        let value = event.currentTarget.value
         setSearch(value)
+        setInputValue(value)
     }
 
     const find = (search: string, type: string, path: string = '/musicFind') => {
             dispatch(getMusicSearchResponse(search, type))
+            setInputValue('')
             history.push(path)
     }
 
     return (
         <div className={styles.root}>
-            <input placeholder="Поиск..." onChange={(e) => handleChangeInput(e)}>
+            <input placeholder="Поиск..." value={inputValue} onChange={(e) => handleChangeInput(e)}>
             </input>
             <select name="search" onChange={selectType}>
                 <option value=""></option>

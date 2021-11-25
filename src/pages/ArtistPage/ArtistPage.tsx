@@ -12,6 +12,7 @@ import { getArtistData, getArtistAlbums } from '../../redux/music_reducer'
 import { useParams } from 'react-router-dom'
 import { setIdOfLikedMusic, MusicData } from '../../redux/profile_reducer'
 import { MusicEnum } from '../../redux/profile_reducer'
+import { getNotification } from '../../redux/app_reducer'
 
 interface RouteParams {
     artistId: string
@@ -44,6 +45,7 @@ export const ArtistPage = () => {
         setIsLikeArtist(!isLikeArtist)
         if(data) {
             dispatch(setIdOfLikedMusic(data, MusicEnum.ARTIST))
+            dispatch(getNotification(1, `Артист ${data.name} добавлен в коллекцию`))
         }
     }
 

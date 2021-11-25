@@ -10,6 +10,8 @@ import { showTrackTime } from '../../helpers/time'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 import AddIcon from '@mui/icons-material/Add'
 import CheckIcon from '@mui/icons-material/Check'
+import { MusicEnum, setIdOfLikedMusic } from '../../redux/profile_reducer'
+import { getNotification } from '../../redux/app_reducer'
 
 interface RouteParams {
     albumId: string
@@ -23,7 +25,8 @@ export const AlbumPage = () => {
     const dispatch = useDispatch()
     const album = useSelector(getAlbum)
     const title = useSelector(getAlbumTitle)
-    const [plus, setPlus] = useState(false)
+    const [addAlbum, setAddAlbum] = useState(false)
+    const [addTrack, setAddTrack] = useState(false)
     const [savedTitle, setSavedTitle] = useState(title)
     const albumImage = useSelector(getAlbumImage)
     const [savedAlbumImage, setSavedAlbumImage] = useState(albumImage)
@@ -72,15 +75,39 @@ export const AlbumPage = () => {
           }
     }
 
+    const addToColliction = () => {
+        dispatch(setIdOfLikedMusic(
+            {name: title,
+            id: albumId,
+            image: albumImage}, 
+            MusicEnum.ALBUM))
+        dispatch(getNotification(1, `Альбом ${title} добавлен в коллекцию`))
+        setAddAlbum(true)
+    }
+
+    const addTrackToCollection = (track: string, trackId: string) => {
+        dispatch(setIdOfLikedMusic({name: track, id: trackId}, MusicEnum.TRACK))
+        setAddTrack(true)
+    }
+
     return (
         <div className={styles.album__page_root}>
             <div className={styles.album__page_header}>
                 <h1>{savedTitle}</h1>
-                {/* <div>{totalTime}</div> */}
+                <div className={styles.album__page_time}>Продолжительность альбома {totalTime} минут</div>
                 <img src={savedAlbumImage} alt="album"/>
-                {
-                    plus ? <AddIcon /> : <CheckIcon />
-                }
+                <div className={styles.album__add_icon}>
+                    {
+                        addAlbum ? <div className={styles.album__add_text}>
+                                    <CheckIcon fontSize="large"/>
+                                    </div>
+                        : 
+                        <div className={styles.album__add_text} onClick={() => addToColliction()}>
+                            <AddIcon fontSize="large"/> 
+                            добавить в коллекцию
+                        </div>
+                    }
+                </div>
             </div>
             <div className={styles.album__page_buttons}>
                 <h3>Сортировать треки</h3>
@@ -91,7 +118,19 @@ export const AlbumPage = () => {
             <div className={styles.album__page_tracks}>
                 {
                     tracks ? tracks.map((item: AlbumItemType) => <div key={item.id} className={styles.album__info_track}>
-                    {item.track_number} - {item.name} <span>{showTrackTime(item.duration_ms)}</span></div> )
+                    {item.track_number} - 
+                    {item.name} 
+                    <div className={styles.album__add_track} onClick={() => addTrackToCollection(item.name, item.id)}>
+                        {
+                            addTrack ? <CheckIcon /> 
+                            :
+                            <AddIcon />
+                        }
+                    </div>
+                        <span>
+                            {showTrackTime(item.duration_ms)}
+                        </span>
+                    </div> )
                     : <div className={styles.album__page_loader}>
                         <LoaderTwo />
                     </div>

@@ -3,36 +3,31 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import styles from './ProfilePage.module.scss'
 import { MusicData, deleteMusicInCollection } from '../../redux/profile_reducer'
-import { AppStateType } from '../../redux/root_reducer'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
+import { isAuth } from '../../redux/selectors/authSelectors'
 import { TabPanel } from '../../components/Tabs/TabPanel/TabPanel'
-import { getArtistsNames } from '../../redux/selectors/musicSelectors'
+import { getArtistsNames, getLikedAlbums, getLikedTracks } from '../../redux/selectors/musicSelectors'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 
 
 export const ProfilePage = () => {
 
-    //const dispatch = useDispatch()
-    const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
-    const artistsNames = useSelector(getArtistsNames)
+    const dispatch = useDispatch()
+    const userAuth = useSelector(isAuth)
+    const artistsData = useSelector(getArtistsNames)
+    const albumsData = useSelector(getLikedAlbums)
+    const tracksData = useSelector(getLikedTracks)
     const [value, setValue] = useState(0)
     const history = useHistory()
-    const dispatch = useDispatch()
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue)
     }
-    
-    // useEffect(() => {
-    //     if(userId) {
-    //         dispatch(getUserProfile(userId))
-    //     }
-    // }, [userId, dispatch])
 
     useEffect(() => {
-        if(!isAuth) {
+        if(!userAuth) {
             history.push('/')
         }
     })
@@ -66,7 +61,7 @@ export const ProfilePage = () => {
                 <TabPanel value={value} index={0}>
                     Артисты
                     {
-                        artistsNames.length ? artistsNames.map((data: MusicData) => <div key={data.id} className={styles.profile__page_artists}>
+                        artistsData.length ? artistsData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_artists}>
                             <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
                             <div className={styles.artist__image}>
                                 <img src={data.image} alt="artist"/>
@@ -84,9 +79,38 @@ export const ProfilePage = () => {
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     Альбомы
+                    {
+                        albumsData.length ? albumsData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_artists}>
+                            <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
+                            <div className={styles.artist__image}>
+                                <img src={data.image} alt="album"/>
+                            </div>
+                            <button onClick={() => deleteArtistInCollection(data.id)}>
+                                <HighlightOffIcon />
+                            </button>
+                        </div>)
+                        : 
+                        <div className={styles.profile__page_empty}>
+                            Ваша коллекция пуста
+                            <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
+                        </div>
+                    }
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                     Треки
+                    {
+                        tracksData.length ? tracksData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_tracks}>
+                            <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
+                            <button onClick={() => deleteArtistInCollection(data.id)}>
+                                <HighlightOffIcon />
+                            </button>
+                        </div>)
+                        : 
+                        <div className={styles.profile__page_empty}>
+                            Ваша коллекция пуста
+                            <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
+                        </div>
+                    }
                 </TabPanel>
                 </Box>
             </div>

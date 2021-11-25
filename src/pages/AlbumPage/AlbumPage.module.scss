@@ -1,7 +1,7 @@
 .album__page_root {
     margin: 0 auto;
     width: 1000px;
-    height: 100vh;
+    height: 100%;
     padding-top: 60px;
     background-color: #1c1c1c;
     color: white;
@@ -27,11 +27,11 @@
     background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
     position: relative;
     h1 {
-        width: 700px;
+        width: 400px;
         overflow: hidden;
         color: white;
         position: absolute;
-        bottom: 20px;
+        top: 200px;
         right: 20px;
     }
     img {
@@ -71,4 +71,33 @@
 
 .album__page_loader {
     margin: 0 auto;
+}
+
+.album__add_icon {
+    position: absolute;
+    top: 200px;
+    left: 280px;
+    color: red;
+}
+
+.album__add_text {
+    width: 180px;
+    display: flex;
+    align-items: center;
+    color: white;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.album__page_time {
+    position: absolute;
+    top: 235px;
+    left: 280px;
+}
+
+.album__add_track {
+    position: absolute;
+    right: 80px;
+    color: #345bcb;
+    cursor: pointer;
 }

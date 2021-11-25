@@ -30,3 +30,7 @@ export const tracksSearchResponse = (state: AppStateType) => state.searchReducer
 export const searchResponse = albumsSearchResponse || artistsSearchResponse || tracksSearchResponse
 
 export const getArtistsNames = (state: AppStateType) => state.profileReducer.likedArtistNames
+
+export const getLikedAlbums = (state: AppStateType) => state.profileReducer.likedAlbumsNames
+
+export const getLikedTracks = (state: AppStateType) => state.profileReducer.likedTracks

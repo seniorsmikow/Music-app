@@ -19,7 +19,7 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
         }
         case 'app/GET_NOTIFICATION': {
             return {
-                ...state, notificationCount: action.count, notificationText: [...state.notificationText, action.text]
+                ...state, notificationCount: state.notificationCount + action.count, notificationText: [...state.notificationText, action.text]
             }
         }
         case 'app/DELETE_NOTIFICATIONS_COUNT': {

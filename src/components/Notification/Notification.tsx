@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './Notification.module.scss'
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
-import { AppStateType } from '../../redux/root_reducer'
+import { getNotificationsCount, getNotificationsText } from '../../redux/selectors/appSelectors'
 import { clearNotifications, deleteNotificationsCount } from '../../redux/app_reducer'
 
 
 export const Notification = () => {
 
-    const notificationCount = useSelector((state: AppStateType) => state.appReducer.notificationCount)
-    const notificationText = useSelector((state: AppStateType) => state.appReducer.notificationText)
+    const notificationCount = useSelector(getNotificationsCount)
+    const notificationText = useSelector(getNotificationsText)
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
 
