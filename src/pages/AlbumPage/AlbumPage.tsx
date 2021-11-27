@@ -26,7 +26,6 @@ export const AlbumPage = () => {
     const album = useSelector(getAlbum)
     const title = useSelector(getAlbumTitle)
     const [addAlbum, setAddAlbum] = useState(false)
-    const [addTrack, setAddTrack] = useState(false)
     const [savedTitle, setSavedTitle] = useState(title)
     const albumImage = useSelector(getAlbumImage)
     const [savedAlbumImage, setSavedAlbumImage] = useState(albumImage)
@@ -83,11 +82,6 @@ export const AlbumPage = () => {
             MusicEnum.ALBUM))
         dispatch(getNotification(1, `Альбом ${title} добавлен в коллекцию`))
         setAddAlbum(true)
-    }
-
-    const addTrackToCollection = (track: string, trackId: string) => {
-        dispatch(setIdOfLikedMusic({name: track, id: trackId}, MusicEnum.TRACK))
-        setAddTrack(true)
     }
 
     return (
