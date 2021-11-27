@@ -15,6 +15,7 @@ let initialState = {
     likedArtistNames: [] as Array<MusicData>,
     likedAlbumsNames: [] as Array<MusicData>,
     likedTracks: [] as Array<MusicData>,
+    error: ''
 }
 export type InitialStateType = typeof initialState
 
@@ -51,6 +52,11 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
                 ...state, likedArtistNames: [...state.likedArtistNames.filter(el => el.id !== action.id)]
             }
         }
+        case 'profile/FETCH_ERROR': {
+            return {
+                ...state, error: action.error
+            }
+        }
         default: 
             return state
     }
@@ -63,15 +69,23 @@ export const actions = {
     setArtistsName: (data: MusicData) => ({type: 'profile/SET_ARTIST_ID', data} as const),
     setAlbumsName: (data: MusicData) => ({type: 'profile/SET_ALBUM_ID', data} as const),
     setTrack: (data: MusicData) => ({type: 'profile/SET_TRACK_ID', data} as const),
-    deleteMusic: (id: string) => ({type: 'profile/DELETE_MUSIC_IN_COLL', id} as const)
+    deleteMusic: (id: string) => ({type: 'profile/DELETE_MUSIC_IN_COLL', id} as const),
+    fetchError: (error: string) => ({type: 'profile/FETCH_ERROR', error} as const)
 }
 
 export const getUserProfile = (userId: number): ThunkType => {
     return async (dispatch) => {
         dispatch(actions.loading(true))
-        let data = await profileAPI.getUserProfile(userId)
-        dispatch(actions.getProfile(data))
-        dispatch(actions.loading(false))
+        try {
+            let data = await profileAPI.getUserProfile(userId)
+            dispatch(actions.getProfile(data))
+            dispatch(actions.loading(false))
+        } catch (error) {
+            dispatch(actions.fetchError('Произошла ошибка'))
+        } finally {
+            dispatch(actions.loading(false))
+        }
+        
     }
 }
 

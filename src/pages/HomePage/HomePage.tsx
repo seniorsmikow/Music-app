@@ -4,7 +4,7 @@ import styles from './HomePage.module.scss'
 import Button from '@mui/material/Button'
 import { useHistory } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
-import { isAuth } from '../../redux/selectors/authSelectors'
+import { isUserAuth } from '../../redux/selectors/authSelectors'
 import { getMusicGenres } from '../../redux/genres_reducer'
 import { getGenres } from '../../redux/selectors/musicSelectors'
 import Chip from '@mui/material/Chip'
@@ -14,7 +14,7 @@ import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 export const HomePage = () => {
 
     const history = useHistory()
-    const userAuth = useSelector(isAuth)
+    const userAuth = useSelector(isUserAuth)
     const dispatch = useDispatch()
     const genres = useSelector(getGenres)
 
@@ -43,19 +43,6 @@ export const HomePage = () => {
             </div>
             <div className={styles.home__button_news}>
                 <Button variant="contained" onClick={() => toNewReleases()}>Перейти к новинкам</Button>
-            </div>
-            <div className={styles.home__genres_block}>
-                Музыкальные жанры на любой вкус! 
-                <div className={styles.home__genres_wrapper}>
-                   
-                        {
-                            genres ? genres.map((genre: string) => <div className={styles.home__genre_info} key={genre}>
-                                <Chip label={genre} variant="outlined" color='info'/>
-                                </div>)
-                            : <div className={styles.home__genres_loader}><LoaderTwo /></div>
-                        }
-                   
-                </div>
             </div>
         </div>
     )

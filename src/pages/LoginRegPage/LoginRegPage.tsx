@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './LoginPage.module.scss'
 import { LoginRegForm } from '../../forms/LoginRegForm/LoginRegForm'
 import { toggleFormType } from '../../redux/app_reducer'
 import { useSelector, useDispatch } from 'react-redux'
-import { AppStateType } from '../../redux/root_reducer'
 import { useHistory } from 'react-router-dom'
 import { EntryFormType } from '../../types/auth_types'
+import { isUserAuth, getUserId, fetchError, getRegMessage } from '../../redux/selectors/authSelectors'
+import { getFormType } from '../../redux/selectors/appSelectors'
 
 
 export const LoginRegPage = () => {
 
-    const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
-    const userId = useSelector((state: AppStateType) => state.authReducer.userId)
-    const formType = useSelector((state: AppStateType) => state.appReducer.formType)
-    const error = useSelector((state: AppStateType) => state.authReducer.error)
-    const registrationMessage = useSelector((state: AppStateType) => state.authReducer.registrationMessage)
+    const isAuth = useSelector(isUserAuth)
+    const userId = useSelector(getUserId)
+    const formType = useSelector(getFormType)
+    const error = useSelector(fetchError)
+    const registrationMessage = useSelector(getRegMessage)
     const dispatch = useDispatch()
     const [type, setType] = useState<string>(formType)
     const [loginError, setLoginError] = useState<string | null>(null)
@@ -46,7 +47,6 @@ export const LoginRegPage = () => {
 
     return (
         <div className={styles.login__page_root}>
-
             {
                 loginError && <div className={styles.login_page_error}>{loginError}</div>
             }

@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAlbum, getAlbumTitle, getAlbumImage } from '../../redux/selectors/musicSelectors'
 import { AlbumItemType } from '../../types/albums_types'
 import Button from '@mui/material/Button'
-import { showTrackTime } from '../../helpers/time'
 import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 import AddIcon from '@mui/icons-material/Add'
 import CheckIcon from '@mui/icons-material/Check'
 import { MusicEnum, setIdOfLikedMusic } from '../../redux/profile_reducer'
 import { getNotification } from '../../redux/app_reducer'
+import { MusicTrack } from '../../components/MusicTrack/MusicTrack'
 
 interface RouteParams {
     albumId: string
@@ -117,20 +117,13 @@ export const AlbumPage = () => {
             </div>
             <div className={styles.album__page_tracks}>
                 {
-                    tracks ? tracks.map((item: AlbumItemType) => <div key={item.id} className={styles.album__info_track}>
-                    {item.track_number} - 
-                    {item.name} 
-                    <div className={styles.album__add_track} onClick={() => addTrackToCollection(item.name, item.id)}>
-                        {
-                            addTrack ? <CheckIcon /> 
-                            :
-                            <AddIcon />
-                        }
-                    </div>
-                        <span>
-                            {showTrackTime(item.duration_ms)}
-                        </span>
-                    </div> )
+                    tracks ? tracks.map((item: AlbumItemType) => <MusicTrack 
+                                                                    id={item.id}
+                                                                    name={item.name}
+                                                                    duration_ms={item.duration_ms}
+                                                                    track_number={item.track_number}
+                                                                    key={item.id} 
+                    />)
                     : <div className={styles.album__page_loader}>
                         <LoaderTwo />
                     </div>

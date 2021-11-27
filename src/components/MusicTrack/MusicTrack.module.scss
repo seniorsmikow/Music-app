@@ -1,0 +1,24 @@
+.music__track_root {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    background-color: #1c1c1c;
+    color: #9f9f9f;
+    position: relative;
+    padding: 0 30px;
+}
+
+.music__track_name {
+    position: absolute;
+    left: 60px;
+    color: #cfcfcf;
+}
+
+.music__track_handle {
+    position: absolute;
+    right: 80px;
+    color: #cd2929;
+}

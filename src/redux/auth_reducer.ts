@@ -13,7 +13,8 @@ let initialState = {
     error: null as string | null,
     registrationMessage: null as string | null, // регистрация в API пока не предусмотрена, вызывается alert с оповещением
     captcha: null as string | null,
-    isSpotifyAuth: false
+    isSpotifyAuth: false,
+    isLoading: false
 }
 export type InitialStateType = typeof initialState
 
@@ -23,7 +24,6 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
         case 'auth/USER_LOGIN': {
             return {
                 ...state, userId: action.payload.data.userId, isAuth: true
-                
             }
         }
         case 'auth/GET_USER': {
@@ -55,6 +55,11 @@ const appReducer = (state = initialState, action: ActionsType): InitialStateType
             return {
                 ...state, isSpotifyAuth: action.auth
             }
+        case 'auth/IS_LOADING': {
+            return {
+                ...state, isLoading: action.load
+            }
+        }
         default: 
             return state
     }
@@ -74,37 +79,44 @@ export const actions = {
     catchError: (error: string | null) => ({type: 'auth/CATCH_ERROR', error} as const),
     registration: (message: string | null) => ({type: 'auth/REGISTRATION', message} as const),
     captcha: (captcha: string | null) => ({type: 'auth/GET_CAPTCHA', captcha} as const),
-    spotifyToken: (auth: boolean) => ({type: 'auth/GET_SPOTIFY_TOKEN', auth} as const)
+    spotifyToken: (auth: boolean) => ({type: 'auth/GET_SPOTIFY_TOKEN', auth} as const),
+    isLoading: (load: boolean) => ({type: 'auth/IS_LOADING', load} as const)
 }
 
 export const loginOrRegistration = (email: string, password: string, rememberMe: boolean, formType: string, captcha: string | null): ThunkType => {
     return async (dispatch) => {
-
-        if(formType === 'login') {
-
-            let response = await authAPI.login(email, password, rememberMe, captcha)
-            await musicTokenAPI.getToken()
-
-            if(response.data.resultCode === ResultCodesEnum.Success) {
-                dispatch(actions.loginAction(response.data))
-                dispatch(actions.spotifyToken(true))
-            } else if(response.data.resultCode === ResultCodesEnum.Captcha) {
-                dispatch(getCaptcha())
-            } else if(response.data.resultCode === ResultCodesEnum.Error) {
-                dispatch(actions.catchError('Неверный Email или Password'))
+        try {
+            if(formType === 'login') {
+                dispatch(actions.isLoading(true))
+                let response = await authAPI.login(email, password, rememberMe, captcha)
+                await musicTokenAPI.getToken()
+    
+                if(response.data.resultCode === ResultCodesEnum.Success) {
+                    dispatch(actions.loginAction(response.data))
+                    dispatch(actions.spotifyToken(true))
+                    dispatch(actions.isLoading(false))
+                } else if(response.data.resultCode === ResultCodesEnum.Captcha) {
+                    dispatch(getCaptcha())
+                    dispatch(actions.isLoading(false))
+                } else if(response.data.resultCode === ResultCodesEnum.Error) {
+                    dispatch(actions.catchError('Неверный Email или Password'))
+                    dispatch(actions.isLoading(false))
+                } else {
+                    dispatch(actions.catchError('Неизвестная ошибка'))
+                    dispatch(actions.isLoading(false))
+                }
+    
             } else {
-                dispatch(actions.catchError('Неизвестная ошибка'))
+                //В SamuraiJS Social Network API пока не предусмотрена регистрация пользователей. Вызывается alert
+                // с информацией, что пока регистрация не возможна. 
+                
+                dispatch(actions.registration(`API, на базе которого создан сайт, пока не предоставляет возможность для регистрации пользователей`))
             }
-
-        } else {
-
-            //В SamuraiJS Social Network API пока не предусмотрена регистрация пользователей. Вызывается alert
-            // с информацией, что пока регистрация не возможна. 
-            
-            dispatch(actions.registration(`API, на базе которого создан сайт, пока не предоставляет возможность для регистрации пользователей`))
+        } catch(error) {
+            dispatch(actions.catchError("Произошла ошибка"))
+        } finally {
+            dispatch(actions.isLoading(false))
         }
-            
-        
     }
 }
 
@@ -117,11 +129,20 @@ export const getCaptcha = (): ThunkType => {
 
 export const getOwnUserData = (): ThunkType => {
     return async (dispatch) => {
-        let response = await authAPI.me()
-        if(response.resultCode === ResultCodesEnum.Success) {
-            let {id, login, email} = response.data
-            dispatch(actions.getUserData(id, login, email, true))
+        try {
+            dispatch(actions.isLoading(true))
+            let response = await authAPI.me()
+            if(response.resultCode === ResultCodesEnum.Success) {
+                let {id, login, email} = response.data
+                dispatch(actions.getUserData(id, login, email, true))
+            }
+            dispatch(actions.isLoading(false))
+        } catch (error) {
+            dispatch(actions.catchError("Произошла ошибка"))
+        } finally {
+            dispatch(actions.isLoading(false))
         }
+        
     }
 }
 

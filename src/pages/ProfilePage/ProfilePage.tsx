@@ -6,19 +6,21 @@ import { MusicData, deleteMusicInCollection } from '../../redux/profile_reducer'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
-import { isAuth } from '../../redux/selectors/authSelectors'
+import { isUserAuth, getLoading } from '../../redux/selectors/authSelectors'
 import { TabPanel } from '../../components/Tabs/TabPanel/TabPanel'
 import { getArtistsNames, getLikedAlbums, getLikedTracks } from '../../redux/selectors/musicSelectors'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import { LoaderTwo } from '../../components/LoaderTwo/LoaderTwo'
 
 
 export const ProfilePage = () => {
 
     const dispatch = useDispatch()
-    const userAuth = useSelector(isAuth)
+    const userAuth = useSelector(isUserAuth)
     const artistsData = useSelector(getArtistsNames)
     const albumsData = useSelector(getLikedAlbums)
     const tracksData = useSelector(getLikedTracks)
+    const isLoadingProfile = useSelector(getLoading)
     const [value, setValue] = useState(0)
     const history = useHistory()
 
@@ -45,75 +47,87 @@ export const ProfilePage = () => {
     }
 
     return (
-        <div className={styles.profile__page_root}>
-            <div className={styles.profile__page_title}>
-                <h1>Ваша коллекция музыки</h1>
-            </div>
-            <div className={styles.profile__page_tabs}>
-                <Box sx={{ width: '100%', color: 'white' }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider', color: 'white' }}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Артисты" />
-                    <Tab label="Альбомы"  />
-                    <Tab label="Треки"  />
-                    </Tabs>
-                </Box>
-                <TabPanel value={value} index={0}>
-                    Артисты
-                    {
-                        artistsData.length ? artistsData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_artists}>
-                            <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
-                            <div className={styles.artist__image}>
-                                <img src={data.image} alt="artist"/>
-                            </div>
-                            <button onClick={() => deleteArtistInCollection(data.id)}>
-                                <HighlightOffIcon />
-                            </button>
-                        </div>)
-                        : 
-                        <div className={styles.profile__page_empty}>
-                            Ваша коллекция пуста
-                            <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
-                        </div>
-                    }
-                </TabPanel>
-                <TabPanel value={value} index={1}>
-                    Альбомы
-                    {
-                        albumsData.length ? albumsData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_artists}>
-                            <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
-                            <div className={styles.artist__image}>
-                                <img src={data.image} alt="album"/>
-                            </div>
-                            <button onClick={() => deleteArtistInCollection(data.id)}>
-                                <HighlightOffIcon />
-                            </button>
-                        </div>)
-                        : 
-                        <div className={styles.profile__page_empty}>
-                            Ваша коллекция пуста
-                            <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
-                        </div>
-                    }
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    Треки
-                    {
-                        tracksData.length ? tracksData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_tracks}>
-                            <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
-                            <button onClick={() => deleteArtistInCollection(data.id)}>
-                                <HighlightOffIcon />
-                            </button>
-                        </div>)
-                        : 
-                        <div className={styles.profile__page_empty}>
-                            Ваша коллекция пуста
-                            <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
-                        </div>
-                    }
-                </TabPanel>
-                </Box>
-            </div>
+        <div className={styles.profile__page_root}> 
+            {
+                isLoadingProfile ? <div className={styles.profile__page_loader}><LoaderTwo /></div>
+                :
+                <>
+                    <div className={styles.profile__page_title}>
+                        <h1>Ваша коллекция музыки</h1>
+                    </div>
+                    <div className={styles.profile__page_tabs}>
+                        <Box sx={{ width: '100%', color: 'white' }}>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider', color: 'white' }}>
+                            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                            <Tab label="Артисты" />
+                            <Tab label="Альбомы"  />
+                            <Tab label="Треки"  />
+                            </Tabs>
+                        </Box>
+                        <TabPanel value={value} index={0}>
+                            <>
+                            Артисты
+                            {
+                                artistsData.length ? artistsData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_artists}>
+                                    <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
+                                    <div className={styles.artist__image}>
+                                        <img src={data.image} alt="artist"/>
+                                    </div>
+                                    <button onClick={() => deleteArtistInCollection(data.id)}>
+                                        <HighlightOffIcon />
+                                    </button>
+                                </div>)
+                                : 
+                                <div className={styles.profile__page_empty}>
+                                    Ваша коллекция пуста
+                                    <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
+                                </div>
+                            }
+                            </>
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <>
+                            Альбомы
+                            {
+                                albumsData.length ? albumsData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_artists}>
+                                    <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
+                                    <div className={styles.artist__image}>
+                                        <img src={data.image} alt="album"/>
+                                    </div>
+                                    <button onClick={() => deleteArtistInCollection(data.id)}>
+                                        <HighlightOffIcon />
+                                    </button>
+                                </div>)
+                                : 
+                                <div className={styles.profile__page_empty}>
+                                    Ваша коллекция пуста
+                                    <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
+                                </div>
+                            }
+                            </>
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <>
+                            Треки
+                            {
+                                tracksData.length ? tracksData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_tracks}>
+                                    <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
+                                    <button onClick={() => deleteArtistInCollection(data.id)}>
+                                        <HighlightOffIcon />
+                                    </button>
+                                </div>)
+                                : 
+                                <div className={styles.profile__page_empty}>
+                                    Ваша коллекция пуста
+                                    <button onClick={() => toNewRelisesPage()}>Новые релизы</button>
+                                </div>
+                            }
+                            </>
+                        </TabPanel>
+                        </Box>
+                    </div>
+                </>
+            }
         </div>
     )
 }
