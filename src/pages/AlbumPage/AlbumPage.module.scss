@@ -102,3 +102,25 @@
     color: #345bcb;
     cursor: pointer;
 }
+
+.album__page_limit {
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    input {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 150px;
+        height: 35px;
+        text-align: center;
+        border-radius: 5px;
+        -webkit-box-shadow: 7px 7px 5px 0px #0f0f0f;
+        -moz-box-shadow:    7px 7px 5px 0px #111010;
+        box-shadow:         7px 7px 5px 0px #161616;
+    }
+}

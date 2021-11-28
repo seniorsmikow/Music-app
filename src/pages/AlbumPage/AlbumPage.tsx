@@ -32,6 +32,9 @@ export const AlbumPage = () => {
     const [totalTime, setTotalTime] = useState(0)
     const [time, setTime] = useState<Array<number>>([])
     const [tracks, setTracks] = useState<Array<AlbumItemType> | null>(null)
+    const [tracksLimitTime, setTracksLimitTime] = useState('')
+    const [timeAlert, setTimeAlert] = useState(false)
+
     enum SortTypes {
         Long = 'Long',
         Short = 'Short',
@@ -84,6 +87,27 @@ export const AlbumPage = () => {
         setAddAlbum(true)
     }
 
+    const handleChangeInput = (event: React.FormEvent<HTMLInputElement>) => {
+        let value = event.currentTarget.value
+        setTracksLimitTime(value)
+    }
+
+    const handleLimitTime = (tracksLimitTime: number, tracks: Array<AlbumItemType>) => {
+        let allTracksTime = tracks.map(el => el.duration_ms).reduce((sum, current) => sum + current, 0)
+        let limitMs = tracksLimitTime * 60000
+        if(allTracksTime > limitMs) {
+            setTracks(tracks.slice(0, -1))
+        }
+    }
+
+    useEffect(() => { 
+        if(tracks && +tracksLimitTime > 5) {
+            handleLimitTime(+tracksLimitTime, tracks)
+        } else if (album && +tracksLimitTime === 0) {
+            setTracks(album.items)
+        } 
+    }, [tracksLimitTime, tracks, album])
+
     return (
         <div className={styles.album__page_root}>
             <div className={styles.album__page_header}>
@@ -108,6 +132,15 @@ export const AlbumPage = () => {
                 <Button variant="outlined" onClick={() => sortTracks(SortTypes.Long)}>Сначала долгие</Button>
                 <Button variant="outlined" onClick={() => sortTracks(SortTypes.Short)}>Начать с коротких</Button>
                 <Button variant="outlined"onClick={() => sortTracks(SortTypes.Cancel)}>Как задумал автор</Button>
+            </div>
+            <div className={styles.album__page_limit}>
+                {
+                    tracks && <> У вас мало свободного времени? Укажите, сколько минут вы готовы уделить этому альбому, 
+                                    и мы проиграем только необходимое количество треков
+                                { timeAlert && <div>Времени достаточно, чтобы послушать и другие альбомы!</div>}
+                                <input  value={tracksLimitTime} onChange={(e) => handleChangeInput(e)}/>
+                                </>
+                }
             </div>
             <div className={styles.album__page_tracks}>
                 {

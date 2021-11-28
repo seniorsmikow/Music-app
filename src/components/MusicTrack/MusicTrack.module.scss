@@ -9,6 +9,29 @@
     color: #9f9f9f;
     position: relative;
     padding: 0 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all ease-in-out .1s;
+}
+
+.music__track_active {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    color: #9f9f9f;
+    position: relative;
+    padding: 0 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all ease-in-out .1s;
+    background-color: #39639b;
+    color: white;
+    .music__track_handle {
+        color: white;
+    }
 }
 
 .music__track_name {

@@ -8,7 +8,6 @@ import { setIdOfLikedMusic, MusicEnum } from '../../redux/profile_reducer'
 import { getLikedTracks } from '../../redux/selectors/musicSelectors'
 import { getNotification } from '../../redux/app_reducer'
 
-
 type PropsType = {
     id: string
     track_number: number
@@ -41,7 +40,7 @@ export const MusicTrack: React.FC<PropsType> = ({id, track_number, name, duratio
     }, [])
 
     return (
-        <div className={styles.music__track_root}>
+        <div className={isLiked ? styles.music__track_active : styles.music__track_root}>
             <div>{track_number}</div>
             <div className={styles.music__track_name}>{name}</div>
             <div className={styles.music__track_handle} onClick={() => addTrackToCollection()}>
