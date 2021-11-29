@@ -6,7 +6,7 @@ let initialState = {
     newReleasesData: [] as Array<NewReleasesDataType>,
     error: '' as string,
     categories: null as any,
-    isLoading: true,
+    isLoading: false,
     artistData: null as any,
     albumsData: [] as Array<AlbumType>,
 }

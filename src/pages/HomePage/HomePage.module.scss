@@ -1,57 +1,51 @@
 .home__page_root {
     margin: 0 auto;
     width: 1000px;
-    height: 100%;
+    height: 100vh;
     padding-top: 60px;
-    color: #f34d3c;
     position: relative;
     background-image: linear-gradient(to right, #434343 0%, black 100%);
 }
 
+.home__page_main {
+    display: flex;
+    position: relative;
+}
+
 .home__page_text {
+    padding: 50px;
+    margin-top: 40px;
     font-size: 20px;
+    color: #c6c64d;
     h1 {
-        color: #414141;
+        color: #3aa87a;
         margin-bottom: 20px;
     }
 }
 
 .home__button_news {
+    position: absolute;
+    top: 200px;
+    left: 50px;
     button {
-        background-color:#e5e5e5;
-        color: rgb(37, 37, 37);
+        background-color:#0ba598;
+        color: rgb(236, 236, 236);
         border-radius: 15px;
     }
 }
 
 .home__animation_block {
-    padding-top: 20px;
-    width: 1000px;
-    height: 350px;
+    padding: 60px 50px;
 }
 
 .home__genres_block {
     width: 100%;
 }
 
-.home__genres_wrapper {
+.home__page_slider {
     margin: 0 auto;
+    padding-top: 40px;
     width: 100%;
-    padding: 20px 150px;
-    display: flex;
-    flex-flow: wrap;
-    justify-content: space-between;
-}
-
-.home__genres_loader {
-    margin: 0 auto;
-}
-
-.home__genre_info {
-    margin-top: 10px;
-    margin-left: 20px;
-    cursor: pointer;
-    &:hover {
-        transform: scale(1.1);
-    }
+    height: 400px;
+    background-image: linear-gradient(-60deg, #16a085 0%, #f4d03f 100%);
 }

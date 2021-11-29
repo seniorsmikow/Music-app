@@ -1,9 +1,10 @@
-
-import React, { useState } from 'react'
+import { useState } from 'react'
 import classes from './Slider.module.scss'
-import ImgOne from '../../img/react-js-banner.png'
-import ImgTwo from '../../img/typescript.png'
-import ImgThree from '../../img/social-network-cubes-concept-1140x747.jpg'
+import ImgOne from '../../img/adele.jpg'
+import ImgTwo from '../../img/dua_lipa.jpg'
+import ImgThree from '../../img/kanye_west.jpg'
+import ImgFour from '../../img/hans.jpg'
+import ImgFive from '../../img/metallica.jpg'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 
@@ -11,7 +12,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 export const Slider = () => {
 
     let imgArray = [
-        ImgOne, ImgTwo, ImgThree
+        ImgOne, ImgTwo, ImgThree, ImgFour, ImgFive
     ];
 
     const [posX, setPosX] = useState(0);
