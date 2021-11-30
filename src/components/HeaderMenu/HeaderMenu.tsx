@@ -6,6 +6,7 @@ import { AppStateType } from '../../redux/root_reducer'
 import {toogleOpenModalWindow} from '../../redux/app_reducer'
 import styles from './HeaderMenu.module.scss'
 import { NavLink } from 'react-router-dom'
+import { useHistory } from 'react-router'
 
 type PropsType = {
     isOpen: boolean
@@ -17,9 +18,11 @@ export const HeaderMenu: React.FC<PropsType> = ({isOpen}) => {
     const dispatch = useDispatch()
     const isAuth = useSelector((state: AppStateType) => state.authReducer.isAuth)
     const ownUserId = useSelector((state: AppStateType) => state.authReducer.userId)
+    const history = useHistory()
 
     const userLogout = () => {
         dispatch(logout())
+        history.push('/')
     }
     
     return (

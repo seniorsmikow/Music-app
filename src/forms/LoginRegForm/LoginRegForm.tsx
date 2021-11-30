@@ -35,6 +35,11 @@ interface MyFormValues {
 
    return (
      <div className={styles.login__form_wrapper}>
+       <p>Тестовые данные для входа: 
+         <br />
+         Email: free@samuraijs.com
+         <br/>
+          Password: free</p>
        <Formik
          initialValues={initialValues}
          validationSchema={SignupSchema}
