@@ -1,8 +1,8 @@
-export type getUserProfile = {
+export type UserProfileType = {
     userId: number
 }
 
-export type profileType = {
+export type ProfileType = {
     photos: profilePhotosType 
     contacts: contactsProfileType 
     userId: number

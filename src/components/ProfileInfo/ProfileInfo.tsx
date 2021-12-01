@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import styles from './ProfileInfo.module.scss'
 import CheckBoxIcon from '@material-ui/icons/CheckBox'
 import CancelIcon from '@material-ui/icons/Cancel'
-import { profileType } from '../../types/profile_types'
+import { ProfileType } from '../../types/profile_types'
 import { AppStateType } from '../../redux/root_reducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { followUser, checkIsUserFriend } from '../../redux/users_reducer'
@@ -10,7 +10,7 @@ import { getNotification } from '../../redux/app_reducer'
 import userWithoutPhoto from '../../img/user_without_photo.png'
 
 type PropsType = {
-    profile: profileType
+    profile: ProfileType
 }
 
 

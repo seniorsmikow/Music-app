@@ -1,6 +1,6 @@
 import { InferActionsTypes, BaseThunkType } from './root_reducer'
 import { profileAPI } from '../api/profileAPI'
-import { profileType } from '../types/profile_types'
+import { ProfileType } from '../types/profile_types'
 
 export type MusicData = {
     name: string
@@ -10,7 +10,7 @@ export type MusicData = {
 
 
 let initialState = {
-    profile: null as profileType | null,
+    profile: null as ProfileType | null,
     isLoad: false,
     likedArtistNames: [] as Array<MusicData>,
     likedAlbumsNames: [] as Array<MusicData>,
@@ -47,9 +47,19 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
                 ...state, likedTracks: [...state.likedTracks, action.data]
             }
         }
-        case 'profile/DELETE_MUSIC_IN_COLL': {
+        case 'profile/DELETE_ARTIST_IN_COLL': {
             return {
                 ...state, likedArtistNames: [...state.likedArtistNames.filter(el => el.id !== action.id)]
+            }
+        }
+        case 'profile/DELETE_ALBUM_IN_COLL': {
+            return {
+                ...state, likedAlbumsNames: [...state.likedAlbumsNames.filter(el => el.id !== action.id)]
+            }
+        }
+        case 'profile/DELETE_TRACK_IN_COLL': {
+            return {
+                ...state, likedTracks: [...state.likedTracks.filter(el => el.id !== action.id)]
             }
         }
         case 'profile/FETCH_ERROR': {
@@ -64,12 +74,14 @@ const profileReducer = (state = initialState, action: ActionsType): InitialState
 }
 
 export const actions = {
-    getProfile: (payload: any) => ({type: 'profile/GET_PROFILE', payload} as const),
+    getProfile: (payload: ProfileType) => ({type: 'profile/GET_PROFILE', payload} as const),
     loading: (load: boolean) => ({type: 'profile/IS_LOADING', load} as const),
     setArtistsName: (data: MusicData) => ({type: 'profile/SET_ARTIST_ID', data} as const),
     setAlbumsName: (data: MusicData) => ({type: 'profile/SET_ALBUM_ID', data} as const),
     setTrack: (data: MusicData) => ({type: 'profile/SET_TRACK_ID', data} as const),
-    deleteMusic: (id: string) => ({type: 'profile/DELETE_MUSIC_IN_COLL', id} as const),
+    deleteAlbum: (id: string) => ({type: 'profile/DELETE_ALBUM_IN_COLL', id} as const),
+    deleteArtist: (id: string) => ({type: 'profile/DELETE_ARTIST_IN_COLL', id} as const),
+    deleteTrack: (id: string) => ({type: 'profile/DELETE_TRACK_IN_COLL', id} as const),
     fetchError: (error: string) => ({type: 'profile/FETCH_ERROR', error} as const)
 }
 
@@ -109,9 +121,22 @@ export const setIdOfLikedMusic = (data: MusicData, type: MusicEnum): ThunkType =
     }
 }
 
-export const deleteMusicInCollection = (id: string): ThunkType => {
+export enum DELETE_MUSIC_ENUM {
+    ALBUM = 'album',
+    ARTIST = 'artist',
+    TRACK = 'track'
+}
+
+export const deleteMusicInCollection = (id: string, type: DELETE_MUSIC_ENUM): ThunkType => {
     return async(dispatch) => {
-        dispatch(actions.deleteMusic(id))
+        if(type === DELETE_MUSIC_ENUM.ARTIST) {
+            dispatch(actions.deleteArtist(id))
+        } else if(type === DELETE_MUSIC_ENUM.ALBUM) {
+            dispatch(actions.deleteAlbum(id))
+        } else if(type === DELETE_MUSIC_ENUM.TRACK) {
+            dispatch(actions.deleteTrack(id))
+        }
+        
     }
 }
 

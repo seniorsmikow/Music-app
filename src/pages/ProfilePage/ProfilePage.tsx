@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import styles from './ProfilePage.module.scss'
-import { MusicData, deleteMusicInCollection } from '../../redux/profile_reducer'
+import { MusicData, deleteMusicInCollection, DELETE_MUSIC_ENUM } from '../../redux/profile_reducer'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Box from '@mui/material/Box'
@@ -38,8 +38,8 @@ export const ProfilePage = () => {
         history.push(`/artist/${id}`)
     }
 
-    const deleteArtistInCollection = (artistId: string) => {
-        dispatch(deleteMusicInCollection(artistId))
+    const deleteArtistInCollection = (artistId: string, type: DELETE_MUSIC_ENUM) => {
+        dispatch(deleteMusicInCollection(artistId, type))
     }
 
     const toNewRelisesPage = () => {
@@ -73,7 +73,7 @@ export const ProfilePage = () => {
                                     <div className={styles.artist__image}>
                                         <img src={data.image} alt="artist"/>
                                     </div>
-                                    <button onClick={() => deleteArtistInCollection(data.id)}>
+                                    <button onClick={() => deleteArtistInCollection(data.id, DELETE_MUSIC_ENUM.ARTIST)}>
                                         <HighlightOffIcon />
                                     </button>
                                 </div>)
@@ -94,7 +94,7 @@ export const ProfilePage = () => {
                                     <div className={styles.artist__image}>
                                         <img src={data.image} alt="album"/>
                                     </div>
-                                    <button onClick={() => deleteArtistInCollection(data.id)}>
+                                    <button onClick={() => deleteArtistInCollection(data.id, DELETE_MUSIC_ENUM.ALBUM)}>
                                         <HighlightOffIcon />
                                     </button>
                                 </div>)
@@ -112,7 +112,7 @@ export const ProfilePage = () => {
                             {
                                 tracksData.length ? tracksData.map((data: MusicData) => <div key={data.id} className={styles.profile__page_tracks}>
                                     <button onClick={() => toArtistPage(data.id)}>{data.name}</button>
-                                    <button onClick={() => deleteArtistInCollection(data.id)}>
+                                    <button onClick={() => deleteArtistInCollection(data.id, DELETE_MUSIC_ENUM.TRACK)}>
                                         <HighlightOffIcon />
                                     </button>
                                 </div>)
